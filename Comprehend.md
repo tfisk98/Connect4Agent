@@ -1,11 +1,11 @@
-###### Comprehension du jeu 
-### Partie 1: Regles du jeu
-## 1.1: Analyse des règles du jeu 
+# Comprehension du jeu 
+## Partie 1: Regles du jeu
+### 1.1: Analyse des règles du jeu 
 
 Le jeu de Puissance 4 se compose d'un plateau de 42 cases, une grille de 7 lignes par 6 colonnes où tour à tour deux joueurs y déposent un jeton rouge ou jaune. Le jeton est soit déposé au fond d'une colonne soit au-dessus du jeton le plus haut placé dans la colonne. Le but du jeu est de créer une chaine de 4 jetons de la même couleur. Dans le cas où le plateau est rempli sans possibilté de déclarer un vainqueur, la partie est alors déclaré nulle. Un joueur ne peut déposer un jeton dans une colonne pleine. Les résultats possibles pour un joueur sont donc victoire, match nul ou défaite. Une disqualafication suite à un coup illégal pourra aboutir à une défaite. 
 
  
-## 1.1: Analyse des conditions de victoire
+### 1.2: Analyse des conditions de victoire
 
 On représentera les jetons par des 0. Voici les conditions de victoires :
 1.:0    2.:   0 3.: 0  4.: 
@@ -17,12 +17,19 @@ Pour vérifier une victoire lorsqu'un joueur pose un jeton, il est nécessaire d
 
 
 
-### Partie 2: Comprendre PettingZoo
+## Partie 2: Comprendre PettingZoo
+### 2.1 : Lire la documentation
 
 Les noms des deux agents sont : 'player_0' et'player_1'.
 La variable 'action' correspond à un entier compris entre 0 et 6, correspondant à l'indice de la colonne dans lequel un joueur désire déposer son jeton.
 'env.agent_iter()' est une liste contenant qui sur lequel on itere au cours d'une ou plusieurs parties afin de connaitre le joueur/l'agent dont c'est au tour de jouer.
 'env.step(action)' place un jeton dans la grille de l'agent en question, en placant un 1 dans le tableau/matrice de jeu, vérifie si une des conditions de victoire est atteinte. 
 'env.last()' renvoie la grille de l'agent en question(observation), un score indiquant la qualité de la position de l'agent (reward), si la partie est finie ou non (termination), (truncation) ainsi que des informations complémentaires. 
+
+
+### 2.2: Analyse de l'espace d'observation
+
+Le tableau d'observation est un tenseur de dimension 3 de taille (6,7,2). La première dimension représente les lignes de la grille, la seconde les colonnes et la 3e le nombre de joueurs. Les joueurs n'ont pas accès au même tableau, ou plutôt à la même information. On peut y déposer des 1 (pour un jeton déposé par le joueur), des 0 pour des jetons adverses ou un espace vide. 
+
 
   
