@@ -2,30 +2,38 @@
 ## Partie 1: Regles du jeu
 ### 1.1: Analyse des règles du jeu 
 
-Le jeu de Puissance 4 se compose d'un plateau de 42 cases, une grille de 7 lignes par 6 colonnes où tour à tour deux joueurs y déposent un jeton rouge ou jaune. Le jeton est soit déposé au fond d'une colonne soit au-dessus du jeton le plus haut placé dans la colonne. Le but du jeu est de créer une chaine de 4 jetons de la même couleur. Dans le cas où le plateau est rempli sans possibilté de déclarer un vainqueur, la partie est alors déclaré nulle. Un joueur ne peut déposer un jeton dans une colonne pleine. Les résultats possibles pour un joueur sont donc victoire, match nul ou défaite. Une disqualafication suite à un coup illégal pourra aboutir à une défaite. 
+Le jeu de Puissance 4 se compose d'un plateau vertical de 42 cases : une grille de 6 lignes et 7 colonnes (fois deux pour représenter chaque joueur dans Pettingzoo). Un joueur joue avec les jetons jaunes et l'autre avec les rouges. Ils jouent tour à tour en déposant un jeton en haut d'une colonne (non pleine sinon le coup est illégal) et ce dernier tombe alors le long de celle-ci. Pour gagner, un joueur doit créer une chaine horizontale, verticale ou diagonale de 4 jetons de la couleur qui lui est attribué. Si le plateau est rempli sans que cette condition soit réalisée par l'un des deux joueurs, la partie est alors déclarée nulle.  Un coup illégal entraîne une défaite. Les résultats possibles pour un joueur sont donc victoire, match nul ou défaite.
 
  
 ### 1.2: Analyse des conditions de victoire
 
 On représentera les jetons par des 0. Voici les conditions de victoires :
-1.:0    2.:   0 3.: 0  4.: 
-    0        0      0     0 0 0 0
-     0      0       0
-      0    0        0
 
-Pour vérifier une victoire lorsqu'un joueur pose un jeton, il est nécessaire de vérifier 8 directions. Par exemple, on peut initialiser un compteur à 1 au dépot d'un jeton. Puis on commence à regarder les jetons à sa gauche. On s'arrête lorsque l'on tombe sur un jeton adverse ou lorsque le compteur de jetons atteint la valeur 4.Si il s'atteint la valeur 4 on déclare le joueur vainqueur et la partie se termine. Sinon on fait de même dans la direction opposée, ici la droite. Si le compteur atteint 4 avant de tomber sur un jeton de l'autre joueur on le déclare vainqueur, sinon on commence à regarder dans une autre direction: haut-gauche, haut, haut-droite, bas-droite, bas, bas-gauche (angliscismes). 
+1.:        2.:  3.:      4.: 
+0          0    0   
+  0        0      0      0 0 0 0
+    0      0        0
+      0    0          0
 
+Pour une position possible du prochain jeton à jouer, il est nécessaire de vérifier 4 directions (ou 8 demi-directions). En pseudo-code :
+- vérifier le nombre de jetons contigus de la même couleur vers le bas : si 3 -> victoire;
+- vérifier le nombre de jetons contigus de la même couleur vers la gauche et la droite : si la somme des deux > 3 -> victoire;
+- vérifier le nombre de jetons contigus de la même couleur sur la première diagonale dans la première demi-direction puis la seconde : si la somme des deux > 3 -> victoire;
+- faire de même avec la deuxième diagonale : si la somme > 3 -> victoire;
+- sinon, pas de victoire possible à cette position. 
 
 
 ## Partie 2: Comprendre PettingZoo
 ### 2.1 : Lire la documentation
 
 Les noms des deux agents sont : 'player_0' et'player_1'.
-La variable 'action' correspond à un entier compris entre 0 et 6, correspondant à l'indice de la colonne dans lequel un joueur désire déposer son jeton.
-'env.agent_iter()' est une liste contenant qui sur lequel on itere au cours d'une ou plusieurs parties afin de connaitre le joueur/l'agent dont c'est au tour de jouer.
-'env.step(action)' place un jeton dans la grille de l'agent en question, en placant un 1 dans le tableau/matrice de jeu, vérifie si une des conditions de victoire est atteinte. 
-'env.last()' renvoie la grille de l'agent en question(observation), un score indiquant la qualité de la position de l'agent (reward), si la partie est finie ou non (termination), (truncation) ainsi que des informations complémentaires. 
 
+La variable 'action' correspond à un entier compris entre 0 et 6, correspondant à l'indice de la colonne dans lequel un joueur désire déposer son jeton :
+- 'env.agent_iter()' est une liste de la forme ['player_0', 'player_1', 'player_0', 'player_1', ... ] sur laquelle on itère au cours d'une partie afin de connaitre le joueur/l'agent dont c'est le tour.
+- 'env.step(action)' place un jeton dans la grille de l'agent en train de jouer (indice 0 de la troisième dimension de la grille de jeu pour 'agent_0', indice 1 pour l'autre 'agent_1' ), en placant un 1 aux indices correspondants (premère dimension de la grille de jeu pour le premier index, deuxième dimension pour le second ). 
+- 'env.last()' renvoie l'état du jeu à la fin du dernier coup joué : le dictionnaire (observation) contenant la grille de jeu (clé 'observation') de taille 6*7*2 ainsi que les coups légaux possibles pour le prochain coup (clé 'action_mask'), un score indiquant la qualité de la position de l'agent (reward), si la grille de jeu a été remplie (booléen termination), si la partie a été remportée ou un coup illégal joué (booléen truncation) ainsi que des informations complémentaires. 
+
+La clé 'action_mask' est ainsi particulièrement importante car elle donne accès au vecteur d'entiers des coups légaux (représentés par 1, les coups illégaux étant eux réprésentés par 0) possibles pour le prochain coup. 
 
 ### 2.2: Analyse de l'espace d'observation
 
