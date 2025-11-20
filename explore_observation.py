@@ -8,20 +8,41 @@ def print_board(observation):
     observation: numpy array of shape (6, 7, 2)
         observation[:,:,0] = current player's pieces
         observation[:,:,1] = opponent's pieces
+
+    La ligne du bas de l'affichage correspond à la ligne du bas de la grille du puissance 4, 
+    et à la ligne 0 de la matrice observation
+    
     """
     # TODO: Implement this function
     # Hint: Loop through rows and columns
     # Use symbols like 'X', 'O', and '.' for current player, opponent, and empty
 
     board_0 = observation['observation'][:,:,0]
-    board_0 = np.where(board_0 == 1, 'X','0')
-    board_0 = '\n'.join(" ".join(str(j) for j in i) for i in board_0)
-    print("Board_0 : \n",board_0)
+    board_0[0,3] = 1
 
     board_1 = observation['observation'][:,:,1]
-    board_1 = np.where(board_1 == 1, 'X','0')
-    board_1 = '\n'.join(" ".join(str(j) for j in i) for i in board_1)
-    print("Board_1 : \n",board_1)
+    board_1[5,3] = 1
+
+    for i in range(board_0.shape[0] -1 , -1, -1) :
+        for j in range(board_0.shape[1]) :
+            if board_0[i][j] == 1 :
+                print('X', end='')
+            elif board_1[i][j] == 1 : 
+                print('O', end='')
+            else : 
+                print('.', end='')
+        print("\n")
+
+    for i in range(board_1.shape[0] -1 , -1, -1) :
+        for j in range(board_1.shape[1]) :
+            if board_1[i][j] == 1 :
+                print('X', end='')
+            elif board_0[i][j] == 1 : 
+                print('O', end='')
+            else : 
+                print('.', end='')
+        print("\n")
+
     
 
 
