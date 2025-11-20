@@ -11,7 +11,7 @@ def print_board(observation):
 
     La ligne du bas de l'affichage correspond à la ligne du bas de la grille du puissance 4, 
     et à la ligne 0 de la matrice observation
-    
+
     """
     # TODO: Implement this function
     # Hint: Loop through rows and columns
@@ -23,6 +23,7 @@ def print_board(observation):
     board_1 = observation['observation'][:,:,1]
     board_1[5,3] = 1
 
+    print("Your board :")
     for i in range(board_0.shape[0] -1 , -1, -1) :
         for j in range(board_0.shape[1]) :
             if board_0[i][j] == 1 :
@@ -31,8 +32,10 @@ def print_board(observation):
                 print('O', end='')
             else : 
                 print('.', end='')
+            print('\t', end='')
         print("\n")
 
+    print("Opponent's board :")
     for i in range(board_1.shape[0] -1 , -1, -1) :
         for j in range(board_1.shape[1]) :
             if board_1[i][j] == 1 :
@@ -41,6 +44,7 @@ def print_board(observation):
                 print('O', end='')
             else : 
                 print('.', end='')
+            print('\t', end='')
         print("\n")
 
     
