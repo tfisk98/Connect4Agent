@@ -1,5 +1,5 @@
-# Comprehension du jeu 
-## Partie 1: Regles du jeu
+# Compréhension du jeu 
+## Partie 1: Règles du jeu
 ### 1.1: Analyse des règles du jeu 
 
 Le jeu de Puissance 4 se compose d'un plateau vertical de 42 cases : une grille de 6 lignes et 7 colonnes (fois deux pour représenter chaque joueur dans Pettingzoo). Un joueur joue avec les jetons jaunes et l'autre avec les rouges. Ils jouent tour à tour en déposant un jeton en haut d'une colonne (non pleine sinon le coup est illégal) et ce dernier tombe alors le long de celle-ci. Pour gagner, un joueur doit créer une chaine horizontale, verticale ou diagonale de 4 jetons de la couleur qui lui est attribué. Si le plateau est rempli sans que cette condition soit réalisée par l'un des deux joueurs, la partie est alors déclarée nulle.  Un coup illégal entraîne une défaite. Les résultats possibles pour un joueur sont donc victoire, match nul ou défaite.
@@ -13,10 +13,10 @@ Voici les configurations victorieuses :
 |     :---:   |      :---:        |      :--- |      :---  |
 |  0 &ensp;0 &ensp;0 &ensp;0    | 0<br>0<br>0<br>0  | 0<br>&ensp;&ensp;0<br>&ensp;&ensp;&ensp;&ensp;0<br>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;0 | &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;0<br>&ensp;&ensp;&ensp;&ensp;0<br>&ensp;&ensp;0<br>0
 
-Pour une position et une couleur de jeton données dans la grille, il est nécessaire de vérifier 4 directions (ou 8 demi-directions), ce qui donnerait en peudo-code :
-- vérifier le nombre de jetons contigus de la même couleur vers le bas : si 3 -> victoire;
-- vérifier le nombre de jetons contigus de la même couleur vers la gauche et la droite : si la somme des deux > 3 -> victoire;
-- vérifier le nombre de jetons contigus de la même couleur sur la première diagonale dans la première demi-direction puis la seconde : si la somme des deux > 3 -> victoire;
+Pour une position et une couleur de jeton données dans la grille, il est nécessaire de vérifier 4 directions (ou 8 demi-directions) pour déterminer si la position est gagnante, ce qui donnerait en peudo-code :
+- vérifier le nombre de jetons contigus du même joueur vers le bas : si 3 -> victoire;
+- vérifier le nombre de jetons contigus du même joueur vers la gauche et la droite : si la somme des deux > 3 -> victoire;
+- vérifier le nombre de jetons contigus du même joueur sur la première diagonale dans la première demi-direction puis la seconde : si la somme des deux > 3 -> victoire;
 - faire de même avec la deuxième diagonale : si la somme > 3 -> victoire;
 - sinon, pas de victoire à cette position. 
 
@@ -36,11 +36,11 @@ La variable `action` de type personnalisé `Discrete` modélise les entiers comp
 
 L'observation retournée est un dictionnaire possédant les clés `"observation"` et `"action_mask"`. La première a pour valeur l'espace d'observation, c'est-à-dire la grille de jeu. La deuxième clé `"action_mask"` est associée à un `mask` vecteur de taille 7 où un index représente une colonne, la valeur associée à cet index indiquant si le coup est légal (valeur 1) ou non (valeur 0). Notons que pour un agent dont ce n'est pas le tour, `mask` ne contiendra que des 0.
 
-La clé `'action_mask'` est ainsi particulièrement importante car elle permet de déterminer les coups légaux possibles pour le prochain coup. 
+La clé `'action_mask'` est ainsi particulièrement importante car elle permet de déterminer les coups légaux possibles pour le prochain tour. 
 
 ### 2.2: Analyse de l'espace d'observation
 
-Le tableau d'observation est un tenseur de dimension 3 de taille (6,7,2). 
+Le tableau d'observation est un tableau `ndarray` de dimension 3 et de taille `(6,7,2)` de la bibliothèque `numpy`.
 
 Les deux premières dimensions représentent une position dans le plateau de jeu. La première correspond aux lignes (index 0 à 6) et la seconde aux colonnes (index 0 à 7). La dernière dimension représente la grille de l'agent en train de jouer (index 0) ou celle de son adversaire (index 1). A l'index 
 `(i, j, k)` on a donc : 
@@ -67,18 +67,27 @@ Une fois la colonne choisie l'agent n'aura alors plus qu'a retourner via `env.st
 
 ### 3.2 : Conception d'algorithme - Progression
 
-- Niveau 0 : l'agent choisis une colonne aléatoirement sans tenir compte de l'action_mask et peut donc jouer des coups illégaux.
+- Niveau 0 : l'agent choisit une colonne aléatoirement sans contrainte.
 
-- Niveau 1 : l'agent joue des coups au hasard mais légaux c'est à dire dans les colonnes dont la valeur dans l'action mask vaut 1. 
+- Niveau 1 : l'agent choisit une colonne aléatoirement parmi celles associées à un coup légal. 
 
-Un motif de victoire sera détecté en simulant le dépots d'un jeton dans une colonne puis en observant si l'un des 4 motifs de victoires décris est vérifié, selon le pseudo-algorithme décris dans la section 1.2.
+- Niveau 2 : l'agent vérifie s'il a une opportunité de victoire et la saisit si possible, sinon, il fait la même chose qu'au niveau précédent. 
 
-- Niveau 2 : l'agent observe sur sa grille, parmis les colonnes jouables, lesquelles peuvent mènent à une victoire immédiate en vérifiant les 8 motifs de victoires possibles. Si il en trouve une, il la sélectionne. Sinon il joue au hasard. 
+- Niveau 3 : l'agent vérifie s'il a une opportunité de victoire et la saisit si possible, sinon il vérifie les possibilités de victoire de l'adversaire au prochain tour et joue pour de façon à la bloquer. En dernier recours, il réalise le niveau 1. 
 
-- Niveau 3 : Une fois les motifs de victoires vérifiés et dans le cas où aucun d'entre eux n'est détecté par l'agent. Celui-ci vérifie les opportunités de victoires de son adversaire et le bloque si il repère un motif de victoire. Dans le cas, où il n'en trouve pas, il joue au hasard. 
+- Niveau 4 : Si l'agent n'a pas de possibilité de vitcoire et son adversaire non plus, il vérifie s'il peut réaliser des placements stratégiques (jouer au centre, renforcer ses chaînes de pions ou bloquer celles de l'adversaire). En dernier recours, il réalise le niveau 1. 
 
-- Niveau 4 : Dans le cas ou l'agent ne trouve aucune potentielle chaine de 4 pions pour lui ou son adversaire, des consignes lui seront données pour sélectionner la colonne dans laquelle jouer. Il pourra s'agir de privilégier des colonnes placées au centre, de chercher des chaines de 2 pions, ou enfin de bloquer les chaines de 2 pions adverses par exemple. 
-
-- Niveau 5 : Pas d'algorithme de choix choisi pour le moment. 
+- Niveau 5 : Implémentation d'algorithmes de décision plus évolués, par apprentissage par exemple.
 
 ### 3.3 : Définir l'interface de l'agent
+
+Une classe `MyAgent` contiendrait les méthodes :
+- `__init__` prenant pour arguments `self`, l'environnement `env` ainsi qu'un argument optionnel `name` et les construits en tant qu'attributs de classe, construit également à partir de `self.env` l'attribut `action_space`; 
+-  `choose_action` prenant pour arguments `self`, `observation` (obligatoire) et les autres objets renvoyés par `env.last()` (optionnels) et retourne la prochaine `action` à réaliser selon les stratégies implémentées par la fonction;
+- `check_winning_move` permettant de déterminer si il y a un coup gagnant pour l'agent;
+- `check_blocking_move` permettant de déterminer si l'adversaire a un coup gagnant au prochain tour;
+- `check_center` permettant de déterminer si l'agent peut jouer au centre;
+- éventuellement des méthodes plus évoluées d'analyse de la grille de jeu;
+- éventuellement des méthodes auxiliaires pour fluidifier l'implémentation des précédentes.
+
+Les méthodes d'analyse de l'état du jeu comme `check_winning_move` devraient retourner, soit le prochain coup à jouer, soit un raffinnement de `action_mask` prenant en compte les heuristiques stratégiques sur la qualité des coups. Les méthodes auxiliaires seront déterminées au fur et à mesure du développement.

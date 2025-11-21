@@ -1,11 +1,9 @@
-### Setting path to the project in order to be able to import from src package
+### Working directory must be the one of this file for src import to work
 
 import sys
 import os
 sys.path.append(os.getcwd())
 
-
-### Import
 
 from pettingzoo.classic import connect_four_v3
 import src.random_agent as rnda
@@ -22,7 +20,6 @@ agent_list=[agent0,agent1]
 
 for agent in env.agent_iter():
     observation, reward, termination, truncation, info = env.last()
-
     if agent_list[0].name==agent :
         current_agent=agent_list[0]
 
@@ -45,7 +42,7 @@ for agent in env.agent_iter():
 
 ### Testing RandomAgent with choose_action_manual
 
-env.reset(seed=42)
+env.reset()
 
 for agent in env.agent_iter():
     observation, reward, termination, truncation, info = env.last()
