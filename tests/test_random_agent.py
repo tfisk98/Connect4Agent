@@ -45,7 +45,7 @@ for agent in env.agent_iter():
 
 ### Testing RandomAgent with choose_action_manual
 
-env.reset(seed=42)
+env.reset()
 
 for agent in env.agent_iter():
     observation, reward, termination, truncation, info = env.last()

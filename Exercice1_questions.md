@@ -36,7 +36,7 @@ La variable `action` de type personnalisé `Discrete` modélise les entiers comp
 
 L'observation retournée est un dictionnaire possédant les clés `"observation"` et `"action_mask"`. La première a pour valeur l'espace d'observation, c'est-à-dire la grille de jeu. La deuxième clé `"action_mask"` est associée à un `mask` vecteur de taille 7 où un index représente une colonne, la valeur associée à cet index indiquant si le coup est légal (valeur 1) ou non (valeur 0). Notons que pour un agent dont ce n'est pas le tour, `mask` ne contiendra que des 0.
 
-La clé `'action_mask'` est ainsi particulièrement importante car elle permet de déterminer les coups légaux possibles pour le prochain coup. 
+La clé `'action_mask'` est ainsi particulièrement importante car elle permet de déterminer les coups légaux possibles pour le prochain tour. 
 
 ### 2.2: Analyse de l'espace d'observation
 
