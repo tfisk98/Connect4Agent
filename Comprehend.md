@@ -7,20 +7,18 @@ Le jeu de Puissance 4 se compose d'un plateau vertical de 42 cases : une grille 
  
 ### 1.2: Analyse des conditions de victoire
 
-On représentera les jetons par des 0. Voici les conditions de victoires :
+Voici les configurations victorieuses :
 
-1.:        2.:  3.:      4.: 
-0          0    0   
-  0        0      0      0 0 0 0
-    0      0        0
-      0    0          0
+| Condition 1 | Condition 2       | Condition 3 | Condition 4 |
+|     :---:   |      :---:        |      :--- |      :---  |
+|  0 0 0 0    | 0<br>0<br>0<br>0  | 0<br>&ensp;&ensp;0<br>&ensp;&ensp;&ensp;&ensp;0<br>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;0 | &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;0<br>&ensp;&ensp;&ensp;&ensp;0<br>&ensp;&ensp;0<br>0
 
-Pour une position possible du prochain jeton à jouer, il est nécessaire de vérifier 4 directions (ou 8 demi-directions). En pseudo-code :
+Pour une position et une couleur de jeton données dans la grille, il est nécessaire de vérifier 4 directions (ou 8 demi-directions) :
 - vérifier le nombre de jetons contigus de la même couleur vers le bas : si 3 -> victoire;
 - vérifier le nombre de jetons contigus de la même couleur vers la gauche et la droite : si la somme des deux > 3 -> victoire;
 - vérifier le nombre de jetons contigus de la même couleur sur la première diagonale dans la première demi-direction puis la seconde : si la somme des deux > 3 -> victoire;
 - faire de même avec la deuxième diagonale : si la somme > 3 -> victoire;
-- sinon, pas de victoire possible à cette position. 
+- sinon, pas de victoire à cette position. 
 
 
 ## Partie 2: Comprendre PettingZoo
