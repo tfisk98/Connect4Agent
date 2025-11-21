@@ -1,5 +1,13 @@
-from pettingzoo.classic import connect_four_v3
+### Setting path to the project in order to be able to import from src package
 
+import sys
+import os
+sys.path.append(os.getcwd())
+
+
+### Import
+
+from pettingzoo.classic import connect_four_v3
 import src.random_agent as rnda
 
 env = connect_four_v3.env(render_mode="human") # ou render_mode="rdb_array" ou bien None
