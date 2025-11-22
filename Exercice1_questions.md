@@ -42,11 +42,12 @@ La clé `'action_mask'` est ainsi particulièrement importante car elle permet d
 
 Le tableau d'observation est un tableau `ndarray` de dimension 3 et de taille `(6,7,2)` de la bibliothèque `numpy`.
 
-Les deux premières dimensions représentent une position dans le plateau de jeu. La première correspond aux lignes (index 0 à 6) et la seconde aux colonnes (index 0 à 7). La dernière dimension représente la grille de l'agent en train de jouer (index 0) ou celle de son adversaire (index 1). A l'index 
+Les deux premières dimensions représentent une position dans le plateau de jeu cohérent avec l'affichage des matrices `ndarray`. La première correspond ainsi aux lignes (l'index 5 étant la ligne la plus basse de la grille de jeu réelle) et la seconde aux colonnes ( l'index 7 étant la colonne la plus à droite de la grille de jeu réelle). La dernière dimension représente la grille de l'agent en train de jouer (index 0) ou celle de son adversaire (index 1). A l'index 
 `(i, j, k)` on a donc : 
 - la position (i, j) de la grille de l'agent associé à k;
 - la valeur 1 si un jeton de l'agent associé à k;
 - la valeur 0 si il y a un jeton de l'adversaire ou une case vide.
+
 
 ## Partie 3 : Décomposition du problème
 ### 3.1 : Décomposer l'implémentation de l'agent
