@@ -7,6 +7,7 @@ sys.path.append(os.getcwd())
 
 from pettingzoo.classic import connect_four_v3
 import src.random_agent as rnda
+import src.auxiliary_game_loop_functions as aux
 
 env = connect_four_v3.env(render_mode="human") # ou render_mode="rdb_array" ou bien None
 
@@ -20,6 +21,7 @@ agent_list=[agent0,agent1]
 
 for agent in env.agent_iter():
     observation, reward, termination, truncation, info = env.last()
+
     if agent_list[0].name==agent :
         current_agent=agent_list[0]
 
@@ -29,13 +31,13 @@ for agent in env.agent_iter():
     if termination or truncation:
         action = None
         if reward == 1:
-            print(f"{agent} wins!")
+            print(f"{agent} wins!\n")
         elif reward == 0:
-            print("It's a draw!")
+            print("It's a draw!\n")
     else:
         # Take a random valid action
         action = current_agent.choose_action(observation)
-        print(f"{agent} plays column {action}")
+        aux.print_board(observation, env.agents, agent, action)
 
     env.step(action)
 
