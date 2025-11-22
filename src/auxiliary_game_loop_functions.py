@@ -25,11 +25,11 @@ def print_board(observation, agents, playing_agent, action):
     n_col = np.shape(board_0)[1]
     human_board = ""
 
-    # Including agent action in board_0 :
+    # Including playing_agent action in board_0 :
 
-    for i in range(n_row) : 
+    for i in range(n_row-1,-1,-1) : 
          if board_0[i,action]==0 and board_1[i,action]==0 :
-            board_0[ n_row-(i+1) ,action]=1
+            board_0[ i ,action]=1
             break
 
     # Checking which agent is playing
@@ -41,7 +41,7 @@ def print_board(observation, agents, playing_agent, action):
 
     # Preparing information for readibbility
 
-    board_title = ""
+    board_title = "Next turn :\n"
     board_title = board_title + agents[0] + " tokens : 'X'\n" 
     board_title = board_title + agents[1] + " tokens : 'O'\n" 
 
