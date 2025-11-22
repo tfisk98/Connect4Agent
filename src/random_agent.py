@@ -1,7 +1,5 @@
 """
-My Random Agent for Connect Four
-
-This agent chooses moves randomly from the available (valid) columns.
+A simple random agent
 """
 
 import numpy as np
@@ -9,7 +7,7 @@ import random as rnd
 
 class RandomAgent:
     """
-    A simple agent that plays randomly
+    A simple agent that chooses randomly and uniformly a legal play.
     """
 
     def __init__(self, env, player_name=None):

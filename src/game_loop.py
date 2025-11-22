@@ -1,5 +1,17 @@
+"""
+Functions to help to visualize the board or 
+making Connect4 games
+"""
+
+
+### Import
+
 from pettingzoo.classic import connect_four_v3
 import numpy as np
+import tracemalloc
+import time
+
+### Functions 
 
 def print_board(observation, agents, playing_agent, action):
     """
@@ -73,6 +85,7 @@ def print_board(observation, agents, playing_agent, action):
     print(human_board)
     return 
     
+
 def setting_custom_agent(env,Custom_Agent0, Custom_Agent1) :
     """ 
     Setting the two custom agents that will play in 
@@ -114,20 +127,21 @@ def select_current_agent(agent_list, playing_agent) :
         current_agent=agent_list[1]
     return current_agent
 
-def Connect4_game(number_of_games, Custom_Agent0, Custom_Agent1, custom_render_option=False, render_option=None, seed_option=42) :
+
+def Connect4_game(num_games, Custom_Agent0, Custom_Agent1, custom_render_option=False, render_option=None, seed_option=42) :
     """ 
     Make a certain number of connect4 game with the given
     agents.
 
     Parameters : 
-        number_of_games : the number of game to be played
+        num_games : the number of game to be played
         Custom_Agent0 : the type of the first custom agent
         Custom_Agent1 : the type of the second custom agent
-        seed_option : a positive integer to be used as seed for 
-        pettingzoo environment 
         custom_render_option : boolean asserting if print_board has
         to be used
         render_option : setting string for pettingzoo environment render_mode
+        seed_option : a positive integer to be used as seed for 
+        pettingzoo environment 
 
     Return :
         None
@@ -141,16 +155,14 @@ def Connect4_game(number_of_games, Custom_Agent0, Custom_Agent1, custom_render_o
 
     # Gameloop
 
-    for game in range(0,number_of_games) :
+    for game in range(0,num_games) :
 
-        print(f"GAME NUMBER {game+1} :\n\n")
+        print(f"\nGAME NUMBER {game+1} :\n\n")
 
         env.reset(seed=seed_option)
 
         for agent in env.agent_iter():
             observation, reward, termination, truncation, info = env.last()
-
-            current_agent=select_current_agent(agent_list, agent)
 
             if termination or truncation:
                 action = None
@@ -159,8 +171,120 @@ def Connect4_game(number_of_games, Custom_Agent0, Custom_Agent1, custom_render_o
                 elif reward == 0:
                     print("It's a draw!\n")
             else:
+                current_agent=select_current_agent(agent_list, agent)
                 action = current_agent.choose_action(observation)
                 if custom_render_option :
                     print_board(observation, env.agents, agent, action)
             env.step(action)
+
+
+def Connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option=42) :
+    """ 
+    Make a certain number of connect4 game with the given
+    agents and get data for later analysis.
+
+    Parameters : 
+        num_games : the number of game to be played
+        Custom_Agent0 : the type of the first custom agent 
+        Custom_Agent1 : the type of the second custom agent
+        seed_option : a positive integer to be used as seed for 
+        pettingzoo environment 
+
+    Return :
+        data : a tuple containing for each game another tuple 
+        of the form (turn_count, data0, data1).
+        turn_count is the total number of turns played during this game. 
+        data0 (for the first agent) and data1 (for the second agent) are tuples 
+        containing the following informations in this order: the agent result ("win", "loss" or "draw"), 
+        a tuple containing the time (in second) taken by the agent to play for each turn,
+        a tuple of size num_games containing the memory usage peak reached by the agent for each turn.
+        Please note that we want the returned data to be immutable to prevent them to be
+        mistakenly changed during their usage. Hence, a library like pandas does not 
+        have been used to store sampled informations.
+    """
+
+    # Setting environment and agents
+
+    env = connect_four_v3.env(render_mode=None)
+    env.reset(seed=seed_option)
+    agent_list=setting_custom_agent(env,Custom_Agent0, Custom_Agent1)
+
+    
+    # Game loop
+
+    data=[]
+
+    for game in range(0,num_games) :
+
+        env.reset(seed=seed_option)
+
+        # Setting data collectors
+
+        data0=[ 0 for i in range(3)]
+        data1=[ 0 for i in range(3)]
+        turn_count=0
+        time_list0=[]
+        time_list1=[]
+        memory_list0=[]
+        memory_list1=[]
+
+        # Playing
+
+        for agent in env.agent_iter():
+            observation, reward, termination, truncation, info = env.last()
+
+
+            # Saving the result of the game
             
+            if termination or truncation:
+                action = None
+                if reward == 1:
+                    if agent=='player_0' :
+                        data0[0]="win"
+                        data1[0]="loss"
+                    else :
+                        data0[0]="loss"
+                        data1[0]="win"
+                       
+                elif reward == 0:
+                    print(f"{agent} draw!\n")
+                    data0[0]="draw"
+                    data1[0]="draw"
+
+
+            # Playing and measuring time taken and memory usage 
+
+            else:
+                turn_count+=1
+                current_agent=select_current_agent(agent_list, agent)
+                tracemalloc.start()
+                start_time = time.time()
+                action = current_agent.choose_action(observation)
+                time_used= time.time()-start_time
+                memory_peak=tracemalloc.get_traced_memory()[1]
+                tracemalloc.stop()
+
+                # Saving time and memory data of this turn
+
+                if current_agent.name==env.agents[0] :
+                    time_list0.append(time_used)
+                    memory_list0.append(memory_peak)
+
+                else : 
+                    time_list1.append(time_used)
+                    memory_list1.append(memory_peak)
+
+            env.step(action)
+        
+
+        # Saving the data of the current game
+
+        data0[1]=time_list0
+        data0[2]=memory_list0
+        data1[1]=time_list1
+        data1[2]=memory_list1
+        game_data=(turn_count, tuple(data0), tuple(data1))
+        data.append(game_data)
+    
+    data=tuple(data)
+    return data
