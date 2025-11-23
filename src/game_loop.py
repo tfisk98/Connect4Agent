@@ -153,6 +153,8 @@ def Connect4_game(num_games, Custom_Agent0, Custom_Agent1, custom_render_option=
     env.reset(seed=seed_option)
     agent_list=setting_custom_agent(env,Custom_Agent0, Custom_Agent1)
 
+    score = [0,0]
+
     # Gameloop
 
     for game in range(0,num_games) :
@@ -167,6 +169,7 @@ def Connect4_game(num_games, Custom_Agent0, Custom_Agent1, custom_render_option=
             if termination or truncation:
                 action = None
                 if reward == 1:
+                    score[agent_list.index(current_agent)] += 1
                     print(f"{agent} wins!\n")
                 elif reward == 0:
                     print("It's a draw!\n")
@@ -177,6 +180,13 @@ def Connect4_game(num_games, Custom_Agent0, Custom_Agent1, custom_render_option=
                     print_board(observation, env.agents, agent, action)
             env.step(action)
 
+    print("scores :", score)
+    if score[0] >= score[1] :
+        winner = 0
+    else : 
+        winner = 1 
+    print("And the winner is player", winner)
+            
 
 def Connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option=42) :
     """ 
