@@ -220,3 +220,14 @@ assert agent0._find_winning_move(observation, valid_actions, channel) == 2
 
 
 
+a = [1,2,3,4] 
+print('before : ', a)
+
+def plus_one (li):
+    li[0] += 1 
+    #li[:] = b
+
+
+plus_one(a)
+
+print('after :', a)
