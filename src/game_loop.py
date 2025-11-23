@@ -207,7 +207,7 @@ def connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option
         data0 (for the first agent) and data1 (for the second agent) are tuples 
         containing the following informations in this order: the agent result ("win", "loss" or "draw"), 
         a tuple containing the time (in second) taken by the agent to play for each turn,
-        a tuple of size num_games containing the memory usage peak (in KiB) reached by the agent for each turn.
+        a tuple of size num_games containing the memory usage peak (in B) reached by the agent for each turn.
     """
 
     # Setting environment and agents
@@ -311,7 +311,7 @@ def getting_stats_per_game(data) :
         the same structure where each line represents a game played, and the column
         indicate a specific metric constructed thanks to data. These metrics are
         for a given agent : the result of the game,the average time (in second) used to play
-        and the maximum one, the average memory peak (in KiB) reached by the agent and the maximum one.
+        and the maximum one, the average memory peak (in B) reached by the agent and the maximum one.
     """
 
     turn_counter_data = []
@@ -352,7 +352,7 @@ def connect4_game_with_stats(num_games, Custom_Agent0, Custom_Agent1, seed_optio
         abbout the length of the games and agent_stats is data frame containing the overall 
         statistics of each agent for the whole set of games played. The metrics are the frequency 
         of win, loss and draw, the average time (in second) used by the agent to play and the maximum one, 
-        the average memory usage peak (in KiB) reached by the agent and the maximum one.
+        the average memory usage peak (in B) reached by the agent and the maximum one.
     """
 
     data=connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option=42)

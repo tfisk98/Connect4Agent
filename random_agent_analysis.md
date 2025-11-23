@@ -29,7 +29,7 @@ A l'issue de 10 000 parties jouées entre deux agents de la classe `RandomAgent`
 - sur la mémoire utilisée par chaque agent pour jouer son action :
 
 
-| Agent | Pic moyen de mémoire utilisée pour jouer (en KiB) | Pic maximal de mémoire utilisée pour jouer (en KiB) | 
+| Agent | Pic moyen de mémoire utilisée pour jouer (en B) | Pic maximal de mémoire utilisée pour jouer (en B) | 
 |    :---:     | :---:        | :---:    |
 | RandomAgent0 | 1623.064751  | 2836     |
 | RandomAgent1 |  1622.624966 | 1624 |
@@ -75,7 +75,7 @@ Avec la même configuration de test que pour le paragraphe 1.1, les données sui
 - sur la mémoire utilisée par chaque agent pour jouer son action :
 
 
-| Agent | Pic moyen de mémoire utilisée pour jouer (en KiB) | Pic maximal de mémoire utilisée pour jouer (en KiB) | 
+| Agent | Pic moyen de mémoire utilisée pour jouer (en B) | Pic maximal de mémoire utilisée pour jouer (en B) | 
 |    :---:     | :---:        | :---:    |
 | WeightedRandomAgent | 307.405193   | 1616 |
 | RandomAgent         |  1635.817775 | 2700 |
@@ -107,7 +107,7 @@ Avec la même configuration de test que pour le paragraphe 1.1, les données sui
 - sur la mémoire utilisée par chaque agent pour jouer son action :
 
 
-| Agent | Pic moyen de mémoire utilisée pour jouer (en KiB) | Pic maximal de mémoire utilisée pour jouer (en KiB) | 
+| Agent | Pic moyen de mémoire utilisée pour jouer (en B) | Pic maximal de mémoire utilisée pour jouer (en B) | 
 |    :---:     | :---:        | :---:    |
 | RandomAgent         | 1631.747264 | 2836 |
 | WeightedRandomAgent |  299.159817 | 1616 |
