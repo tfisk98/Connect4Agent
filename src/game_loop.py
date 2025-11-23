@@ -8,6 +8,7 @@ making Connect4 games
 
 from pettingzoo.classic import connect_four_v3
 import numpy as np
+import pandas as pd
 import tracemalloc
 import time
 
@@ -122,7 +123,6 @@ def select_current_agent(agent_list, playing_agent) :
 
     if agent_list[0].name==playing_agent :
         current_agent=agent_list[0]
-
     else :
         current_agent=agent_list[1]
     return current_agent
@@ -179,13 +179,13 @@ def Connect4_game(num_games, Custom_Agent0, Custom_Agent1, custom_render_option=
                 if custom_render_option :
                     print_board(observation, env.agents, agent, action)
             env.step(action)
-
-    print("scores :", score)
     if score[0] >= score[1] :
         winner = 0
+        looser = 1
     else : 
-        winner = 1 
-    print("And the winner is player", winner)
+        winner = 1
+        looser = 0
+    print("The overall winner is player_"+ str(winner) + f" with a score of {score[winner]} points against {score[looser]} !\n")
             
 
 def Connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option=42) :
@@ -208,9 +208,6 @@ def Connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option
         containing the following informations in this order: the agent result ("win", "loss" or "draw"), 
         a tuple containing the time (in second) taken by the agent to play for each turn,
         a tuple of size num_games containing the memory usage peak reached by the agent for each turn.
-        Please note that we want the returned data to be immutable to prevent them to be
-        mistakenly changed during their usage. Hence, a library like pandas does not 
-        have been used to store sampled informations.
     """
 
     # Setting environment and agents
@@ -224,7 +221,7 @@ def Connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option
 
     data=[]
 
-    for game in range(0,num_games) :
+    for game in range(num_games) :
 
         env.reset(seed=seed_option)
 
@@ -257,7 +254,6 @@ def Connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option
                         data1[0]="win"
                        
                 elif reward == 0:
-                    print(f"{agent} draw!\n")
                     data0[0]="draw"
                     data1[0]="draw"
 
@@ -289,12 +285,118 @@ def Connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option
 
         # Saving the data of the current game
 
-        data0[1]=time_list0
-        data0[2]=memory_list0
-        data1[1]=time_list1
-        data1[2]=memory_list1
+        data0[1]=tuple(time_list0)
+        data0[2]=tuple(memory_list0)
+        data1[1]=tuple(time_list1)
+        data1[2]=tuple(memory_list1)
         game_data=(turn_count, tuple(data0), tuple(data1))
         data.append(game_data)
     
     data=tuple(data)
     return data
+
+
+def getting_stats_per_game(data) : 
+    """ 
+    Make statistics per game of a given set of played ones.
+
+    Parameters : 
+        data : a tuple as returned by the function Connect4_game_with_data
+
+    Return :
+        per_game_data : a tuple (turn_counter, stats0, stats1) where turn_counter
+        is a panda series containing the number of turns per game. stat0 and stat1 are 
+        dataframe from pandas library giving statistics per game for the first
+        agent (stats0) and the second agent (stats1). Both dataframes have 
+        the same structure where each line represents a game played, and the column
+        indicate a specific metric constructed thanks to data. These metrics are
+        for a given agent : the result of the game,the average time used to play
+        and the maximum one, the average memory peak reached by the agent and the maximum one.
+    """
+
+    turn_counter_data = []
+    agent0_data = []
+    agent1_data = []
+
+    for game in data :
+        turn_counter_data.append(game[0])
+        data0 = game[1]
+        data1 = game[2]
+        turn_data0 = (data0[0], sum(data0[1])/len(data0[1]), max(data0[1]), sum(data0[2])/len(data0[2]), max(data0[2]) )
+        turn_data1 = (data1[0], sum(data1[1])/len(data1[1]), max(data1[1]), sum(data1[2])/len(data1[2]), max(data1[2]) )
+        agent0_data.append(turn_data0)
+        agent1_data.append(turn_data1)
+
+    columns_name = ("Result", "Average time", "Maximum time", "Average peak", "Maximum peak")
+    index_name = tuple([f"Game {i+1}" for i in range(len(data))])
+    turn_counter=pd.Series(data=turn_counter_data, name="Number of turns", index=index_name)
+    stats0 = pd.DataFrame(data=agent0_data, columns=columns_name, index=index_name)
+    stats1 = pd.DataFrame(data=agent1_data, columns=columns_name, index=index_name)
+    per_game_data=(turn_counter, stats0, stats1)
+    return per_game_data
+    
+
+def Connect4_game_with_stats(num_games, Custom_Agent0, Custom_Agent1, seed_option=42) :
+    """ 
+    Generate general statistics for the agents over a certain number of games played
+
+    Parameters : 
+        num_games : the number of game to be played
+        Custom_Agent0 : the type of the first custom agent 
+        Custom_Agent1 : the type of the second custom agent
+        seed_option : a positive integer to be used as seed for 
+        pettingzoo environment 
+
+    Return :
+        stats : a pandas data frame containing the overall statistics of each agent
+        for the whole set of games played. The metrics are, the average number of turns
+        played by game and the maximum one, the frequency of win, loss and draw, the average 
+        time used by the agent to play and the maximum one through all the games, the average memory peak reached
+        by the agent through the game and the maximum one.
+    """
+
+    data=Connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option=42)
+    stats_per_game=getting_stats_per_game(data)
+    turns_counter=stats_per_game[0]
+    stats0=stats_per_game[1]
+    stats1=stats_per_game[2]
+    stats_global=[0,0]
+    global_data=[]
+
+    average_turn_number=turns_counter.mean()
+    max_turn_number=turns_counter.max()
+
+    for i in range(2) :
+        if i==0 :
+            result=stats0["Result"]
+            freq=result.groupby(result)
+            print(result[result=="win"])
+            win_frequency=len(result[result=="win"])/len(result)
+            draw_frequency=len(result[result=="draw"])/len(result)
+            loss_frequency=len(result[result=="loss"])/len(result)
+            average_time=stats0["Average time"].mean()
+            max_time=stats0["Maximum time"].max()
+            average_peak=stats0["Average peak"].mean()
+            max_peak=stats0["Maximum peak"].max()
+        else :
+            result=stats1["Result"]
+            win_frequency=len(result[result=="win"])/len(result)
+            draw_frequency=len(result[result=="draw"])/len(result)
+            loss_frequency=len(result[result=="loss"])/len(result)
+            average_time=stats1["Average time"].mean()
+            max_time=stats1["Maximum time"].max()
+            average_peak=stats1["Average peak"].mean()
+            max_peak=stats1["Maximum peak"].max()
+        global_data.append((average_turn_number, max_turn_number, win_frequency,
+                            draw_frequency, loss_frequency, average_time,
+                            max_time, average_peak, max_peak))
+
+    index_name = ("player_0", "player_1")
+    column_name = ( "Average turns per game", "Maximum number of turns",
+                 " Frequency of win ", "Frequency of draw", "Frequency of loss",
+                 "Average time", "Maximum time",
+                 "Average memory peak", "Maximum memory peak"
+                 )
+    stats=pd.DataFrame(data=global_data, columns=column_name, index=index_name)
+    
+    return stats
