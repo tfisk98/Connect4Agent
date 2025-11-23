@@ -16,7 +16,7 @@ import time
 def print_board(observation, agents, playing_agent, action):
     """
     Print a human-readable version of the board. 'X' will represent
-    agents[0] tokens, 'O' those of it's opponent. A '.' will
+    "player_0"'s tokens, 'O' those of it's opponent. A '.' will
     indicate en empty position.
 
     Parameters :
