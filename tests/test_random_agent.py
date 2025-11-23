@@ -1,4 +1,10 @@
-### Working directory must be the one of this file for src import to work
+"""
+Testing the class RandomAgent from random_agent.py.
+WARNING : Working directory must be the parent of this file's directory
+"""
+
+
+### Working directory must be the parent of this file's directory
 
 import sys
 import os
@@ -32,4 +38,5 @@ print(stats_per_game[2])
 ### Getting global statistics over a given set of games
 
 stats=gl.Connect4_game_with_stats(1000, rnda.RandomAgent, rnda.RandomAgent)
-print(stats)
+print(stats[0])
+print(stats[1])
