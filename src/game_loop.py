@@ -348,11 +348,11 @@ def Connect4_game_with_stats(num_games, Custom_Agent0, Custom_Agent1, seed_optio
         pettingzoo environment 
 
     Return :
-        stats : a pandas data frame containing the overall statistics of each agent
-        for the whole set of games played. The metrics are, the average number of turns
-        played by game and the maximum one, the frequency of win, loss and draw, the average 
-        time used by the agent to play and the maximum one through all the games, the average memory peak reached
-        by the agent through the game and the maximum one.
+        stats : a tuple of the form (turn_stats, agent_stats) where turn_stats gives statistics
+        abbout the length of the games and agent_stats is data frame containing the overall 
+        statistics of each agent for the whole set of games played. The metrics are the frequency 
+        of win, loss and draw, the average time used by the agent to play and the maximum one, 
+        the average memory usage peak reached by the agent and the maximum one.
     """
 
     data=Connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option=42)
@@ -365,6 +365,11 @@ def Connect4_game_with_stats(num_games, Custom_Agent0, Custom_Agent1, seed_optio
 
     average_turn_number=turns_counter.mean()
     max_turn_number=turns_counter.max()
+    min_turn_number=turns_counter.min()
+    index_name=("Average number of turns per game", "Minimum number of turns in a game", 
+                "Maximum number of turns in a game")
+    turn_stats=pd.Series([average_turn_number, max_turn_number, min_turn_number],
+                         index=index_name, name="Statistics on the length of a game")
 
     for i in range(2) :
         if i==0 :
@@ -387,16 +392,16 @@ def Connect4_game_with_stats(num_games, Custom_Agent0, Custom_Agent1, seed_optio
             max_time=stats1["Maximum time"].max()
             average_peak=stats1["Average peak"].mean()
             max_peak=stats1["Maximum peak"].max()
-        global_data.append((average_turn_number, max_turn_number, win_frequency,
+        global_data.append((win_frequency,
                             draw_frequency, loss_frequency, average_time,
                             max_time, average_peak, max_peak))
 
     index_name = ("player_0", "player_1")
-    column_name = ( "Average turns per game", "Maximum number of turns",
-                 " Frequency of win ", "Frequency of draw", "Frequency of loss",
+    column_name = ( " Frequency of win ", "Frequency of draw", "Frequency of loss",
                  "Average time", "Maximum time",
                  "Average memory peak", "Maximum memory peak"
                  )
-    stats=pd.DataFrame(data=global_data, columns=column_name, index=index_name)
     
+    agent_stats=pd.DataFrame(data=global_data, columns=column_name, index=index_name)
+    stats=(turn_stats, agent_stats)
     return stats
