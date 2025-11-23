@@ -21,7 +21,7 @@ A l'issue de 10 000 parties jouées entre deux agents de la classe `RandomAgent`
 
 - sur le temps utilisée par chaque agent pour jouer son action :
 
-| Agent | Temps moyen pour jouer | Temps maximal pour jouer | 
+| Agent | Temps moyen pour jouer (en s) | Temps maximal pour jouer (en s) | 
 |    :---:     | :---:    | :---:    |
 | RandomAgent0 | 0.000080 | 0.010167 |
 | RandomAgent1 | 0.000083 | 0.008106 |
@@ -29,7 +29,7 @@ A l'issue de 10 000 parties jouées entre deux agents de la classe `RandomAgent`
 - sur la mémoire utilisée par chaque agent pour jouer son action :
 
 
-| Agent | Pic moyen de mémoire utilisée pour jouer | Pic maximal de mémoire utilisée pour jouer | 
+| Agent | Pic moyen de mémoire utilisée pour jouer (en KiB) | Pic maximal de mémoire utilisée pour jouer (en KiB) | 
 |    :---:     | :---:        | :---:    |
 | RandomAgent0 | 1623.064751  | 2836     |
 | RandomAgent1 |  1622.624966 | 1624 |
@@ -67,7 +67,7 @@ Avec la même configuration de test que pour le paragraphe 1.1, les données sui
 
 - sur le temps utilisé par chaque agent pour jouer son action :
 
-| Agent | Temps moyen pour jouer | Temps maximal pour jouer | 
+| Agent | Temps moyen pour jouer (en s) | Temps maximal pour jouer (en s) | 
 |    :---:     | :---:    | :---:    |
 | WeightedRandomAgent | 0.000017 | 0.010167 |
 | RandomAgent         | 0.000083 | 0.010751 |
@@ -75,7 +75,7 @@ Avec la même configuration de test que pour le paragraphe 1.1, les données sui
 - sur la mémoire utilisée par chaque agent pour jouer son action :
 
 
-| Agent | Pic moyen de mémoire utilisée pour jouer | Pic maximal de mémoire utilisée pour jouer | 
+| Agent | Pic moyen de mémoire utilisée pour jouer (en KiB) | Pic maximal de mémoire utilisée pour jouer (en KiB) | 
 |    :---:     | :---:        | :---:    |
 | WeightedRandomAgent | 307.405193   | 1616 |
 | RandomAgent         |  1635.817775 | 2700 |
@@ -99,7 +99,7 @@ Avec la même configuration de test que pour le paragraphe 1.1, les données sui
 
 - sur le temps utilisé par chaque agent pour jouer son action :
 
-| Agent | Temps moyen pour jouer | Temps maximal pour jouer | 
+| Agent | Temps moyen pour jouer (en s) | Temps maximal pour jouer (en s) | 
 |    :---:     | :---:    | :---:    |
 | RandomAgent          | 0.000079 | 0.010315 |
 | WeightedRandomAgent  | 0.000016 | 0.010263 |
@@ -107,7 +107,7 @@ Avec la même configuration de test que pour le paragraphe 1.1, les données sui
 - sur la mémoire utilisée par chaque agent pour jouer son action :
 
 
-| Agent | Pic moyen de mémoire utilisée pour jouer | Pic maximal de mémoire utilisée pour jouer | 
+| Agent | Pic moyen de mémoire utilisée pour jouer (en KiB) | Pic maximal de mémoire utilisée pour jouer (en KiB) | 
 |    :---:     | :---:        | :---:    |
 | RandomAgent         | 1631.747264 | 2836 |
 | WeightedRandomAgent |  299.159817 | 1616 |
