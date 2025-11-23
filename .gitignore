@@ -50,3 +50,7 @@ __pycache__/
 
 # Local History for Visual Studio Code
 .history/
+
+# Mac files
+
+.DS_STORE
