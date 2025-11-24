@@ -45,6 +45,6 @@ stats_per_game=gl.getting_stats_per_game(data)
 #print(stats[0])
 #print(stats[1])
 
-stats=gl.connect4_game_with_stats(10000, rnda.RandomAgent, rnda.WeightedRandomAgent)
+stats=gl.connect4_game_with_stats(10, rnda.RandomAgent, rnda.WeightedRandomAgent)
 print(stats[0])
 print(stats[1])
