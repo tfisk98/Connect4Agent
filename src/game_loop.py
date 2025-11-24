@@ -1,6 +1,11 @@
 """
-Functions to help to visualize the board or 
-making Connect4 games
+A module to provide utilities for visualizing board, 
+making connect4 games and testing agents. There are notably functions 
+to print the board, making a given set of game with eventually statistics
+about the agents playing. There is also a set of lists containing precise 
+connect4 actions to simulate a given state of game and make the testing
+of agents' behaviour easier. You can refer to the annex of Readme.md to
+visualize the corresponding game states. 
 """
 
 
@@ -14,7 +19,7 @@ import time
 
 ### Functions 
 
-def print_board(observation, agents, playing_agent, action):
+def print_board(observation, agents, playing_agent, action, is_print=True):
     """
     Print a human-readable version of the board. 'X' will represent
     "player_0"'s tokens, 'O' those of it's opponent. A '.' will
@@ -30,9 +35,11 @@ def print_board(observation, agents, playing_agent, action):
         playing
         action : the index of the column of observartion
         where the next tokens will be put
+        is_print : a boolean asserting if the function has to print
 
     Return : 
-        None
+        None if is_print==True, the string humand_board representing
+        the board otherwise
     """
 
     board_0 = np.copy(observation['observation'][:,:,0])
@@ -81,10 +88,12 @@ def print_board(observation, agents, playing_agent, action):
         human_board+="\n"
    
     # Printing human readable state of the board
-
-    print(board_title)
-    print(human_board)
-    return 
+    if is_print :
+        print(board_title)
+        print(human_board)
+        return
+    else :
+        return human_board 
     
 
 def setting_custom_agent(env,Custom_Agent0, Custom_Agent1) :
@@ -93,7 +102,7 @@ def setting_custom_agent(env,Custom_Agent0, Custom_Agent1) :
     env.
 
     Parameters :
-    env : a connect4 environement
+    env : a connect4 pettingzoo environement
     Custom_Agent0 : the type of the first custom agent
     Custom_Agent1 : the type of the second custom agent
 
@@ -185,6 +194,8 @@ def Connect4_game(num_games, Custom_Agent0, Custom_Agent1, custom_render_option=
     else : 
         winner = 1
         looser = 0
+    print("\nThe overall winner is player_"+ str(winner) + f" with a score of {score[winner]} points against {score[looser]} !\n")
+    env.close()
     print("The overall winner is player_"+ str(winner) + f" with a score of {score[winner]} points against {score[looser]} !\n")
             
 
@@ -292,6 +303,7 @@ def Connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option
         game_data=(turn_count, tuple(data0), tuple(data1))
         data.append(game_data)
     
+    env.close()
     data=tuple(data)
     return data
 
@@ -374,8 +386,6 @@ def Connect4_game_with_stats(num_games, Custom_Agent0, Custom_Agent1, seed_optio
     for i in range(2) :
         if i==0 :
             result=stats0["Result"]
-            freq=result.groupby(result)
-            print(result[result=="win"])
             win_frequency=len(result[result=="win"])/len(result)
             draw_frequency=len(result[result=="draw"])/len(result)
             loss_frequency=len(result[result=="loss"])/len(result)
@@ -405,3 +415,74 @@ def Connect4_game_with_stats(num_games, Custom_Agent0, Custom_Agent1, seed_optio
     agent_stats=pd.DataFrame(data=global_data, columns=column_name, index=index_name)
     stats=(turn_stats, agent_stats)
     return stats
+
+
+def generate_state(env, action_list) :
+    """ 
+    Generate a given state of game. has to be used inside an
+    already defined game.
+
+    Parameters : 
+        env : a connect4 pettingzoo environement
+        action_list : the list of action to be performed
+        to reach the desired state of game
+
+    Return :
+        None
+    """
+    
+    for action in action_list :
+        env.step(action)
+        
+    return 
+
+
+def testing_strategy( action_list, CustomAgent, expected_action ) :
+    """ 
+    Test if in a give state of the game, the agent will
+    play as it is expected.
+
+    Parameters : 
+        action_list : the list of action to be performed
+        to reach the desired state of game
+        CustomAgent : the type of the agent that is tested
+        expected_action : an int representing 
+        th expected action to be played 
+        by the agent
+
+    Return :
+        as_expected : a boolean asserting if the agent 
+        actually played expected_action
+    """
+
+    env = connect_four_v3.env(render_mode=None)
+    env.reset(seed=42)
+
+    tested_agent = CustomAgent(env)
+
+    # Generating the expecting observation 
+
+    env.reset(seed=42)
+    expected_action_list = action_list+[expected_action]
+    generate_state(env, expected_action_list)
+    expected_observation = np.copy(env.last()[0]["observation"])
+
+    # Generating the observation the agent will produce
+
+    env.reset(seed=42)
+    generate_state(env, action_list)
+    observation = env.last()[0]
+    action = tested_agent.choose_action(observation)
+    env.step(action)
+    actual_observation = env.last()[0]["observation"]
+
+    as_expected = (actual_observation==expected_observation).all()
+
+    env.close()
+
+    return as_expected
+
+
+### Predefined action lists : 
+
+# Note that the corresponding game state are represented in the annex of Readme.md.
