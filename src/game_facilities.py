@@ -197,6 +197,7 @@ def Connect4_game(num_games, Custom_Agent0, Custom_Agent1, custom_render_option=
         looser = 0
     print("\nThe overall winner is player_"+ str(winner) + f" with a score of {score[winner]} points against {score[looser]} !\n")
     env.close()
+    print("The overall winner is player_"+ str(winner) + f" with a score of {score[winner]} points against {score[looser]} !\n")
             
 
 def connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option=42, is_testing=False) :
@@ -221,7 +222,7 @@ def connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option
         data0 (for the first agent) and data1 (for the second agent) are tuples 
         containing the following informations in this order: the agent result ("win", "loss" or "draw"), 
         a tuple containing the time (in second) taken by the agent to play for each turn,
-        a tuple of size num_games containing the memory usage peak (in B) reached by the agent for each turn.
+        a tuple of size num_games containing the memory usage peak reached by the agent for each turn.
     """
 
     # Setting environment and agents
@@ -341,8 +342,8 @@ def getting_stats_per_game(data) :
         agent (stats0) and the second agent (stats1). Both dataframes have 
         the same structure where each line represents a game played, and the column
         indicate a specific metric constructed thanks to data. These metrics are
-        for a given agent : the result of the game,the average time (in second) used to play
-        and the maximum one, the average memory peak (in B) reached by the agent and the maximum one.
+        for a given agent : the result of the game,the average time used to play
+        and the maximum one, the average memory peak reached by the agent and the maximum one.
     """
 
     turn_counter_data = []
@@ -367,7 +368,7 @@ def getting_stats_per_game(data) :
     return per_game_data
     
 
-def connect4_game_with_stats(num_games, Custom_Agent0, Custom_Agent1, seed_option=42, is_testing=False) :
+def connect4_game_with_stats(num_games, Custom_Agent0, Custom_Agent1, seed_option=42) :
     """ 
     Generate general statistics for the agents over a certain number of games played
 
@@ -385,11 +386,11 @@ def connect4_game_with_stats(num_games, Custom_Agent0, Custom_Agent1, seed_optio
         stats : a tuple of the form (turn_stats, agent_stats) where turn_stats gives statistics
         abbout the length of the games and agent_stats is data frame containing the overall 
         statistics of each agent for the whole set of games played. The metrics are the frequency 
-        of win, loss and draw, the average time (in second) used by the agent to play and the maximum one, 
-        the average memory usage peak (in B) reached by the agent and the maximum one.
+        of win, loss and draw, the average time used by the agent to play and the maximum one, 
+        the average memory usage peak reached by the agent and the maximum one.
     """
 
-    data=connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option=42, is_testing=is_testing)
+    data=connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option=42)
     stats_per_game=getting_stats_per_game(data)
     turns_counter=stats_per_game[0]
     stats0=stats_per_game[1]
@@ -402,7 +403,7 @@ def connect4_game_with_stats(num_games, Custom_Agent0, Custom_Agent1, seed_optio
     min_turn_number=turns_counter.min()
     index_name=("Average number of turns per game", "Minimum number of turns in a game", 
                 "Maximum number of turns in a game")
-    turn_stats=pd.Series([average_turn_number, min_turn_number, max_turn_number],
+    turn_stats=pd.Series([average_turn_number, max_turn_number, min_turn_number],
                          index=index_name, name="Statistics on the length of a game")
 
     for i in range(2) :
@@ -429,7 +430,7 @@ def connect4_game_with_stats(num_games, Custom_Agent0, Custom_Agent1, seed_optio
                             max_time, average_peak, max_peak))
 
     index_name = ("player_0", "player_1")
-    column_name = ( "Frequency of win", "Frequency of draw", "Frequency of loss",
+    column_name = ( " Frequency of win ", "Frequency of draw", "Frequency of loss",
                  "Average time to play", "Maximum time to play",
                  "Average memory usage peak", "Maximum memory usage peak"
                  )

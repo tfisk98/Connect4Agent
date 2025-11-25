@@ -22,7 +22,7 @@ class RandomAgent:
         self.action_space=self.env.action_space(self.env.agents[0])
         return
 
-    def choose_action(self, observation, reward=0.0, terminated=False, truncated=False, info=None, action_mask=None):
+    def choose_action(self, observation, moves = None, reward=0.0, terminated=False, truncated=False, info=None, action_mask=None):
         """
         Choose a random valid action
 
