@@ -16,7 +16,7 @@ import src.game_facilities as gf
 
 ### Testing RandomAgent 
 
-gf.Connect4_game(2, rnda.RandomAgent, rnda.RandomAgent, True)
+gf.connect4_game(2, rnda.RandomAgent, rnda.RandomAgent, True)
 
 
 ### Getting data on numerous games beetween two random agent

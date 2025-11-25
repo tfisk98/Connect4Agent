@@ -78,3 +78,6 @@ def test_connect4_game_with_stats() :
     assert expected_frequency_win_player0==stats[1]["Frequency of win"]["player_0"]
     assert expected_frequency_draw_player0==stats[1]["Frequency of draw"]["player_0"]
     return
+
+stats=gf.connect4_game_with_stats(4, None, None, 42, True)
+print(stats[0])

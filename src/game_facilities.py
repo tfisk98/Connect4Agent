@@ -138,7 +138,7 @@ def select_current_agent(agent_list, playing_agent) :
     return current_agent
 
 
-def Connect4_game(num_games, Custom_Agent0, Custom_Agent1, custom_render_option=False, render_option=None, seed_option=42) :
+def connect4_game(num_games, Custom_Agent0, Custom_Agent1, custom_render_option=False, render_option=None, seed_option=42) :
     """ 
     Make a certain number of connect4 game with the given
     agents.
@@ -368,7 +368,7 @@ def getting_stats_per_game(data) :
     return per_game_data
     
 
-def connect4_game_with_stats(num_games, Custom_Agent0, Custom_Agent1, seed_option=42) :
+def connect4_game_with_stats(num_games, Custom_Agent0, Custom_Agent1, seed_option=42, is_testing=False) :
     """ 
     Generate general statistics for the agents over a certain number of games played
 
@@ -390,20 +390,19 @@ def connect4_game_with_stats(num_games, Custom_Agent0, Custom_Agent1, seed_optio
         the average memory usage peak reached by the agent and the maximum one.
     """
 
-    data=connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option=42)
+    data=connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option=42, is_testing=is_testing)
     stats_per_game=getting_stats_per_game(data)
     turns_counter=stats_per_game[0]
     stats0=stats_per_game[1]
     stats1=stats_per_game[2]
-    stats_global=[0,0]
     global_data=[]
 
     average_turn_number=turns_counter.mean()
-    max_turn_number=turns_counter.max()
     min_turn_number=turns_counter.min()
+    max_turn_number=turns_counter.max()
     index_name=("Average number of turns per game", "Minimum number of turns in a game", 
                 "Maximum number of turns in a game")
-    turn_stats=pd.Series([average_turn_number, max_turn_number, min_turn_number],
+    turn_stats=pd.Series([average_turn_number, min_turn_number, max_turn_number],
                          index=index_name, name="Statistics on the length of a game")
 
     for i in range(2) :
@@ -430,7 +429,7 @@ def connect4_game_with_stats(num_games, Custom_Agent0, Custom_Agent1, seed_optio
                             max_time, average_peak, max_peak))
 
     index_name = ("player_0", "player_1")
-    column_name = ( " Frequency of win ", "Frequency of draw", "Frequency of loss",
+    column_name = ( "Frequency of win", "Frequency of draw", "Frequency of loss",
                  "Average time to play", "Maximum time to play",
                  "Average memory usage peak", "Maximum memory usage peak"
                  )
