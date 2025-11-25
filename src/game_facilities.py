@@ -19,7 +19,7 @@ import time
 
 ### Functions 
 
-def print_board(observation, agents, playing_agent, action, is_print=True):
+def print_board(observation, playing_agent, action=None, is_print=True):
     """
     Print a human-readable version of the board. 'X' will represent
     "player_0"'s tokens, 'O' those of it's opponent. A '.' will
@@ -50,14 +50,15 @@ def print_board(observation, agents, playing_agent, action, is_print=True):
 
     # Including playing_agent action in board_0 :
 
-    for i in range(n_row-1,-1,-1) : 
-         if board_0[i,action]==0 and board_1[i,action]==0 :
-            board_0[ i ,action]=1
-            break
+    if not action==None :
+        for i in range(n_row-1,-1,-1) : 
+            if board_0[i,action]==0 and board_1[i,action]==0 :
+                board_0[ i ,action]=1
+                break
 
     # Checking which agent is playing
 
-    if playing_agent==agents[0] :
+    if playing_agent[-1]=="0" :
         check_player0 = True
     else :
         check_player0 = False 
@@ -65,8 +66,8 @@ def print_board(observation, agents, playing_agent, action, is_print=True):
     # Preparing information for readibbility
 
     board_title = "Next turn :\n"
-    board_title = board_title + agents[0] + " tokens : 'X'\n" 
-    board_title = board_title + agents[1] + " tokens : 'O'\n" 
+    board_title = board_title + "player_0 tokens : 'X'\n" 
+    board_title = board_title + "player_1 tokens : 'O'\n" 
 
 
     # Constructing the string representing the real board
@@ -110,8 +111,8 @@ def setting_custom_agent(env,Custom_Agent0, Custom_Agent1) :
         agent_list : the list containing the 
         two agent created (agent0 at index 0)
     """
-    agent0=Custom_Agent0(env, env.agents[0])
-    agent1=Custom_Agent1(env, env.agents[1])
+    agent0=Custom_Agent0(env)
+    agent1=Custom_Agent1(env)
     agent_list=[agent0, agent1]
     return agent_list
 
@@ -130,7 +131,7 @@ def select_current_agent(agent_list, playing_agent) :
         current_agent the custom agent playing
     """
 
-    if agent_list[0].name==playing_agent :
+    if playing_agent[-1]=="0" :
         current_agent=agent_list[0]
     else :
         current_agent=agent_list[1]
@@ -186,7 +187,7 @@ def Connect4_game(num_games, Custom_Agent0, Custom_Agent1, custom_render_option=
                 current_agent=select_current_agent(agent_list, agent)
                 action = current_agent.choose_action(observation)
                 if custom_render_option :
-                    print_board(observation, env.agents, agent, action)
+                    print_board(observation, agent, action)
             env.step(action)
     if score[0] >= score[1] :
         winner = 0
@@ -198,7 +199,7 @@ def Connect4_game(num_games, Custom_Agent0, Custom_Agent1, custom_render_option=
     env.close()
             
 
-def connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option=42) :
+def connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option=42, is_testing=False) :
     """ 
     Make a certain number of connect4 game with the given
     agents and get data for later analysis.
@@ -209,6 +210,9 @@ def connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option
         Custom_Agent1 : the type of the second custom agent
         seed_option : a positive integer to be used as seed for 
         pettingzoo environment 
+        is_testing : a boolean to trigger the testing mode of the 
+        function (playing 4 deterministic games for testing
+        purpose)
 
     Return :
         data : a tuple containing for each game another tuple 
@@ -224,7 +228,8 @@ def connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option
 
     env = connect_four_v3.env(render_mode=None)
     env.reset(seed=seed_option)
-    agent_list=setting_custom_agent(env,Custom_Agent0, Custom_Agent1)
+    if not is_testing :
+        agent_list=setting_custom_agent(env,Custom_Agent0, Custom_Agent1)
 
     
     # Game loop
@@ -237,8 +242,8 @@ def connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option
 
         # Setting data collectors
 
-        data0=[ 0 for i in range(3)]
-        data1=[ 0 for i in range(3)]
+        data0=[0 for i in range(3)]
+        data1=[0 for i in range(3)]
         turn_count=0
         time_list0=[]
         time_list1=[]
@@ -271,18 +276,33 @@ def connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option
             # Playing and measuring time taken and memory usage 
 
             else:
-                turn_count+=1
-                current_agent=select_current_agent(agent_list, agent)
-                tracemalloc.start()
-                start_time = time.time()
-                action = current_agent.choose_action(observation)
-                time_used= time.time()-start_time
-                memory_peak=tracemalloc.get_traced_memory()[1]
-                tracemalloc.stop()
+                    
+                # Normal case
+
+                if not is_testing :
+                    turn_count+=1
+                    current_agent=select_current_agent(agent_list, agent)
+                    tracemalloc.start()
+                    start_time = time.time()
+                    action = current_agent.choose_action(observation)
+                    time_used= time.time()-start_time
+                    memory_peak=tracemalloc.get_traced_memory()[1]
+                    tracemalloc.stop()
+
+                # Special case to make tests of the function
+
+                else :
+                    turn_count+=1
+                    tracemalloc.start()
+                    start_time = time.time()
+                    action = full_game_list[game][turn_count-1]
+                    time_used= time.time()-start_time
+                    memory_peak=tracemalloc.get_traced_memory()[1]
+                    tracemalloc.stop()
 
                 # Saving time and memory data of this turn
 
-                if current_agent.name==env.agents[0] :
+                if agent[-1] == "0" :
                     time_list0.append(time_used)
                     memory_list0.append(memory_peak)
 
@@ -347,7 +367,7 @@ def getting_stats_per_game(data) :
     return per_game_data
     
 
-def connect4_game_with_stats(num_games, Custom_Agent0, Custom_Agent1, seed_option=42) :
+def connect4_game_with_stats(num_games, Custom_Agent0, Custom_Agent1, seed_option=42, is_testing=False) :
     """ 
     Generate general statistics for the agents over a certain number of games played
 
@@ -357,6 +377,9 @@ def connect4_game_with_stats(num_games, Custom_Agent0, Custom_Agent1, seed_optio
         Custom_Agent1 : the type of the second custom agent
         seed_option : a positive integer to be used as seed for 
         pettingzoo environment 
+        is_testing : a boolean to trigger the testing mode of the 
+        function (playing 4 deterministic games for testing
+        purpose)
 
     Return :
         stats : a tuple of the form (turn_stats, agent_stats) where turn_stats gives statistics
@@ -366,7 +389,7 @@ def connect4_game_with_stats(num_games, Custom_Agent0, Custom_Agent1, seed_optio
         the average memory usage peak (in B) reached by the agent and the maximum one.
     """
 
-    data=connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option=42)
+    data=connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option=42, is_testing=is_testing)
     stats_per_game=getting_stats_per_game(data)
     turns_counter=stats_per_game[0]
     stats0=stats_per_game[1]
@@ -406,7 +429,7 @@ def connect4_game_with_stats(num_games, Custom_Agent0, Custom_Agent1, seed_optio
                             max_time, average_peak, max_peak))
 
     index_name = ("player_0", "player_1")
-    column_name = ( " Frequency of win ", "Frequency of draw", "Frequency of loss",
+    column_name = ( "Frequency of win", "Frequency of draw", "Frequency of loss",
                  "Average time to play", "Maximum time to play",
                  "Average memory usage peak", "Maximum memory usage peak"
                  )
@@ -416,7 +439,7 @@ def connect4_game_with_stats(num_games, Custom_Agent0, Custom_Agent1, seed_optio
     return stats
 
 
-def generate_state(env, action_list) :
+def generate_state(env, action_list, is_print=False) :
     """ 
     Generate a given state of game. has to be used inside an
     already defined game.
@@ -425,6 +448,8 @@ def generate_state(env, action_list) :
         env : a connect4 pettingzoo environement
         action_list : the list of action to be performed
         to reach the desired state of game
+        is_print : a boolean asserting if the state 
+        has to be printed
 
     Return :
         None
@@ -432,11 +457,13 @@ def generate_state(env, action_list) :
     
     for action in action_list :
         env.step(action)
+    if is_print :
+        print(print_board(env.last()[0], f"player_{len(action_list)%2}",None,False))
         
     return 
 
 
-def testing_strategy( action_list, CustomAgent, expected_action ) :
+def testing_strategy( action_list, CustomAgent, expected_action_list ) :
     """ 
     Test if in a give state of the game, the agent will
     play as it is expected.
@@ -445,9 +472,8 @@ def testing_strategy( action_list, CustomAgent, expected_action ) :
         action_list : the list of action to be performed
         to reach the desired state of game
         CustomAgent : the type of the agent that is tested
-        expected_action : an int representing 
-        th expected action to be played 
-        by the agent
+        expected_action_list : a list containing the agent's
+        excpected possibilities of action
 
     Return :
         as_expected : a boolean asserting if the agent 
@@ -461,10 +487,14 @@ def testing_strategy( action_list, CustomAgent, expected_action ) :
 
     # Generating the expecting observation 
 
-    env.reset(seed=42)
-    expected_action_list = action_list+[expected_action]
-    generate_state(env, expected_action_list)
-    expected_observation = np.copy(env.last()[0]["observation"])
+    expected_obeservation_list=[]
+
+    for expected_action in expected_action_list :
+        env.reset(seed=42)
+        expected_action_list = action_list+[expected_action]
+        generate_state(env, expected_action_list)
+        expected_observation = np.copy(env.last()[0]["observation"])
+        expected_obeservation_list.append(expected_observation)
 
     # Generating the observation the agent will produce
 
@@ -475,7 +505,11 @@ def testing_strategy( action_list, CustomAgent, expected_action ) :
     env.step(action)
     actual_observation = env.last()[0]["observation"]
 
-    as_expected = (actual_observation==expected_observation).all()
+    as_expected = False
+
+    for expected_observation in expected_obeservation_list :
+        if (actual_observation==expected_observation).all() :
+            as_expected=True
 
     env.close()
 
@@ -484,4 +518,24 @@ def testing_strategy( action_list, CustomAgent, expected_action ) :
 
 ### Predefined action lists : 
 
-# Note that the corresponding game state are represented in the annex of Readme.md.
+# Note that the corresponding game states are represented in the annex of Readme.md.
+
+full_game0=[0,1,0,2,0,1,0]
+full_game1=[0,1,2,1,0,1,2,1]
+full_game_list=[full_game0, full_game0, full_game0, full_game1]
+
+
+# Printing predefined states (don't forget to comment it again after vizualization) :
+
+""" env = connect_four_v3.env(render_mode=None)
+
+env.reset(seed=42)
+print("full_game0 corresponding state :\n")
+generate_state(env, full_game0, True)
+
+print("full_game1 corresponding state :\n")
+env.reset(seed=42)
+generate_state(env, full_game1, True)
+
+
+env.close() """

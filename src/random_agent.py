@@ -19,7 +19,6 @@ class RandomAgent:
             player_name: Optional string name for the agent (for display)
         """
         self.env=env
-        self.name=player_name
         self.action_space=self.env.action_space(self.env.agents[0])
         return
 
