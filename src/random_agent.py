@@ -1,5 +1,5 @@
 """
-A simple random agent
+A simple random agent and a simple weighted improvement. 
 """
 
 import numpy as np
@@ -80,7 +80,7 @@ class RandomAgent:
 
 class WeightedRandomAgent(RandomAgent):
     """
-    Random agent that prefers center columns
+    Random agent that prefers the center column
     """
 
     def __init__(self, env, player_name=None):

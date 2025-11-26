@@ -54,15 +54,6 @@ def test_print_board() :
     assert function_board1==expected_board1 and function_board2==expected_board2
 
 
-# Testing testing_strategy
-
-def test_testing_strategy() :
-    action_list=[]
-    expected_action_list= [3]
-    assert gf.testing_strategy( action_list, rnda.WeightedRandomAgent, expected_action_list )
-    return
-
-
 # Testing connect4_game_with_stats using full_game_list
 
 def test_connect4_game_with_stats() :
@@ -79,5 +70,11 @@ def test_connect4_game_with_stats() :
     assert expected_frequency_draw_player0==stats[1]["Frequency of draw"]["player_0"]
     return
 
-stats=gf.connect4_game_with_stats(4, None, None, 42, True)
-print(stats[0])
+
+# Testing testing_strategy
+
+def test_testing_strategy() :
+    action_list=[]
+    expected_action_list= [3]
+    assert gf.testing_strategy( action_list, rnda.WeightedRandomAgent, expected_action_list )
+    return
