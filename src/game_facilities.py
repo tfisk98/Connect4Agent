@@ -145,8 +145,8 @@ def connect4_game(num_games, Custom_Agent0, Custom_Agent1, custom_render_option=
 
     Parameters : 
         num_games : the number of game to be played
-        Custom_Agent0 : the type of the first custom agent
-        Custom_Agent1 : the type of the second custom agent
+        Custom_Agent0 : the type of the custom agent playing first
+        Custom_Agent1 : the type of the custom agent playgin second
         custom_render_option : boolean asserting if print_board has
         to be used
         render_option : setting string for pettingzoo environment render_mode
@@ -207,8 +207,8 @@ def connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option
 
     Parameters : 
         num_games : the number of game to be played
-        Custom_Agent0 : the type of the first custom agent 
-        Custom_Agent1 : the type of the second custom agent
+        Custom_Agent0 : the type of the custom agent playing first
+        Custom_Agent1 : the type of the custom agent playgin second
         seed_option : a positive integer to be used as seed for 
         pettingzoo environment 
         is_testing : a boolean to trigger the testing mode of the 
@@ -374,8 +374,8 @@ def connect4_game_with_stats(num_games, Custom_Agent0, Custom_Agent1, seed_optio
 
     Parameters : 
         num_games : the number of game to be played
-        Custom_Agent0 : the type of the first custom agent 
-        Custom_Agent1 : the type of the second custom agent
+        Custom_Agent0 : the type of the custom agent playing first
+        Custom_Agent1 : the type of the custom agent playgin second
         seed_option : a positive integer to be used as seed for 
         pettingzoo environment 
         is_testing : a boolean to trigger the testing mode of the 
