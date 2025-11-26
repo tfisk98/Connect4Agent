@@ -38,7 +38,7 @@ def test_RandomAgent() :
     assert stat_maximum_peak1 < maximum_memory_peak
 
 
-### Testing WeightedRandomAgent against RandomAget, WeeightedRandom Agent plays first : checking 
+### Testing WeightedRandomAgent against RandomAgent, WeeightedRandom Agent plays first : checking 
 ### ML-Arena requirements and statistical superiority of WeightedRandomAgent
 
 def test_WeightedRandomAgent_first() :
@@ -54,7 +54,7 @@ def test_WeightedRandomAgent_first() :
     assert stat_maximum_peak0 < maximum_memory_peak
 
 
-### Testing WeightedRandomAgent against RandomAget, WeeightedRandom Agent plays second : checking 
+### Testing WeightedRandomAgent against RandomAgent, WeeightedRandom Agent plays second : checking 
 ### ML-Arena requirements and statistical superiority of WeightedRandomAgent
 
 
