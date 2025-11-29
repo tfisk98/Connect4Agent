@@ -4,7 +4,7 @@
 
 #### 1: Classement des priorités 
 
-La priorité 0 est de ne pas jouer de coups illégaux. Ensuite énumérée dans l'ordre du plus au moins important : 
+La priorité 0 est de ne pas jouer de coups illégaux. Ensuite énumérées dans l'ordre du plus au moins important, les priorités sont de : 
 _ Chercher les colonnes menant à une victoire immédiate. 
 _ Bloquer les colonnes menant à une défaite immédiate.  
 _ Ne pas jouer un coup qui mènerait à une défaite immédiate. Id est, le point précedant consiste à repérer les chaine de 3 jetons de l'adversaire et bloquer la chaine. A mon sens, il ne prends pas en compte le cas où une chaine de 3 jetons apparaît par dessus le jeton que l'on vient de déposer. 
@@ -24,7 +24,7 @@ _ Respecter les règles éssentielles.
 _ Eviter les coups aléatoires.
 _ Pouvoir anticiper/ calculer l'état du jeu après quelques coups en se focalisant sur le prochain coup le plus probable pour l'adversaire. 
 _ Plus difficle: Essayer de créer des situations de 'doubles puissance 4' plus difficiles à parer.(une ligne qui rejoint une diagonale par exemple ). 
-_ Plus difficile: créer des situations de puissance 4 inévitables, par exemple, deux chaines de 3 jetons sur deux lignes contigues qui qui se complètent en 4 sur la même colonne. 
+_ Plus difficile: créer des situations de puissance 4 inévitables, par exemple, deux chaines de 3 jetons sur deux lignes contigues qui se complètent en 4 sur la même colonne. 
 _ Eviter les puissances 4 en colonnes qui sont faciles à parer (pour un humain).
 _ Eviter les colonnes 1 et 7 qui sont trop isolé en début de partie et qui sont stratégiquement mauvaises.
 

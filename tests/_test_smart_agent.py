@@ -3,7 +3,7 @@ import os
 sys.path.append(os.getcwd())
 
 
-from src.smart_agent import SmartAgent
+from src.agents.smart_agent import SmartAgent
 from pettingzoo.classic import connect_four_v3
 
 import numpy as np

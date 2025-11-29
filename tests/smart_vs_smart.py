@@ -6,9 +6,9 @@ sys.path.append(os.getcwd())
 from pettingzoo.classic import connect_four_v3
 
 
-from src.smart_agent import SmartAgent
-import src.random_agent as rnda
-import src.game_loop as gl
+from src.agents.smart_agent import SmartAgent
+import src.agents.random_agent as rnda
+import src.game_facilities as gl
 
 import numpy as np
 

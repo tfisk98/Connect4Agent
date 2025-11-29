@@ -10,7 +10,7 @@ import sys
 import os
 sys.path.append(os.getcwd())
 
-import src.random_agent as rnda
+import src.agents.random_agent as rnda
 import src.game_facilities as gf
 
 

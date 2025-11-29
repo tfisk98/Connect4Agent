@@ -55,34 +55,12 @@ class SmartAgent:
         blocking_move = self._find_winning_move(observation, valid_actions, channel=1)
         if blocking_move is not None:
             logger.warning(f"{self.name}: BLOCKING -> column {blocking_move}")
-            return blocking_move
-
-
-       # Rule 3: Create double threat (TODO - Advanced)
-       # A double threat is when you create two ways to win at once
-        double_threat = self._creates_double_threat(observation, valid_actions, channel=0 )
-        if double_threat is not None:
-            logger.warning(f"{self.name}: CREATE DOUBLE THREAT -> column {double_threat}")
-            return double_threat
+            return blocking_move        
         
-        #Rule 4: Detect double threat
-        double_threat = self._creates_double_threat(observation, valid_actions, channel=1 )
-        if double_threat is not None:
-            logger.warning(f"{self.name}: DETECTED DOUBLE THREAT -> column {double_threat}")
-            return double_threat
-       
-        #Rule 5 : Default ordering choice  
-        center_preference = [3, 2, 4, 1, 5, 0, 6]
-        for col in center_preference:
-            if col in valid_actions:
-                logger.warning(f"{self.name}: COLUMN PREFERENCE -> column {col}")
-                return col
-        
-        
-        # Rule 3: Prefer center
-        #if 3 in valid_actions:
-        #    logger.info(f"{self.name}: CENTER PREFERENCE -> column 3")
-        #    return 3
+        #Rule 3: Prefer center
+        if 3 in valid_actions:
+            logger.info(f"{self.name}: CENTER PREFERENCE -> column 3")
+            return 3
 
         # Rule 4: Random fallback
         logger.debug(f"{self.name}: RANDOM -> column {action}")
@@ -277,6 +255,107 @@ class SmartAgent:
 
         return False 
     
+    def choose_action_manual(self, observation, moves = None, reward=0, terminated=False, truncated=False, info=None, action_mask=None):
+
+        """
+        Same name as twin function in random_player to be able to play against random_player that plays only legal move
+        """
+        action=None
+        if terminated or truncated :
+            print("Truncated")
+            return action
+        elif action_mask == None :
+            mask=observation["action_mask"]
+        else :
+            mask=action_mask
+        return self.choose_action(observation, moves, reward, terminated, truncated, info, action_mask)
+
+
+
+class EnhancedSmartAgent(SmartAgent):
+    """Smart Agent with enhanced tactics like detecting double threats and order of column preferences"""
+         
+    def __init__(self, env, player_name=None):
+        """
+        Initialize the enhanced smart agent
+
+        Parameters:
+            env: PettingZoo environment
+            player_name: Optional string name for the agent (for display)
+        """
+        super().__init__(env, player_name)
+
+    def choose_action(self, observation, moves = None, reward=0.0, terminated=False, truncated=False, info=None, action_mask=None):
+        """
+        Choose an action using rule-based strategy
+
+        Strategy priority:
+        1. Win if possible
+        2. Block opponent from winning
+        3. Play center if available
+        4. Random valid move
+
+        Returns : 
+        None if there is no action to play, an integer between 0 and 6 otherwise
+        """
+
+        action=None
+        if terminated or truncated :
+            print("Truncated")
+            return action
+        elif action_mask == None :
+            action_mask=observation["action_mask"]
+        else :
+            mask=action_mask
+        
+        # Get valid actions
+        valid_actions = self._get_valid_actions(action_mask)
+
+        # Rule 1: Try to win
+        winning_move = self._find_winning_move(observation, valid_actions, channel=0)
+        if winning_move is not None:
+            logger.success(f"{self.name}: WINNING MOVE -> column {winning_move}")
+            return winning_move
+        
+        # Rule 2: Block opponent
+        blocking_move = self._find_winning_move(observation, valid_actions, channel=1)
+        if blocking_move is not None:
+            logger.warning(f"{self.name}: BLOCKING -> column {blocking_move}")
+            return blocking_move
+
+
+       # Rule 3: Create double threat (TODO - Advanced)
+       # A double threat is when you create two ways to win at once
+        double_threat = self._creates_double_threat(observation, valid_actions, channel=0 )
+        if double_threat is not None:
+            logger.warning(f"{self.name}: CREATE DOUBLE THREAT -> column {double_threat}")
+            return double_threat
+        
+        #Rule 4: Detect double threat
+        double_threat = self._creates_double_threat(observation, valid_actions, channel=1 )
+        if double_threat is not None:
+            logger.warning(f"{self.name}: DETECTED DOUBLE THREAT -> column {double_threat}")
+            return double_threat
+       
+        #Rule 5 : Default ordering choice  
+        center_preference = [3, 2, 4, 1, 5, 0, 6]
+        for col in center_preference:
+            if col in valid_actions:
+                logger.warning(f"{self.name}: COLUMN PREFERENCE -> column {col}")
+                return col
+        
+        
+        #Rule 3: Prefer center
+        #if 3 in valid_actions:
+        #    logger.info(f"{self.name}: CENTER PREFERENCE -> column 3")
+        #    return 3
+
+        # Rule 4: Random fallback
+        logger.debug(f"{self.name}: RANDOM -> column {action}")
+        return random.choice(valid_actions)   
+     
+
+
     def _creates_double_threat(self, observation, valid_actions, channel):
          """
         Looks for a column col that creates two separate winning threats
@@ -328,19 +407,4 @@ class SmartAgent:
         #if row >= 4 and col <= 2 : 
         #    if self._check_win_from_position(board, row, col, channel ) and self._check_win_from_position(board, row-4, col + 4, channel ) :
         #        return True
-        return False  
-    
-    def choose_action_manual(self, observation, moves = None, reward=0, terminated=False, truncated=False, info=None, action_mask=None):
-
-        """
-        Same name as twin function in random_player to be able to play against random_player that plays only legal move
-        """
-        action=None
-        if terminated or truncated :
-            print("Truncated")
-            return action
-        elif action_mask == None :
-            mask=observation["action_mask"]
-        else :
-            mask=action_mask
-        return self.choose_action(observation, moves, reward, terminated, truncated, info, action_mask)
+        return False 

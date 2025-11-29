@@ -1,0 +1,23 @@
+[project]
+name = "connect4agent_BLEULER_ALEXANDRE_FISK_THOMAS"
+version = "0.0.1"
+authors = [
+  { name1="Bleuler Alexandre", email1="author@example.com", name2="Fisk Thomas", email2="thomas.fisk15@gmail.com" },
+]
+description = "A connect four agent package"
+readme = "README.md"
+requires-python = ">=3.9"
+requires-numpy =">=2.3.5"
+requires-pettingzoo= ">=1.25.0"
+requires-pygame=">=2.6.1"
+requires-pandas=">=2.3.3"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+
+[project.urls]
+Homepage = "https://github.com/tfisk98/Connect4Agent/tree/main"
+Issues = "https://github.com/pypa/sampleproject/issues"
