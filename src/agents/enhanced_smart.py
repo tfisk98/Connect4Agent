@@ -2,8 +2,7 @@ import random
 
 from loguru import logger
 
-
-from smart_agent.py import SmartAgent, logger, random
+from src.agents.smart_agent import SmartAgent
 
 
 class EnhancedSmartAgent(SmartAgent):

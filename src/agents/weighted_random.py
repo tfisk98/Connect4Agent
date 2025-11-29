@@ -1,4 +1,5 @@
-from random_agent import RandomAgent
+from src.agents.random_agent import RandomAgent
+from src.agents.smart_agent import random
 
 class WeightedRandomAgent(RandomAgent):
     """
