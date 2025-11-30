@@ -54,7 +54,20 @@ def test_print_board() :
     assert function_board1==expected_board1 and function_board2==expected_board2
     return
 
+<<<<<<< HEAD
 ### Testing connect4_game_with_history using full_game_list
+=======
+# Testing connect4_game_with_history using full_game_list
+
+def test_connect4_game_with_history() :
+    history=gf.connect4_game_with_history(4, None, None, 42, True)
+    win=history[0]
+    draw=history[1]
+    loose=history[2]
+    assert win[2]==tuple(gf.full_game0)
+    assert len(draw)==0
+    return loose[0]==tuple(gf.full_game1)
+>>>>>>> d8f63fc (adding connect4 with history, tested)
 
 def test_connect4_game_with_history() :
     history=gf.connect4_game_with_history(4, None, None, 42, True)
@@ -98,3 +111,6 @@ def test_testing_strategy() :
     expected_action_list= [3]
     assert gf.testing_strategy( action_list, rnda.WeightedRandomAgent, expected_action_list )
     return
+
+
+
