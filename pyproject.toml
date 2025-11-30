@@ -2,7 +2,7 @@
 name = "connect4agent_BLEULER_ALEXANDRE_FISK_THOMAS"
 version = "0.0.1"
 authors = [
-  { name1="Bleuler Alexandre", email1="author@example.com", name2="Fisk Thomas", email2="thomas.fisk15@gmail.com" },
+  { name1="Bleuler Alexandre", email1="alexandre.bleuler@yahoo.com", name2="Fisk Thomas", email2="thomas.fisk15@gmail.com" },
 ]
 description = "A connect four agent package"
 readme = "README.md"

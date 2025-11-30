@@ -13,13 +13,14 @@ sys.path.append(os.getcwd())
 import src.random_agent as rnda
 import src.game_facilities as gf
 
+number_of_games=1000
 
 ### Testing RandomAgent against himself, checking ML-Arena requirements and statistical
 ### expected winrate range with a mild advantage for the agent that play first
 
 
 def test_RandomAgent() :
-    stats=gf.connect4_game_with_stats(1000, rnda.RandomAgent, rnda.RandomAgent)
+    stats=gf.connect4_game_with_stats(number_of_games, rnda.RandomAgent, rnda.RandomAgent)
     minimal_win_rate0 = 0.5
     minimal_win_rate1 = 0.4
     maximum_time = 2.8
@@ -39,11 +40,11 @@ def test_RandomAgent() :
     return
 
 
-### Testing WeightedRandomAgent against RandomAget, WeeightedRandom Agent plays first : checking 
+### Testing WeightedRandomAgent against RandomAgent, WeeightedRandom Agent plays first : checking 
 ### ML-Arena requirements and statistical superiority of WeightedRandomAgent
 
 def test_WeightedRandomAgent_first() :
-    stats=gf.connect4_game_with_stats(1000, rnda.WeightedRandomAgent, rnda.RandomAgent)
+    stats=gf.connect4_game_with_stats(number_of_games, rnda.WeightedRandomAgent, rnda.RandomAgent)
     minimal_win_rate = 0.8
     maximum_time = 2.8
     maximum_memory_peak = 364*10e6
@@ -56,12 +57,12 @@ def test_WeightedRandomAgent_first() :
     return
 
 
-### Testing WeightedRandomAgent against RandomAget, WeeightedRandom Agent plays second : checking 
+### Testing WeightedRandomAgent against RandomAgent, WeeightedRandom Agent plays second : checking 
 ### ML-Arena requirements and statistical superiority of WeightedRandomAgent
 
 
 def test_WeightedRandomAgent_second() :
-    stats=gf.connect4_game_with_stats(1000, rnda.RandomAgent, rnda.WeightedRandomAgent)
+    stats=gf.connect4_game_with_stats(number_of_games, rnda.RandomAgent, rnda.WeightedRandomAgent)
     minimal_win_rate = 0.75
     maximum_time = 2.8
     maximum_memory_peak = 364*10e6

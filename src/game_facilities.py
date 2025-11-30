@@ -4,7 +4,7 @@ making connect4 games and testing agents. There are notably functions
 to print the board, making a given set of game with eventually statistics
 about the agents playing. There is also a set of lists containing precise 
 connect4 actions to simulate a given state of game and make the testing
-of agents' behaviour easier. You can refer to the annex of Readme.md to
+of agents' behaviour easier. You can refer to the annex of readme.md to
 visualize the corresponding game states. 
 """
 
@@ -600,16 +600,26 @@ def testing_strategy( action_list, CustomAgent, expected_action_list ) :
 
 ### Predefined action lists : 
 
-# Note that the corresponding game states are represented in the annex of Readme.md.
+# Note that the corresponding game states are represented in the annex of readme.md.
 
-full_game0=[0,1,0,2,0,1,0]
-full_game1=[0,1,2,1,0,1,2,1]
+full_game0=[0,1,0,2,0,1,0] # player_0 win
+full_game1=[0,1,2,1,0,1,2,1] # player_1 loose
 full_game_list=[full_game0, full_game0, full_game0, full_game1]
+full_column=[0,0,0,0,0,0]
+win_state0=[0,1,0,2,0,3] # player_0 has to play
+win_state1=[0,6,1,6,2,6] # player_0 has to play
+win_state2=[6,5,6,4,5,3,4] # player_1 has to play
+win_state3=[0,1,1,3,2,2,2,4,3,3,5,4,4] # player_1 has to play
+win_state4=[6,5,5,3,4,4,4,2,3,3,1,2,2] # player_1 has to play
+win_state5=[0,0,0,0,1,1,2,1,6,2,6,6,6,5,5,4,5,6,4] # player_1 has to play
+win_state6=[6,6,6,6,5,5,4,5,0,4,0,0,0,1,1,2,1,0,2] # player_1 has to play
+block_state0=[0,0,6,0,5,0] # player_0 has to play
+empty_state=[] # player_0 has to play
 
 
 # Printing predefined states (don't forget to comment it again after vizualization) :
 
-""" env = connect_four_v3.env(render_mode=None)
+"""env = connect_four_v3.env(render_mode=None)
 
 env.reset(seed=42)
 print("full_game0 corresponding state :\n")
@@ -619,5 +629,44 @@ print("full_game1 corresponding state :\n")
 env.reset(seed=42)
 generate_state(env, full_game1, True)
 
+print("full_column corresponding state :\n")
+env.reset(seed=42)
+generate_state(env, full_column, True)
 
-env.close() """
+print("win_state0 corresponding state :\n")
+env.reset(seed=42)
+generate_state(env, win_state0, True)
+
+print("win_state1 corresponding state :\n")
+env.reset(seed=42)
+generate_state(env, win_state1, True)
+
+print("win_state2 corresponding state :\n")
+env.reset(seed=42)
+generate_state(env, win_state2, True)
+
+print("win_state3 corresponding state :\n")
+env.reset(seed=42)
+generate_state(env, win_state3, True)
+
+print("win_state4 corresponding state :\n")
+env.reset(seed=42)
+generate_state(env, win_state4, True)
+
+print("win_state5 corresponding state :\n")
+env.reset(seed=42)
+generate_state(env, win_state5, True)
+
+print("win_state6 corresponding state :\n")
+env.reset(seed=42)
+generate_state(env, win_state6, True)
+
+print("block_state0 corresponding state :\n")
+env.reset(seed=42)
+generate_state(env, block_state0, True)
+
+print("empty_state0 corresponding state :\n")
+env.reset(seed=42)
+generate_state(env, empty_state, True)
+
+env.close()"""
