@@ -59,7 +59,7 @@ def test__get_next_row():
     env.close()
     return
 
-### Test _find_winning_move :
+### Test _find_winning_move (every kind of winning and blocking situations):
 
 def test_find_winning_move():
     env = connect_four_v3.env(render_mode=None) 
