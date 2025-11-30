@@ -30,6 +30,14 @@ def test_RandomAgent() :
     stat_win_rate1 = stats[1]["Frequency of win"]["player_1"]
     stat_maximum_time1 = stats[1]["Maximum time to play"]["player_1"]
     stat_maximum_peak1 = stats[1]["Maximum memory usage peak"]["player_1"]
+
+    print("stat_win_rate0 :", stat_win_rate0)
+    print("stat_maximum_time0 :", stat_maximum_time0)
+    print("stat_maximum_peak0:", stat_maximum_peak0)
+    print("stat_win_rate1 :", stat_win_rate1)
+    print("stat_maximum_time1 :", stat_maximum_time1)
+    print("stat_maximum_peak1:", stat_maximum_peak1)
+
     assert stat_win_rate0 > minimal_win_rate0
     assert stat_win_rate1 > minimal_win_rate1 and stat_win_rate1 < minimal_win_rate0
     assert stat_maximum_time0 < maximum_time
@@ -49,6 +57,9 @@ def test_WeightedRandomAgent_first() :
     stat_win_rate0 = stats[1]["Frequency of win"]["player_0"]
     stat_maximum_time0 = stats[1]["Maximum time to play"]["player_0"]
     stat_maximum_peak0 = stats[1]["Maximum memory usage peak"]["player_0"]
+    print("stat_win_rate0 :", stat_win_rate0)
+    print("stat_maximum_time0 :", stat_maximum_time0)
+    print("stat_maximum_peak0:", stat_maximum_peak0)
     assert stat_win_rate0 > minimal_win_rate
     assert stat_maximum_time0 < maximum_time
     assert stat_maximum_peak0 < maximum_memory_peak
@@ -66,6 +77,13 @@ def test_WeightedRandomAgent_second() :
     stat_win_rate1 = stats[1]["Frequency of win"]["player_1"]
     stat_maximum_time1 = stats[1]["Maximum time to play"]["player_1"]
     stat_maximum_peak1 = stats[1]["Maximum memory usage peak"]["player_1"]
+    print("stat_win_rate1 :", stat_win_rate1)
+    print("stat_maximum_time1 :", stat_maximum_time1)
+    print("stat_maximum_peak1:", stat_maximum_peak1)
     assert stat_win_rate1 > minimal_win_rate
     assert stat_maximum_time1 < maximum_time
     assert stat_maximum_peak1 < maximum_memory_peak
+
+test_RandomAgent()
+test_WeightedRandomAgent_first()
+test_WeightedRandomAgent_second()

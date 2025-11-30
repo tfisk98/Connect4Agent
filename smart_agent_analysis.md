@@ -20,15 +20,14 @@ Contre un agent aléatoire le coup aléatoire devient le coup le plus utilisé p
 Le temps moyen pour jouer un coup par le SmartAgent est de l'ordre du centième de seconde et son pic de consommation de mémoire se situe autour de 4.7 kilobits. 
 
 
-#A rédiger
 ## Cas d'échecs
 
-A priori doubles puissance 4.
+Le modèle ne parvient pas à gérer le cas où 2 colonnes offrent la possibilité d'un puissance 4 à l'adversaire, comme par exemple lorsque trois jetons sont positionnés sur la ligne du bas (5) de manière contigue, car il le détecte trop tard. Le cas où une colonne présente un cas de doubles menace sur 2 lignes successives ne peut également être paré par le modèle actuel.
 
 ## Améliorations 
 
-Diminuer la part d'aléatoire.
-Détecter les doubles menaces.
+Un axe d'amélioration pourrait donc être de pouvoir détecter les menaces ci-dessus suffisament tôt grâce à une fonction de calcul. Il serait également intéressant de pouvoir les créer. 
+Pour faire suite à l'axe précédent, le véritable axe d'amélioration serait donc de diminuer l'aléatoire. Une fois la colonne du centre(3) remplie, l'agent redevient un agent aléatoire jusqu'à l'apparition de potentiels puissance 4, ce qui est une limite de l'agent actuel. 
 
 
 # A mettre en forme
