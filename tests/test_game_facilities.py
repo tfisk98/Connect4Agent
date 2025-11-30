@@ -52,6 +52,7 @@ def test_print_board() :
     env.close()
 
     assert function_board1==expected_board1 and function_board2==expected_board2
+    return
 
 
 # Testing connect4_game_with_stats using full_game_list
