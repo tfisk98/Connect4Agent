@@ -1,4 +1,4 @@
-# Un package pour le jeu Connect4 de la librarie PettingZoo
+# Un package pour le jeu Connect4 de la librairie PettingZoo
 
 
 ## Présentation générale du package
