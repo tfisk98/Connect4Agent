@@ -3,7 +3,7 @@ import os
 sys.path.append(os.getcwd())
 
 
-from src.agents.smart_agent import SmartAgent
+from src.smart_agent import SmartAgent
 from pettingzoo.classic import connect_four_v3
 
 
@@ -112,7 +112,7 @@ def test_check_win_from_position():
 
     #####
 
-    ##### No win for nobody, as agent_0's and agent_1's pieces are mixed together. Will agent_0 think there's a win in there ? 
+    ##### No win as agent_0's and agent_1's pieces are mixed together. Will agent_0 think there's a win in there ? 
 
     board = np.zeros((6, 7, 2))
     board[2, 3, 1] = 1
@@ -247,7 +247,7 @@ def test_find_winning_move():
     ###### Real Game test : 
 
     """
-    Real advanced position in a game between two RandomAgents where both failed to finc the winning column 3. 
+    Real advanced position in a game between two RandomAgents where both failed to find the winning column 3. 
     """
 
     action_list3=[3,1,0,2,0,4,1,3,2,5,2,5,4,6,5,4,5,4,5,3,4,5]
