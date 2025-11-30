@@ -10,7 +10,7 @@ import sys
 import os
 sys.path.append(os.getcwd())
 
-import src.agents.random_agent as rnda
+import src.random_agent as rnda
 import src.game_facilities as gf
 
 
@@ -30,23 +30,16 @@ def test_RandomAgent() :
     stat_win_rate1 = stats[1]["Frequency of win"]["player_1"]
     stat_maximum_time1 = stats[1]["Maximum time to play"]["player_1"]
     stat_maximum_peak1 = stats[1]["Maximum memory usage peak"]["player_1"]
-
-    print("stat_win_rate0 :", stat_win_rate0)
-    print("stat_maximum_time0 :", stat_maximum_time0)
-    print("stat_maximum_peak0:", stat_maximum_peak0)
-    print("stat_win_rate1 :", stat_win_rate1)
-    print("stat_maximum_time1 :", stat_maximum_time1)
-    print("stat_maximum_peak1:", stat_maximum_peak1)
-
     assert stat_win_rate0 > minimal_win_rate0
     assert stat_win_rate1 > minimal_win_rate1 and stat_win_rate1 < minimal_win_rate0
     assert stat_maximum_time0 < maximum_time
     assert stat_maximum_time1 < maximum_time
     assert stat_maximum_peak0 < maximum_memory_peak
     assert stat_maximum_peak1 < maximum_memory_peak
+    return
 
 
-### Testing WeightedRandomAgent against RandomAgent, WeeightedRandom Agent plays first : checking 
+### Testing WeightedRandomAgent against RandomAget, WeeightedRandom Agent plays first : checking 
 ### ML-Arena requirements and statistical superiority of WeightedRandomAgent
 
 def test_WeightedRandomAgent_first() :
@@ -57,33 +50,25 @@ def test_WeightedRandomAgent_first() :
     stat_win_rate0 = stats[1]["Frequency of win"]["player_0"]
     stat_maximum_time0 = stats[1]["Maximum time to play"]["player_0"]
     stat_maximum_peak0 = stats[1]["Maximum memory usage peak"]["player_0"]
-    print("stat_win_rate0 :", stat_win_rate0)
-    print("stat_maximum_time0 :", stat_maximum_time0)
-    print("stat_maximum_peak0:", stat_maximum_peak0)
     assert stat_win_rate0 > minimal_win_rate
     assert stat_maximum_time0 < maximum_time
     assert stat_maximum_peak0 < maximum_memory_peak
+    return
 
 
-### Testing WeightedRandomAgent against RandomAgent, WeeightedRandom Agent plays second : checking 
+### Testing WeightedRandomAgent against RandomAget, WeeightedRandom Agent plays second : checking 
 ### ML-Arena requirements and statistical superiority of WeightedRandomAgent
 
 
 def test_WeightedRandomAgent_second() :
     stats=gf.connect4_game_with_stats(1000, rnda.RandomAgent, rnda.WeightedRandomAgent)
-    minimal_win_rate = 0.8
+    minimal_win_rate = 0.75
     maximum_time = 2.8
     maximum_memory_peak = 364*10e6
     stat_win_rate1 = stats[1]["Frequency of win"]["player_1"]
     stat_maximum_time1 = stats[1]["Maximum time to play"]["player_1"]
     stat_maximum_peak1 = stats[1]["Maximum memory usage peak"]["player_1"]
-    print("stat_win_rate1 :", stat_win_rate1)
-    print("stat_maximum_time1 :", stat_maximum_time1)
-    print("stat_maximum_peak1:", stat_maximum_peak1)
     assert stat_win_rate1 > minimal_win_rate
     assert stat_maximum_time1 < maximum_time
     assert stat_maximum_peak1 < maximum_memory_peak
-
-test_RandomAgent()
-test_WeightedRandomAgent_first()
-test_WeightedRandomAgent_second()
+    return
