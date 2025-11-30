@@ -24,7 +24,7 @@ def test_print_board() :
     expected_board1 += ". . . . . . . \n" 
     expected_board1 += ". . . . . . . \n" 
     expected_board1 += ". . . . . . . \n" 
-    expected_board1 += "X O X O . . . \n" 
+    expected_board1 += "X O X . . . . \n" 
     action_list1=[0,1,2]
 
     expected_board2  = ". . . . . . . \n" 
@@ -40,7 +40,7 @@ def test_print_board() :
     env.reset(seed=42)
     gf.generate_state(env, action_list1)
     observation, reward, termination, truncation, info = env.last()
-    action=3
+    action=None
     function_board1=gf.print_board(observation, "player_1", action, is_print=False)
 
     env.reset(seed=42)
@@ -54,6 +54,16 @@ def test_print_board() :
     assert function_board1==expected_board1 and function_board2==expected_board2
     return
 
+# Testing connect4_game_with_history using full_game_list
+
+def test_connect4_game_with_history() :
+    history=gf.connect4_game_with_history(4, None, None, 42, True)
+    win=history[0]
+    draw=history[1]
+    loose=history[2]
+    assert win[2]==tuple(gf.full_game0)
+    assert len(draw)==0
+    return loose[0]==tuple(gf.full_game1)
 
 # Testing connect4_game_with_stats using full_game_list
 
@@ -79,3 +89,6 @@ def test_testing_strategy() :
     expected_action_list= [3]
     assert gf.testing_strategy( action_list, rnda.WeightedRandomAgent, expected_action_list )
     return
+
+
+
