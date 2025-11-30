@@ -8,7 +8,7 @@
 ## 2. Informations supplémentaires
 
 1) [Présentation générale du jeu et de l'environnement ](general_presentation.md#top)
-2) [Présentation de l'agent `RandomAgent`](random_agent_presentation.md)
-3) [Présentation de l'agent `SmartAgent`](smart_agent_presentation.md)
-4) [Mise en place de tests](testing_plan.md)
+2) [Présentation de l'agent `RandomAgent`](random_agent_analysis.md)
+3) [Présentation de l'agent `SmartAgent`](smart_agent_analysis.md)
+4) [Implémentation des tests](test_plan.md)
 5) [Annexe](annex.md#top)
