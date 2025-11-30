@@ -200,6 +200,88 @@ def connect4_game(num_games, Custom_Agent0, Custom_Agent1, custom_render_option=
     print("The overall winner is player_"+ str(winner) + f" with a score of {score[winner]} points against {score[looser]} !\n")
             
 
+def connect4_game_with_history(num_games, Custom_Agent0, Custom_Agent1, seed_option=42, is_testing=False) :
+    """ 
+    Make a certain number of connect4 game with the given
+    agents and get register the actions of the games played.
+
+    Parameters : 
+        num_games : the number of game to be played
+        Custom_Agent0 : the type of the custom agent playing first
+        Custom_Agent1 : the type of the custom agent playgin second
+        seed_option : a positive integer to be used as seed for 
+        pettingzoo environment 
+        is_testing : a boolean to trigger the testing mode of the 
+        function (playing 4 deterministic games for testing
+        purpose)
+
+    Return :
+        history : a tuple containing of the form (win, draw, loose) where win registers
+        in a tupple the games won by CustomAgent0, draw registers games ending with a draw 
+        and loose registers thoses where he losts. More precisely, win is also a tupple 
+        containing tuples. Each subtuple contains the tuple of the actions played during 
+        winning games. draw and loose follow the same structure.
+    """
+     
+    # Setting environment and agents
+
+    env = connect_four_v3.env(render_mode=None)
+    env.reset(seed=seed_option)
+    if not is_testing :
+        agent_list = setting_custom_agent(env,Custom_Agent0, Custom_Agent1)
+
+    # Game loop
+
+    win_list=[]
+    draw_list=[]
+    loose_list=[]
+
+    for game in range(num_games) :
+
+        env.reset(seed=seed_option)
+        action_list=[]
+        turn_count = 0
+
+        # Playing
+
+        for agent in env.agent_iter():
+            observation, reward, termination, truncation, info = env.last()
+
+            
+            if termination or truncation:
+                action = None
+                if reward == 1:
+                    if agent=='player_0' :
+                        win_list.append(tuple(action_list))
+                    else :
+                        loose_list.append(tuple(action_list))
+                       
+                elif reward == 0:
+                    draw_list.append(tuple(action_list))
+
+            else: 
+
+                # Normal case
+
+                if not is_testing :
+                        current_agent=select_current_agent(agent_list, agent)
+                        action = current_agent.choose_action(observation)
+                        action_list.append(int(action))
+
+                # Special case to make tests of the function
+
+                else :
+                    turn_count+=1
+                    action = full_game_list[game][turn_count-1]
+                    action_list.append(int(action))
+                    
+            env.step(action)
+ 
+    env.close()
+    history=(tuple(win_list), tuple(draw_list), tuple(loose_list))
+    return history
+
+
 def connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option=42, is_testing=False) :
     """ 
     Make a certain number of connect4 game with the given
