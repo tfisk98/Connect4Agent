@@ -430,7 +430,7 @@ def connect4_game_with_stats(num_games, Custom_Agent0, Custom_Agent1, seed_optio
 
     index_name = ("player_0", "player_1")
     column_name = ( "Frequency of win", "Frequency of draw", "Frequency of loss",
-                 "Average time to play (s)", "Maximum time to play (s)",
+                 "Average time to play", "Maximum time to play",
                  "Average memory usage peak", "Maximum memory usage peak"
                  )
     

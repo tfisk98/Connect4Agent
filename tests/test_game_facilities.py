@@ -13,7 +13,7 @@ import os
 sys.path.append(os.getcwd())
 
 from pettingzoo.classic import connect_four_v3
-import src.agents.random_agent as rnda
+import src.random_agent as rnda
 import src.game_facilities as gf
 
 # Testing print_board
