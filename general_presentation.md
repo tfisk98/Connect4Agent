@@ -66,7 +66,7 @@ Pour choisir un coup, l'agent sélectionnera alors une des colonnes légales sel
 Une fois la colonne choisie l'agent n'aura alors plus qu'a retourner via `env.step` son action, ou autrement dit un entier compris entre 0 et 6 correspondant à la colonne dans laquelle le jeton sera joué. 
 
 
-### 3.2 : Conception d'algorithme - Progression
+### 3.2 : Conception d'algorithmes - Progression
 
 - Niveau 0 : l'agent choisit une colonne aléatoirement sans contrainte.
 
@@ -82,7 +82,7 @@ Une fois la colonne choisie l'agent n'aura alors plus qu'a retourner via `env.st
 
 ### 3.3 : Définir l'interface de l'agent
 
-Une classe `MyAgent` contiendrait les méthodes :
+Une classe `MyAgent` performante contiendrait les méthodes :
 - `__init__` prenant pour arguments `self`, l'environnement `env` ainsi qu'un argument optionnel `name` et les construits en tant qu'attributs de classe, construit également à partir de `self.env` l'attribut `action_space`; 
 -  `choose_action` prenant pour arguments `self`, `observation` (obligatoire) et les autres objets renvoyés par `env.last()` (optionnels) et retourne la prochaine `action` à réaliser selon les stratégies implémentées par la fonction;
 - `check_winning_move` permettant de déterminer si il y a un coup gagnant pour l'agent;
