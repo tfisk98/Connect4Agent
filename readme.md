@@ -8,7 +8,7 @@
 ## Documents connexes
 
 1) [Présentation générale du jeu et de l'environnement ](general_presentation.md#top)
-2) [Analyse de l'agent `RandomAgent`](random_agent_analysis.md)
-3) [Analyse de l'agent `SmartAgent`](smart_agent_analysis.md)
+2) [Présentation de l'agent `RandomAgent`](random_agent_analysis.md)
+3) [Présentation de l'agent `SmartAgent`](smart_agent_analysis.md)
 4) [Implémentation des tests](test_plan.md)
 5) [Annexe](annex.md#top)
