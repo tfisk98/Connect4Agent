@@ -26,7 +26,7 @@ Pour une position et une couleur de jeton données dans la grille, il est néces
 
 Les noms des deux agents sont : `'player_0'` et `'player_1'`.
 
-La variable `action` de type personnalisé `Discrete` modélise les entiers compris entre 0 et 6 et correspondant aux indices des colonnes de la grille, c'est-à-dire les lieux où un agent peut jouer. :
+La variable `action` de type personnalisé `Discrete` modélise les entiers compris entre 0 et 6 et correspondant aux indices des colonnes de la grille, c'est-à-dire les lieux où un agent peut jouer.
 
 `env.agent_iter()` est une liste de la forme  <br><center>`['player_0', 'player_1', 'player_0', 'player_1', ... ]` </center><br>sur laquelle on itère au cours d'une partie afin de déterminer l'agent dont c'est le tour.
 
