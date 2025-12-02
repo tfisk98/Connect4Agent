@@ -567,32 +567,9 @@ def testing_strategy( action_list, CustomAgent, expected_action_list ) :
 
     tested_agent = CustomAgent(env)
 
-    # Generating the expecting observation 
-
-    expected_obeservation_list=[]
-
-    for expected_action in expected_action_list :
-        env.reset(seed=42)
-        expected_action_list = action_list+[expected_action]
-        generate_state(env, expected_action_list)
-        expected_observation = np.copy(env.last()[0]["observation"])
-        expected_obeservation_list.append(expected_observation)
-
-    # Generating the observation the agent will produce
-
-    env.reset(seed=42)
     generate_state(env, action_list)
-    observation = env.last()[0]
-    action = tested_agent.choose_action(observation)
-    env.step(action)
-    actual_observation = env.last()[0]["observation"]
-
-    as_expected = False
-
-    for expected_observation in expected_obeservation_list :
-        if (actual_observation==expected_observation).all() :
-            as_expected=True
-
+    action = tested_agent.choose_action(env.last()[0])
+    as_expected = action in expected_action_list
     env.close()
 
     return as_expected
@@ -605,15 +582,15 @@ def testing_strategy( action_list, CustomAgent, expected_action_list ) :
 full_game0=[0,1,0,2,0,1,0] # player_0 win
 full_game1=[0,1,2,1,0,1,2,1] # player_1 loose
 full_game_list=[full_game0, full_game0, full_game0, full_game1]
-full_column=[0,0,0,0,0,0]
+full_column=[0,0,0,0,0,0] # player_0 has to play
 win_state0=[0,1,0,2,0,3] # player_0 has to play
-win_state1=[0,6,1,6,2,6] # player_0 has to play
+win_state1=[0,6,1,6,3,6] # player_0 has to play
 win_state2=[6,5,6,4,5,3,4] # player_1 has to play
-win_state3=[0,1,1,3,2,2,2,4,3,3,5,4,4] # player_1 has to play
+win_state3=[0,1,1,3,2,2,2,4,3,5,5,4,4,4,0] # player_1 has to play
 win_state4=[6,5,5,3,4,4,4,2,3,3,1,2,2] # player_1 has to play
 win_state5=[0,0,0,0,1,1,2,1,6,2,6,6,6,5,5,4,5,6,4] # player_1 has to play
-win_state6=[6,6,6,6,5,5,4,5,0,4,0,0,0,1,1,2,1,0,2] # player_1 has to play
-block_state0=[0,0,6,0,5,0] # player_0 has to play
+block_state0=[6,6,6,6,5,5,0,5,0,4,1,0,0,2,2,1,1,0,0] # player_1 has to play
+block_state1=[0,0,6,0,5,0] # player_0 has to play
 empty_state=[] # player_0 has to play
 
 
@@ -657,13 +634,13 @@ print("win_state5 corresponding state :\n")
 env.reset(seed=42)
 generate_state(env, win_state5, True)
 
-print("win_state6 corresponding state :\n")
-env.reset(seed=42)
-generate_state(env, win_state6, True)
-
 print("block_state0 corresponding state :\n")
 env.reset(seed=42)
 generate_state(env, block_state0, True)
+
+print("block_state1 corresponding state :\n")
+env.reset(seed=42)
+generate_state(env, block_state1, True)
 
 print("empty_state0 corresponding state :\n")
 env.reset(seed=42)
