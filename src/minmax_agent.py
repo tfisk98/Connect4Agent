@@ -88,6 +88,10 @@ class MinimaxAgent:
                 new_board = self._simulate_move(board, col=move, channel= 0)
                 eval = self._minimax(new_board, depth - 1, alpha, beta, False)
                 max_eval = np.max(max_eval, eval)
+                alpha = np.max(alpha, eval)
+                if alpha >= beta : 
+                     break 
+                     
             return max_eval
         else : 
             min_eval = 1e6 
@@ -95,6 +99,9 @@ class MinimaxAgent:
                 new_board = self._simulate_move(board, col=move, channel= 1)
                 eval = self._minimax(new_board, depth - 1, alpha, beta, True)
                 min_eval = np.max(min_eval, eval)
+                beta = np.min(beta, eval)
+                if alpha >= beta  : 
+                     break 
             return min_eval
 
     def _simulate_move(self, board, col, channel):

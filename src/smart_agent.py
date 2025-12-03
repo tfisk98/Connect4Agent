@@ -190,7 +190,7 @@ class SmartAgent:
                     return True 
             col += 1
 
-        col = token_col
+        #col = token_col
         token_count = 1
 
         # Ascending Diagonal
@@ -398,8 +398,11 @@ class EnhancedSmartAgent(SmartAgent):
         if row >= 2:
             if self._check_win_from_position(board, row -1, col, channel ) and self._check_win_from_position(board, row -2, col, channel ) :
                 return True
+            
         if col <= 2 :
-            board[col, row] = 1
+
+
+            board[col + 1, row] = 1
             if self._check_win_from_position(board, row, col, channel ) and self._check_win_from_position(board, row, col + 4, channel ) :
                 board[col, row] = 0
                 return True
