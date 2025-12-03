@@ -11,10 +11,10 @@ def evaluate_position(board, player_channel):
     score = 0
 
     # Check for wins
-    if has_won(board, player_channel):
+    if has_won(board, 0 if player_channel== 0 else 1):
         return 10000
 
-    if has_won(board, 1 - player_channel):
+    if has_won(board, 1 if player_channel== 0 else 0):
         return -10000
 
     # Count 3-in-a-row patterns (without the 4th piece blocked)
@@ -32,6 +32,8 @@ def evaluate_position(board, player_channel):
 def has_won(board, player_channel):
     for row in range(5,-1,-1):
          for col in range(7):
+              #if col == 0 :
+              #     print ("board[row,col,player_channel] ")
               if board[row,col,player_channel] == 1 and check_win_from_position(board, row, col, player_channel):
                    return True
     return False 
@@ -44,12 +46,35 @@ def count_three_in_row(board, player_channel):
         for col in range(7):
             if curr_board[row,col] == 1 : 
                 for loc_row in range(-1,2,1):
-                    for loc_col in range(-1,2,1): 
-                        if curr_board[row + loc_row, col + loc_col] == 1 and curr_board[row + 2*loc_row, col + 2*loc_col] :
-                            count += 1
-                        if curr_board[row + loc_row, col + loc_col] == 1 and curr_board[row - loc_row, col - loc_col] :
-                            count += 1/2 
-    return count // 3 
+                    if row == 5 and loc_row==1 :
+                        pass 
+                    elif  row == 0 and loc_row== -1 :
+                        pass 
+                    else :
+                        for loc_col in range(-1,2,1): 
+                            if loc_row ==0 and loc_col == 0: 
+                                pass 
+                            elif col == 0 and loc_col == -1 :
+                                pass 
+                            elif col == 6 and loc_col == 1 :
+                                pass 
+                            elif row + 2*loc_row >= 0 and row + 2*loc_row < 6 :
+                                if col + 2*loc_col >= 0 and col + 2*loc_col < 7 :
+                                    if curr_board[row + loc_row, col + loc_col] == 1 and curr_board[row + 2*loc_row, col + 2*loc_col] == 1 :
+                                        count += 1
+                            if loc_row ==0 and loc_col == 0: 
+                                pass 
+                            elif col == 0 and (loc_col)**2 == 1 :
+                                pass 
+                            elif col == 6 and (loc_col)**2 == 1 :
+                                pass 
+                            elif row == 5 and loc_row== -1 :
+                                pass 
+                            elif row == 0 and loc_row == 1:
+                                pass
+                            elif curr_board[row + loc_row, col + loc_col] == 1 and curr_board[row - loc_row, col - loc_col] == 1 :
+                                count += 1/2
+    return int(count // 3) 
 
 def count_two_in_row(board, player_channel):
     curr_board = board[:,:, player_channel]
@@ -59,10 +84,16 @@ def count_two_in_row(board, player_channel):
             if curr_board[row,col] == 1 : 
                 for loc_row in range(-1,2,1):
                     for loc_col in range(-1,2,1): 
-                        if curr_board[row + loc_row, col + loc_col] == 1 :
+                        if loc_col == 0 and loc_row == 0:
+                            pass 
+                        elif row + loc_row == 6 or row + loc_row == -1 :
+                            pass 
+                        elif col + loc_col == 7 or col + loc_col == -1 :
+                            pass 
+                        elif curr_board[row + loc_row, col + loc_col] == 1 :
                             count += 1 
 
-    return count // 2 
+    return int(count // 2) 
 
 
 def count_pieces_in_center(board, player_channel):
@@ -74,7 +105,7 @@ def count_pieces_in_center(board, player_channel):
 
 
 
-def check_win_from_position(self, board, row, col, channel):
+def check_win_from_position(board, row, col, channel):
         """
         Check if placing a piece at (row, col) would create 4 in a row
 
