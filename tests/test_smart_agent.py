@@ -16,6 +16,7 @@ from pettingzoo.classic import connect_four_v3
 import src.game_facilities as gf
 import src.random_agent as rnda
 import src.smart_agent as sa
+import src.minmax_agent as mma
 
 number_of_games=1000
 

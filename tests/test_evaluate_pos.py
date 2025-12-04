@@ -110,3 +110,5 @@ def test_evaluate_position():
 
     assert evaluate_position(board, player_channel) == 6
     return
+
+
