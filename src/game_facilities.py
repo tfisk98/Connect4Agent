@@ -216,9 +216,9 @@ def connect4_game_with_history(num_games, Custom_Agent0, Custom_Agent1, seed_opt
         purpose)
 
     Return :
-        history : a tuple containing of the form (win, draw, loose) where win registers
+        history : a tuple containing of the form (win, draw, loss) where win registers
         in a tupple the games won by CustomAgent0, draw registers games ending with a draw 
-        and loose registers thoses where he losts. More precisely, win is also a tupple 
+        and loss registers thoses where he losts. More precisely, win is also a tupple 
         containing tuples. Each subtuple contains the tuple of the actions played during 
         winning games. draw and loose follow the same structure.
     """
@@ -545,7 +545,7 @@ def generate_state(env, action_list, is_print=False) :
     return 
 
 
-def testing_strategy( action_list, CustomAgent, expected_action_list ) :
+def testing_strategy(action_list, CustomAgent, expected_action_list) :
     """ 
     Test if in a give state of the game, the agent will
     play as it is expected.
