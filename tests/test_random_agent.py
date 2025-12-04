@@ -73,3 +73,7 @@ def test_WeightedRandomAgent_second() :
     assert stat_maximum_time1 < maximum_time
     assert stat_maximum_peak1 < maximum_memory_peak
     return
+
+stats=gf.connect4_game_with_stats(10000, rnda.RandomAgent, rnda.RandomAgent)
+print(stats[0])
+print(stats[1])

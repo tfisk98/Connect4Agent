@@ -90,9 +90,12 @@ def test_winning_move():
 
 ### Test choose action in situations where the agent can't win and should block it opponent :
 
+assert gf.testing_strategy(gf.win_state0.copy()+[6], sa.SmartAgent, [4])
+print(gf.win_state0)
+
 def test_blocking_move() :
-    assert gf.testing_strategy(gf.win_state0.copy()+[4], sa.SmartAgent, [0])
-    assert gf.testing_strategy(gf.win_state1.copy()+[6], sa.SmartAgent, [2])
+    assert gf.testing_strategy(gf.win_state0.copy()+[6], sa.SmartAgent, [4])
+    assert gf.testing_strategy(gf.win_state1.copy()+[5], sa.SmartAgent, [6])
     assert gf.testing_strategy(gf.win_state2.copy()+[3], sa.SmartAgent, [2])
     assert gf.testing_strategy(gf.win_state3.copy()+[0], sa.SmartAgent, [3])
     assert gf.testing_strategy(gf.win_state4.copy()+[0,2], sa.SmartAgent, [3])
@@ -102,6 +105,7 @@ def test_blocking_move() :
 
 ### Testing SmartAgent against himself, checking ML-Arena requirements and statistical
 ### expected winrate and draw range with an advantage for the agent that play first
+
 
 def test_SmartAgent() :
     stats=gf.connect4_game_with_stats(number_of_games, sa.SmartAgent, sa.SmartAgent)

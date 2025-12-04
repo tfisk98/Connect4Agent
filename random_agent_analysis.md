@@ -1,14 +1,8 @@
-# Présentation de RandomAgent
+# Analyse de RandomAgent
 
-## 1. Description
+## Partie 1 : RandomAgent contre RandomAgent
 
-La classe `RandomAgent` simule un agent très simple qui joue uniformément au hasard parmi les coups légaux disponibles. Une classe fille `WeightedRandomAgent` existe également et ajoute une pondération faisant jouer l'agent dans la colonne centrale si cela est possible. L'agent joue de la même manière que `RandomAgent` sinon.
-
-## 2. Analyse des performances
-
-### 2.1. RandomAgent contre RandomAgent
-
-#### 2.1.1. Données
+### 1.1 Données
 
 A l'issue de 10 000 parties jouées entre deux agents de la classe `RandomAgent` avec le réglage d'environnement `seed=42`, les données suivantes ont été réccoltées à l'aide de la fonction `connect4_game_with_stats` du module `game_loop.py` : 
 
@@ -40,7 +34,7 @@ A l'issue de 10 000 parties jouées entre deux agents de la classe `RandomAgent`
 | RandomAgent0 | 1623.064751  | 2836     |
 | RandomAgent1 |  1622.624966 | 1624 |
 
-#### 2.1.2. Analyse
+### 1.2 Analyse
 
 On constate donc les parties remplissent en moyenne la moitiée de la grille environ. La durée de jeu est donc moyenne et peut parfois aller jusu'à l'égalité (le nombre de tours maximal est 42) mais que cela est rare (seulement 0.21% des parties se terminent par une égalité). Il arrive également qu'un agent gagne parfois avec le nombre de coup optimal (le nombre de tours minimal est 7).
 
@@ -50,11 +44,11 @@ En ce qui concerne les performances requises par la compétition de ML-Arena (3s
 
 En conclusion, retenons en particulier de cette analyse que l'agent jouant en premier semble avoir un avantage d'initiative mais est potentiellement plus à risque de ne pas respecter les performances requises par la compétition de ML-Arena.
 
-### 2.2. WeightedRandomAgent contre RandomAgent
+## Partie 2 : WeightedRandomAgent contre RandomAgent
 
-#### 2.2.1. Données
+### 2.1 Données
 
-##### 2.2.1.1. WeightedRandomAgent joue en premier
+#### 2.1.1 WeightedRandomAgent joue en premier
 
 Avec la même configuration de test que pour le paragraphe 1.1, les données suivantes ont été obtenues : 
 
@@ -86,7 +80,7 @@ Avec la même configuration de test que pour le paragraphe 1.1, les données sui
 | WeightedRandomAgent | 307.405193   | 1616 |
 | RandomAgent         |  1635.817775 | 2700 |
 
-##### 2.2.1.2 WeightedRandomAgent joue en second
+#### 2.1.2 WeightedRandomAgent joue en second
 
 Avec la même configuration de test que pour le paragraphe 1.1, les données suivantes ont été obtenues : 
 
@@ -118,11 +112,11 @@ Avec la même configuration de test que pour le paragraphe 1.1, les données sui
 | RandomAgent         | 1631.747264 | 2836 |
 | WeightedRandomAgent |  299.159817 | 1616 |
 
-#### 2.2.2. Analyse 
+### 2.2 Analyse 
 
 Les conclusions sont dénuées d'ambiguïté : 
 - l'agent avec pondération gagne dans plus de 80% des cas et les parties sont en général très courtes (12 coups en moyenne) indépendamment de l'ordre de jeu;
 - on retrouve la différence de 5% liée à l'initiative en début de partie : l'agent pondéré gagne environ 5% plus souvent quand il joue en premier;
 - l'agent avec pondération vérifie facilement les exigences de performance de la compétition ML-Arena et mieux que l'agent simplement aléatoire.
 
-Ainsi, nous pouvons aisément affirmer que l'agent avec pondération est bien meilleur que  celui simplement aléatoire tout en respectant les conditions de la compétition de ML-Arena. De plus, la présence d'un avantage pour l'agent jouant en premier est confirmée ici aussi
+Ainsi, nous pouvons aisément affirmer que l'agent avec pondération est bien meilleur que  celui simplement aléatoire. De plus, la présence d'un avantage pour l'agent jouant en premier est confirmée ici aussi.
