@@ -90,6 +90,9 @@ def test_winning_move():
 
 ### Test choose action in situations where the agent can't win and should block it opponent :
 
+assert gf.testing_strategy(gf.win_state0.copy()+[6], sa.SmartAgent, [4])
+print(gf.win_state0)
+
 def test_blocking_move() :
     assert gf.testing_strategy(gf.win_state0.copy()+[6], sa.SmartAgent, [4])
     assert gf.testing_strategy(gf.win_state1.copy()+[5], sa.SmartAgent, [6])
