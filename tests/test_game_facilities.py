@@ -17,6 +17,7 @@ import src.random_agent as rnda
 import src.game_facilities as gf
 
 ### Testing print_board
+### Testing print_board
 
 def test_print_board() : 
     expected_board1  = ". . . . . . . \n" 
@@ -54,10 +55,7 @@ def test_print_board() :
     assert function_board1==expected_board1 and function_board2==expected_board2
     return
 
-<<<<<<< HEAD
 ### Testing connect4_game_with_history using full_game_list
-=======
-# Testing connect4_game_with_history using full_game_list
 
 def test_connect4_game_with_history() :
     history=gf.connect4_game_with_history(4, None, None, 42, True)
@@ -81,6 +79,8 @@ def test_connect4_game_with_history() :
 
 ### Testing connect4_game_with_stats using full_game_list
 
+### Testing connect4_game_with_stats using full_game_list
+
 def test_connect4_game_with_stats() :
     stats=gf.connect4_game_with_stats(4, None, None, 42, True)
     expected_average_turn_number = (3*7 + 8)/4
@@ -92,11 +92,19 @@ def test_connect4_game_with_stats() :
     expected_frequency_win_player1 = 1/4
     expected_frequency_draw_player1 = 0
     expected_frequency_loss_player1 = 3/4
+    expected_frequency_loss_player0 = 1/4
+    expected_frequency_win_player1 = 1/4
+    expected_frequency_draw_player1 = 0
+    expected_frequency_loss_player1 = 3/4
     assert expected_average_turn_number==stats[0]["Average number of turns per game"]
     assert expected_min_turn_number==stats[0]["Minimum number of turns in a game"]
     assert expected_max_turn_number==stats[0]["Maximum number of turns in a game"]
     assert expected_frequency_win_player0==stats[1]["Frequency of win"]["player_0"]
     assert expected_frequency_draw_player0==stats[1]["Frequency of draw"]["player_0"]
+    assert expected_frequency_loss_player0==stats[1]["Frequency of loss"]["player_0"]
+    assert expected_frequency_win_player1==stats[1]["Frequency of win"]["player_1"]
+    assert expected_frequency_draw_player1==stats[1]["Frequency of draw"]["player_1"]
+    assert expected_frequency_loss_player1==stats[1]["Frequency of loss"]["player_1"]
     assert expected_frequency_loss_player0==stats[1]["Frequency of loss"]["player_0"]
     assert expected_frequency_win_player1==stats[1]["Frequency of win"]["player_1"]
     assert expected_frequency_draw_player1==stats[1]["Frequency of draw"]["player_1"]
@@ -111,6 +119,3 @@ def test_testing_strategy() :
     expected_action_list= [3]
     assert gf.testing_strategy( action_list, rnda.WeightedRandomAgent, expected_action_list )
     return
-
-
-

@@ -578,24 +578,28 @@ def testing_strategy(action_list, CustomAgent, expected_action_list) :
 ### Predefined action lists : 
 
 # Note that the corresponding game states are represented in the annex of readme.md.
+# Note that the corresponding game states are represented in the annex of readme.md.
 
 full_game0=[0,1,0,2,0,1,0] # player_0 win
 full_game1=[0,1,2,1,0,1,2,1] # player_1 loose
+full_game0=[0,1,0,2,0,1,0] # player_0 win
+full_game1=[0,1,2,1,0,1,2,1] # player_1 loose
 full_game_list=[full_game0, full_game0, full_game0, full_game1]
-full_column=[0,0,0,0,0,0] # player_0 has to play
+full_column=[0,0,0,0,0,0]
 win_state0=[0,1,0,2,0,3] # player_0 has to play
-win_state1=[0,6,1,6,3,6] # player_0 has to play
+win_state1=[0,6,1,6,2,6] # player_0 has to play
 win_state2=[6,5,6,4,5,3,4] # player_1 has to play
-win_state3=[0,1,1,3,2,2,2,4,3,5,5,4,4,4,0] # player_1 has to play
+win_state3=[0,1,1,3,2,2,2,4,3,3,5,4,4] # player_1 has to play
 win_state4=[6,5,5,3,4,4,4,2,3,3,1,2,2] # player_1 has to play
 win_state5=[0,0,0,0,1,1,2,1,6,2,6,6,6,5,5,4,5,6,4] # player_1 has to play
-block_state0=[6,6,6,6,5,5,0,5,0,4,1,0,0,2,2,1,1,0,0] # player_1 has to play
-block_state1=[0,0,6,0,5,0] # player_0 has to play
+win_state6=[6,6,6,6,5,5,4,5,0,4,0,0,0,1,1,2,1,0,2] # player_1 has to play
+block_state0=[0,0,6,0,5,0] # player_0 has to play
 empty_state=[] # player_0 has to play
 
 
 # Printing predefined states (don't forget to comment it again after vizualization) :
 
+"""env = connect_four_v3.env(render_mode=None)
 """env = connect_four_v3.env(render_mode=None)
 
 env.reset(seed=42)
