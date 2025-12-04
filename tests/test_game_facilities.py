@@ -65,7 +65,6 @@ def test_connect4_game_with_history() :
     assert win[2]==tuple(gf.full_game0)
     assert len(draw)==0
     return loose[0]==tuple(gf.full_game1)
->>>>>>> d8f63fc (adding connect4 with history, tested)
 
 def test_connect4_game_with_history() :
     history=gf.connect4_game_with_history(4, None, None, 42, True)
@@ -76,8 +75,6 @@ def test_connect4_game_with_history() :
     assert len(draw)==0
     assert loose[0]==tuple(gf.full_game1)
     return
-
-### Testing connect4_game_with_stats using full_game_list
 
 ### Testing connect4_game_with_stats using full_game_list
 

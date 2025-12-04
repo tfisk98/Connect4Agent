@@ -50,14 +50,7 @@ def test__get_next_row():
     assert agent0._get_next_row(board, 4) == 5
     assert agent0._get_next_row(board, 5) == 5
     assert agent0._get_next_row(board, 6) == 5
-<<<<<<< HEAD
-    
-    env.reset(seed=42)
-    gf.generate_state(env, gf.full_column)
-    board=env.last()[0]["observation"]
-    assert agent0._get_next_row(board, 0) == None
-=======
-    
+
     env.reset(seed=42)
     gf.generate_state(env, gf.full_column)
     board=env.last()[0]["observation"]
@@ -135,15 +128,12 @@ def test_find_winning_move():
     #player_0 plays
     assert agent0._find_winning_move(observation, valid_actions, 0)==None
     assert agent0._find_winning_move(observation, valid_actions, 1)==None
->>>>>>> 6f5707b (smart agent full test, skeleton of a readme)
-
     env.close()
     return
 
 ### Test choose_action priorities
 
 def test_choose_action() :
-<<<<<<< HEAD
     
     # Check that winning has the highest priority
     assert gf.testing_strategy(gf.win_state0, sa.SmartAgent, [0])
@@ -182,34 +172,30 @@ def test_blocking_move() :
     assert gf.testing_strategy(gf.block_state1, sa.SmartAgent, [0])
     return 
 
-=======
-    env = connect_four_v3.env(render_mode=None) 
-    env.reset(seed=42)
-    agent0=sa.SmartAgent(env)
+### Test choose action in situations where the agent can win :
 
-    # Check that winning has the highest priority
-    gf.generate_state(env, gf.win_state0)
-    #player_0 plays
-    assert agent0.choose_action(env.last()[0])==0
-
-    # Check that blocking opponent has higher priority than playing
-    # in the center
-    env.reset(seed=42)
-    gf.generate_state(env, gf.block_state0)
-    #player_0 plays
-    assert agent0.choose_action(env.last()[0])==0
-
-    # Check that playing in the center has higher priority than playing
-    # randomly
-    env.reset(seed=42)
-    gf.generate_state(env, gf.full_column)
-    #player_0 plays
-    assert agent0.choose_action(env.last()[0])==3
-
-    env.close()
+def test_winning_move():
+    assert gf.testing_strategy(gf.win_state0, sa.SmartAgent, [0])
+    assert gf.testing_strategy(gf.win_state1, sa.SmartAgent, [2])
+    assert gf.testing_strategy(gf.win_state2, sa.SmartAgent, [2])
+    assert gf.testing_strategy(gf.win_state3, sa.SmartAgent, [3])
+    assert gf.testing_strategy(gf.win_state4, sa.SmartAgent, [2])
+    assert gf.testing_strategy(gf.win_state5, sa.SmartAgent, [3])
+    assert gf.testing_strategy(gf.block_state0.copy()+[3,3], sa.SmartAgent, [4])
     return
 
->>>>>>> 6f5707b (smart agent full test, skeleton of a readme)
+### Test choose action in situations where the agent can't win and should block it opponent :
+
+def test_blocking_move() :
+    assert gf.testing_strategy(gf.win_state0.copy()+[6], sa.SmartAgent, [4])
+    assert gf.testing_strategy(gf.win_state1.copy()+[5], sa.SmartAgent, [6])
+    assert gf.testing_strategy(gf.win_state2.copy()+[3], sa.SmartAgent, [2])
+    assert gf.testing_strategy(gf.win_state3.copy()+[0], sa.SmartAgent, [3])
+    assert gf.testing_strategy(gf.win_state4.copy()+[0,2], sa.SmartAgent, [3])
+    assert gf.testing_strategy(gf.block_state0, sa.SmartAgent, [3])
+    assert gf.testing_strategy(gf.block_state1, sa.SmartAgent, [0])
+    return 
+
 ### Testing SmartAgent against himself, checking ML-Arena requirements and statistical
 ### expected winrate and draw range with an advantage for the agent that play first
 
@@ -272,15 +258,9 @@ def test_Smart_vs_Weighted_second() :
 ### Testing SmartAgent against RandomAgent, SmartAgent plays first : checking 
 ### ML-Arena requirements and statistical superiority of SmartAgent
 
-<<<<<<< HEAD
 def test_Smart_vs_Random_first() :
     stats=gf.connect4_game_with_stats(number_of_games, sa.SmartAgent, rnda.RandomAgent)
     minimal_win_rate = 0.95
-=======
-def test_Smart_vs_Weighted_first() :
-    stats=gf.connect4_game_with_stats(number_of_games, sa.SmartAgent, rnda.RandomAgent)
-    minimal_win_rate = 0.98
->>>>>>> 6f5707b (smart agent full test, skeleton of a readme)
     maximum_time = 2.8
     maximum_memory_peak = 364*10e6
     stat_win_rate0 = stats[1]["Frequency of win"]["player_0"]
@@ -295,15 +275,10 @@ def test_Smart_vs_Weighted_first() :
 ### Testing SmartAgent against RandomAgent, SmartAgent plays second : checking 
 ### ML-Arena requirements and statistical superiority of SmartAgent
 
-<<<<<<< HEAD
 def test_Smart_vs_Random_second() :
     stats=gf.connect4_game_with_stats(number_of_games, rnda.RandomAgent, sa.SmartAgent)
     minimal_win_rate = 0.95
-=======
-def test_Smart_vs_Weighted_second() :
-    stats=gf.connect4_game_with_stats(number_of_games, rnda.RandomAgent, sa.SmartAgent)
     minimal_win_rate = 0.98
->>>>>>> 6f5707b (smart agent full test, skeleton of a readme)
     maximum_time = 2.8
     maximum_memory_peak = 364*10e6
     stat_win_rate1 = stats[1]["Frequency of win"]["player_1"]
