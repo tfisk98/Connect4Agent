@@ -17,6 +17,7 @@ import src.random_agent as rnda
 import src.game_facilities as gf
 
 ### Testing print_board
+### Testing print_board
 
 def test_print_board() : 
     expected_board1  = ". . . . . . . \n" 
@@ -63,6 +64,15 @@ def test_connect4_game_with_history() :
     loose=history[2]
     assert win[2]==tuple(gf.full_game0)
     assert len(draw)==0
+    return loose[0]==tuple(gf.full_game1)
+
+def test_connect4_game_with_history() :
+    history=gf.connect4_game_with_history(4, None, None, 42, True)
+    win=history[0]
+    draw=history[1]
+    loose=history[2]
+    assert win[2]==tuple(gf.full_game0)
+    assert len(draw)==0
     assert loose[0]==tuple(gf.full_game1)
     return
 
@@ -79,11 +89,19 @@ def test_connect4_game_with_stats() :
     expected_frequency_win_player1 = 1/4
     expected_frequency_draw_player1 = 0
     expected_frequency_loss_player1 = 3/4
+    expected_frequency_loss_player0 = 1/4
+    expected_frequency_win_player1 = 1/4
+    expected_frequency_draw_player1 = 0
+    expected_frequency_loss_player1 = 3/4
     assert expected_average_turn_number==stats[0]["Average number of turns per game"]
     assert expected_min_turn_number==stats[0]["Minimum number of turns in a game"]
     assert expected_max_turn_number==stats[0]["Maximum number of turns in a game"]
     assert expected_frequency_win_player0==stats[1]["Frequency of win"]["player_0"]
     assert expected_frequency_draw_player0==stats[1]["Frequency of draw"]["player_0"]
+    assert expected_frequency_loss_player0==stats[1]["Frequency of loss"]["player_0"]
+    assert expected_frequency_win_player1==stats[1]["Frequency of win"]["player_1"]
+    assert expected_frequency_draw_player1==stats[1]["Frequency of draw"]["player_1"]
+    assert expected_frequency_loss_player1==stats[1]["Frequency of loss"]["player_1"]
     assert expected_frequency_loss_player0==stats[1]["Frequency of loss"]["player_0"]
     assert expected_frequency_win_player1==stats[1]["Frequency of win"]["player_1"]
     assert expected_frequency_draw_player1==stats[1]["Frequency of draw"]["player_1"]

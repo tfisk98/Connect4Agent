@@ -578,11 +578,13 @@ def testing_strategy(action_list, CustomAgent, expected_action_list) :
 ### Predefined action lists : 
 
 # Note that the corresponding game states are represented in the annex of readme.md.
+# Note that the corresponding game states are represented in the annex of readme.md.
 
 full_game0=[0,1,0,2,0,1,0] # player_0 win
-full_game1=[0,1,2,1,0,1,2,1] # player_1 loose
+full_game1=[0,1,2,1,0,1,2,1] # player_0 lost
 full_game_list=[full_game0, full_game0, full_game0, full_game1]
 full_column=[0,0,0,0,0,0] # player_0 has to play
+full_center=[3,3,3,3,3] # player_0 has to play
 win_state0=[0,1,0,2,0,3] # player_0 has to play
 win_state1=[0,6,1,6,3,6] # player_0 has to play
 win_state2=[6,5,6,4,5,3,4] # player_1 has to play
@@ -592,6 +594,21 @@ win_state5=[0,0,0,0,1,1,2,1,6,2,6,6,6,5,5,4,5,6,4] # player_1 has to play
 block_state0=[6,6,6,6,5,5,0,5,0,4,1,0,0,2,2,1,1,0,0] # player_1 has to play
 block_state1=[0,0,6,0,5,0] # player_0 has to play
 empty_state=[] # player_0 has to play
+
+
+win_diag = [0,1,1,2,2,3,2,3,3,4,3]
+connect_twos = [0,2,0,2,1,2] # Three for player_0 , two for player_1
+connect_threes = [3,2,3,4,3,4,2,4,1,6] # Two for player_0, 1 for player_1
+
+
+win_state3_depth3=[0,1,1,3,2,2,2,4,3,5,5,4,4] # player_1 has to play
+
+win_state3_depth32 = [3,3,2,3]
+
+win_state5_depth5=[0,0,0,0,1,1,2,1,6,2,6,6,6,5,5] # player_1 has to play
+
+win_state5_depth52=[3,3,3,4,4,5,4,5]
+
 
 
 # Printing predefined states (don't forget to comment it again after vizualization) :
