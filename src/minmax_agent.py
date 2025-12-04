@@ -13,7 +13,7 @@ class MinimaxAgent:
     Agent using minimax algorithm with alpha-beta pruning
     """
 
-    def __init__(self, env, depth=4, player_name=None):
+    def __init__(self, env, depth=2, player_name=None):
         """
         Initialize minimax agent
 
@@ -31,10 +31,22 @@ class MinimaxAgent:
         """
         Choose action using minimax algorithm
         """
+
+        action=None
+        if terminated or truncated :
+            print("Truncated")
+            return action
+        elif action_mask == None :
+            action_mask=observation["action_mask"]
+        else :
+            mask=action_mask
+
+        
         valid_actions = [i for i, valid in enumerate(action_mask) if valid == 1]
 
         best_action = None
         best_value = float('-inf')
+        observation = observation['observation']
 
         # Try each valid action
         for action in valid_actions:
@@ -68,12 +80,8 @@ class MinimaxAgent:
         # Base cases:
         #   - depth == 0: return evaluate(board)
         #   - game over: return win/loss score
-
-        if self._check_win(board,0) : 
-            return 10000
-        elif self._check_win(board, 1):
-            return -10000        
-        elif depth == 0 : 
+       
+        if depth == 0 : 
             return self._evaluate(board)
         
         # Recursive case:
@@ -83,23 +91,24 @@ class MinimaxAgent:
         #   - Prune if possible
         
         elif maximizing : 
-            max_eval = -1e6 
+            max_eval = alpha 
             for move in self._get_valid_moves(board) :
                 new_board = self._simulate_move(board, col=move, channel= 0)
                 eval = self._minimax(new_board, depth - 1, alpha, beta, False)
-                max_eval = np.max(max_eval, eval)
-                alpha = np.max(alpha, eval)
+                #print("eval :", eval)
+                max_eval = max(max_eval, eval)
+                alpha = max(alpha, eval)
                 if alpha >= beta : 
                      break 
                      
             return max_eval
         else : 
-            min_eval = 1e6 
+            min_eval = beta 
             for move in self._get_valid_moves(board) :
                 new_board = self._simulate_move(board, col=move, channel= 1)
                 eval = self._minimax(new_board, depth - 1, alpha, beta, True)
-                min_eval = np.max(min_eval, eval)
-                beta = np.min(beta, eval)
+                min_eval = min(min_eval, eval)
+                beta = min(beta, eval)
                 if alpha >= beta  : 
                      break 
             return min_eval
@@ -131,6 +140,9 @@ class MinimaxAgent:
         """
         Get list of valid column indices
 
+        Parameters : 
+            board: Current board(6,7,2)
+
         Returns:
             list of valid columns
         """
@@ -139,7 +151,7 @@ class MinimaxAgent:
         for col in range(7):
             if board[0,col,0] == 0 and board[0,col,1] == 0:
                 valid_cols.append(col)
-        
+
         if valid_cols == [] :
             return None 
 
@@ -160,6 +172,7 @@ class MinimaxAgent:
         # TODO: Implement this
         # Hint: Start from bottom row (5) and go up
         # A position is empty if board[row, col, 0] == 0 and board[row, col, 1] == 0
+
         
         for row in range(5,-1,-1):
             if (board[row, col, 0] == 0 and board[row, col, 1] == 0): 
@@ -189,9 +202,9 @@ class MinimaxAgent:
         # TODO: Check all positions for 4 in a row
 
         for row in range(5,-1,-1):
-         for col in range(7):
-              if board[row,col,channel] == 1 and self._check_win_from_position(board, row, col, channel):
-                   return True
+            for col in range(7):
+                if board[row,col,channel] == 1 and self._check_win_from_position(board, row, col, channel):
+                    return True
         return False 
 
     def _check_win_from_position(self, board, row, col, channel):

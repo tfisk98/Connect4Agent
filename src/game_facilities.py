@@ -600,6 +600,16 @@ connect_twos = [0,2,0,2,1,2] # Three for player_0 , two for player_1
 connect_threes = [3,2,3,4,3,4,2,4,1,6] # Two for player_0, 1 for player_1
 
 
+win_state3_depth3=[0,1,1,3,2,2,2,4,3,5,5,4,4] # player_1 has to play
+
+win_state3_depth32 = [3,3,2,3]
+
+win_state5_depth5=[0,0,0,0,1,1,2,1,6,2,6,6,6,5,5] # player_1 has to play
+
+win_state5_depth52=[3,3,3,4,4,5,4,5]
+
+
+
 # Printing predefined states (don't forget to comment it again after vizualization) :
 
 """env = connect_four_v3.env(render_mode=None)

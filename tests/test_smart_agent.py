@@ -16,6 +16,7 @@ from pettingzoo.classic import connect_four_v3
 import src.game_facilities as gf
 import src.random_agent as rnda
 import src.smart_agent as sa
+import src.minmax_agent as mma
 
 number_of_games=1000
 
@@ -183,6 +184,62 @@ def test_Smart_vs_Random_first() :
 def test_Smart_vs_Random_second() :
     stats=gf.connect4_game_with_stats(number_of_games, rnda.RandomAgent, sa.SmartAgent)
     minimal_win_rate = 0.95
+    maximum_time = 2.8
+    maximum_memory_peak = 364*10e6
+    stat_win_rate1 = stats[1]["Frequency of win"]["player_1"]
+    stat_maximum_time1 = stats[1]["Maximum time to play"]["player_1"]
+    stat_maximum_peak1= stats[1]["Maximum memory usage peak"]["player_1"]
+    assert stat_win_rate1 > minimal_win_rate
+    assert stat_maximum_time1 < maximum_time
+    assert stat_maximum_peak1 < maximum_memory_peak
+    return
+
+
+### Testing SmartAgent against RandomAgent, SmartAgent plays second : checking 
+### ML-Arena requirements and statistical superiority of SmartAgent
+
+def test_Minimax_vs_Random_first() :
+    stats=gf.connect4_game_with_stats(number_of_games, mma.MinimaxAgent, rnda.RandomAgent)
+    minimal_win_rate = 0.95
+    maximum_time = 2.8
+    maximum_memory_peak = 364*10e6
+    stat_win_rate0 = stats[1]["Frequency of win"]["player_0"]
+    stat_maximum_time0 = stats[1]["Maximum time to play"]["player_0"]
+    stat_maximum_peak0 = stats[1]["Maximum memory usage peak"]["player_0"]
+    assert stat_win_rate0 > minimal_win_rate
+    assert stat_maximum_time0 < maximum_time
+    assert stat_maximum_peak0 < maximum_memory_peak
+    return
+
+def test_Minimax_vs_Random_second() :
+    stats=gf.connect4_game_with_stats(number_of_games, rnda.RandomAgent, mma.MinimaxAgent)
+    minimal_win_rate = 0.95
+    maximum_time = 2.8
+    maximum_memory_peak = 364*10e6
+    stat_win_rate1 = stats[1]["Frequency of win"]["player_1"]
+    stat_maximum_time1 = stats[1]["Maximum time to play"]["player_1"]
+    stat_maximum_peak1= stats[1]["Maximum memory usage peak"]["player_1"]
+    assert stat_win_rate1 > minimal_win_rate
+    assert stat_maximum_time1 < maximum_time
+    assert stat_maximum_peak1 < maximum_memory_peak
+    return
+
+def test_Minimax_vs_Smart_first() :
+    stats=gf.connect4_game_with_stats(number_of_games, mma.MinimaxAgent,sa.SmartAgent)
+    minimal_win_rate = 0.95
+    maximum_time = 2.8
+    maximum_memory_peak = 364*10e6
+    stat_win_rate0 = stats[1]["Frequency of win"]["player_0"]
+    stat_maximum_time0 = stats[1]["Maximum time to play"]["player_0"]
+    stat_maximum_peak0 = stats[1]["Maximum memory usage peak"]["player_0"]
+    assert stat_win_rate0 > minimal_win_rate
+    assert stat_maximum_time0 < maximum_time
+    assert stat_maximum_peak0 < maximum_memory_peak
+    return
+
+def test_Minimax_vs_Smart_second() :
+    stats=gf.connect4_game_with_stats(number_of_games, sa.SmartAgent, mma.MinimaxAgent)
+    minimal_win_rate = 0.7
     maximum_time = 2.8
     maximum_memory_peak = 364*10e6
     stat_win_rate1 = stats[1]["Frequency of win"]["player_1"]
