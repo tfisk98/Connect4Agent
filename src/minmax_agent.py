@@ -5,7 +5,7 @@ Minimax agent with alpha-beta pruning
 import numpy as np
 import random
 
-from evaluate_pos import evaluate_position
+from src.evaluate_pos import evaluate_position
 
 
 class MinimaxAgent:
