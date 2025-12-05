@@ -1,4 +1,4 @@
-# Présentation de RandomAgent
+# Présentation de `RandomAgent`
 
 ## 1. Description
 
@@ -6,7 +6,7 @@ La classe `RandomAgent` simule un agent très simple qui joue uniformément au h
 
 ## 2. Analyse des performances
 
-### 2.1. RandomAgent contre RandomAgent
+### 2.1. `RandomAgent` contre `RandomAgent`
 
 #### 2.1.1. Données
 
@@ -50,11 +50,11 @@ En ce qui concerne les performances requises par la compétition de ML-Arena (3s
 
 En conclusion, retenons en particulier de cette analyse que l'agent jouant en premier semble avoir un avantage d'initiative mais est potentiellement plus à risque de ne pas respecter les performances requises par la compétition de ML-Arena.
 
-### 2.2. WeightedRandomAgent contre RandomAgent
+### 2.2. `WeightedRandomAgent` contre `RandomAgent`
 
 #### 2.2.1. Données
 
-##### 2.2.1.1. WeightedRandomAgent joue en premier
+##### 2.2.1.1. `WeightedRandomAgent` joue en premier
 
 Avec la même configuration de test que pour le paragraphe 1.1, les données suivantes ont été obtenues : 
 
@@ -68,25 +68,25 @@ Avec la même configuration de test que pour le paragraphe 1.1, les données sui
 
 | Agent | Fréquence de victoire | Fréquence d'égalité   | Fréquence de défaite | 
 |     :---:    | :---:  | :---: | :---:  |
-| WeightedRandomAgent | 0.8721 | 0.0009 |0.1270 |
-| RandomAgent         | 0.1270 | 0.0009 |0.8721 |
+|`WeightedRandomAgent` | 0.8721 | 0.0009 |0.1270 |
+| `RandomAgent`         | 0.1270 | 0.0009 |0.8721 |
 
 - sur le temps utilisé par chaque agent pour jouer son action :
 
 | Agent | Temps moyen pour jouer (en s) | Temps maximal pour jouer (en s) | 
 |    :---:     | :---:    | :---:    |
-| WeightedRandomAgent | 0.000017 | 0.010167 |
-| RandomAgent         | 0.000083 | 0.010751 |
+| `WeightedRandomAgent` | 0.000017 | 0.010167 |
+|` RandomAgent`         | 0.000083 | 0.010751 |
 
 - sur la mémoire utilisée par chaque agent pour jouer son action :
 
 
 | Agent | Pic moyen de mémoire utilisée pour jouer (en B) | Pic maximal de mémoire utilisée pour jouer (en B) | 
 |    :---:     | :---:        | :---:    |
-| WeightedRandomAgent | 307.405193   | 1616 |
-| RandomAgent         |  1635.817775 | 2700 |
+| `WeightedRandomAgent` | 307.405193   | 1616 |
+| `RandomAgent`         |  1635.817775 | 2700 |
 
-##### 2.2.1.2 WeightedRandomAgent joue en second
+##### 2.2.1.2 `WeightedRandomAgent` joue en second
 
 Avec la même configuration de test que pour le paragraphe 1.1, les données suivantes ont été obtenues : 
 
@@ -100,23 +100,23 @@ Avec la même configuration de test que pour le paragraphe 1.1, les données sui
 
 | Agent | Fréquence de victoire | Fréquence d'égalité   | Fréquence de défaite | 
 |     :---:    | :---:  | :---: | :---:  |
-| RandomAgent         | 0.1799 | 0.0004 |0.8197 |
-| WeightedRandomAgent | 0.8197 | 0.0004 |0.1799 |
+| `RandomAgent`         | 0.1799 | 0.0004 |0.8197 |
+| `WeightedRandomAgent` | 0.8197 | 0.0004 |0.1799 |
 
 - sur le temps utilisé par chaque agent pour jouer son action :
 
 | Agent | Temps moyen pour jouer (en s) | Temps maximal pour jouer (en s) | 
 |    :---:     | :---:    | :---:    |
-| RandomAgent          | 0.000079 | 0.010315 |
-| WeightedRandomAgent  | 0.000016 | 0.010263 |
+| `RandomAgent`          | 0.000079 | 0.010315 |
+| `WeightedRandomAgent`  | 0.000016 | 0.010263 |
 
 - sur la mémoire utilisée par chaque agent pour jouer son action :
 
 
 | Agent | Pic moyen de mémoire utilisée pour jouer (en B) | Pic maximal de mémoire utilisée pour jouer (en B) | 
 |    :---:     | :---:        | :---:    |
-| RandomAgent         | 1631.747264 | 2836 |
-| WeightedRandomAgent |  299.159817 | 1616 |
+| `RandomAgent`         | 1631.747264 | 2836 |
+| `WeightedRandomAgent` |  299.159817 | 1616 |
 
 #### 2.2.2. Analyse 
 
