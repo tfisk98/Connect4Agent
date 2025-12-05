@@ -5,7 +5,7 @@ import os
 sys.path.append(os.getcwd())
 
 
-from src.minmax_agent import MinimaxAgent
+from src.minimax_agent import MinimaxAgent
 from src.evaluate_pos import *
 
 import src.game_facilities as gf
