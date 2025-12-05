@@ -44,3 +44,7 @@ La stratégie de test d'un agent se décompose ainsi en deux principales étapes
 Un exemple complet d'une telle procédure est donné par le fichier `test_smart_agent.py`. 
 
 En cas d'échecs des tests ou de performances insatisfaisantes, la fonction `connect4_game_with_history` peut alors être utilisée pour récolter des parties afin de mener leur analyse et aider à décrypter les comportements de l'agent. Mentionnons  également la fonction `print_board` permettant d'afficher ou de stocker sous forme d'une `string` à partir du dictionnaire `observation` de l'environnement l'état du plateau de jeu. Celle-ci peut faciliter la visualisation des parties (voir `game_facilities.py` pour plus de détails). 
+
+## 5. Tester le package
+
+Les tests du package ont été écrits pour fonctionner avec `pytest`. Une fois ce dernier installé, il suffit d'éxécuter la commande éponyme à la racine du package pour lancer l'ensemble des tests.
