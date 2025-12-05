@@ -1,4 +1,4 @@
-# Présentation de SmartAgent
+# Présentation de `SmartAgent`
 
 ## 1. Description 
 
@@ -30,7 +30,7 @@ L'agent a été systématiquement testé contre  lui-même, `RandomAgent` et `We
 
 ### 2.1. Données
 
-#### 2.1.1. Contre lui-même 
+#### 2.1.1. `SmartAgent` contre `SmartAgent` 
 
 | Nombre de tours moyen | Nombre de tours minimal | Nombre de tours maximal |
 |     :---:             |      :---:              |     :---:               |
@@ -40,27 +40,27 @@ L'agent a été systématiquement testé contre  lui-même, `RandomAgent` et `We
 
 | Agent | Fréquence de victoire | Fréquence d'égalité   | Fréquence de défaite | 
 |     :---:    | :---:  | :---: | :---:  |
-| SmartAgent   | 0.5531 | 0.0719 |0.3750 |
-| SmartAgent  | 0.3750 | 0.0719 |0.5531 |
+| `SmartAgent`   | 0.5531 | 0.0719 |0.3750 |
+| `SmartAgent`  | 0.3750 | 0.0719 |0.5531 |
 
 - sur le temps utilisée par chaque agent pour jouer son action :
 
 | Agent | Temps moyen pour jouer (en s) | Temps maximal pour jouer (en s) | 
 |    :---:     | :---:    | :---:    |
-| SmartAgent   | 0.000460 | 0.011101 |
-| SmartAgent | 0.000451 | 0.011302 |
+| `SmartAgent`   | 0.000460 | 0.011101 |
+| `SmartAgent` | 0.000451 | 0.011302 |
 
 - sur la mémoire utilisée par chaque agent pour jouer son action :
 
 
 | Agent | Pic moyen de mémoire utilisée pour jouer (en B) | Pic maximal de mémoire utilisée pour jouer (en B) | 
 |    :---:     | :---:        | :---:    |
-| SmartAgent   | 1181.347385   | 3339     |
-| SmartAgent  |  1086.979180 | 1736 |
+| `SmartAgent`   | 1181.347385   | 3339     |
+| `SmartAgent`  |  1086.979180 | 1736 |
 
-#### 2.1.2. Contre WeightedRandomAgent
+#### 2.1.2. `SmartAgent` contre `WeightedRandomAgent`
 
-##### 2.1.2.1. SmartAgent joue en premier 
+##### 2.1.2.1. `SmartAgent` joue en premier 
 
 | Nombre de tours moyen | Nombre de tours minimal | Nombre de tours maximal |
 |     :---:              |      :---:           |     :---:              |
@@ -70,25 +70,25 @@ L'agent a été systématiquement testé contre  lui-même, `RandomAgent` et `We
 
 | Agent | Fréquence de victoire | Fréquence d'égalité   | Fréquence de défaite | 
 |     :---:           | :---:  | :---: | :---:  |
-| SmartAgent          | 0.9748 | 0.0038 |0.0214 |
-| WeigthedRandomAgent | 0.0214 | 0.0038 |0.9748 |
+| `SmartAgent`          | 0.9748 | 0.0038 |0.0214 |
+| `WeigthedRandomAgent` | 0.0214 | 0.0038 |0.9748 |
 
 - sur le temps utilisée par chaque agent pour jouer son action :
 
 | Agent | Temps moyen pour jouer (en s) | Temps maximal pour jouer (en s) | 
 |    :---:            | :---:    | :---:    |
-| SmartAgent          | 0.000175 | 0.012168 |
-| WeigthedRandomAgent | 0.000029 | 0.000864 |
+| `SmartAgent`          | 0.000175 | 0.012168 |
+| `WeigthedRandomAgent` | 0.000029 | 0.000864 |
 
 - sur la mémoire utilisée par chaque agent pour jouer son action :
 
 
 | Agent | Pic moyen de mémoire utilisée pour jouer (en B) | Pic maximal de mémoire utilisée pour jouer (en B) | 
 |    :---:           | :---:       | :---:|
-| SmartAgent         | 3315.625409 | 4793 |
-|WeigthedRandomAgent |  902.946523 | 3187 |
+| `SmartAgent`         | 3315.625409 | 4793 |
+|`WeigthedRandomAgent` |  902.946523 | 3187 |
 
-##### 2.1.2.2. SmartAgent joue en second
+##### 2.1.2.2. `SmartAgent` joue en second
 
 | Nombre de tours moyen | Nombre de tours minimal| Nombre de tours maximal |
 |     :---:              |      :---:           |     :---:              |
@@ -98,28 +98,28 @@ L'agent a été systématiquement testé contre  lui-même, `RandomAgent` et `We
 
 | Agent | Fréquence de victoire | Fréquence d'égalité   | Fréquence de défaite | 
 |     :---:           | :---:  | :---: | :---:  |
-| WeigthedRandomAgent | 0.0729 | 0.0006 | 0.9198 |
-| SmartAgent          | 0.9198 | 0.0006 | 0.0729 |
+| `WeigthedRandomAgent` | 0.0729 | 0.0006 | 0.9198 |
+| `SmartAgent`          | 0.9198 | 0.0006 | 0.0729 |
 
 - sur le temps utilisée par chaque agent pour jouer son action :
 
 | Agent | Temps moyen pour jouer (en s) | Temps maximal pour jouer (en s) | 
 |    :---:            | :---:    | :---:    |
-| WeigthedRandomAgent | 0.000036 | 0.001220 |
-| SmartAgent          | 0.000185 | 0.014552 |
+| `WeigthedRandomAgent` | 0.000036 | 0.001220 |
+| `SmartAgent`          | 0.000185 | 0.014552 |
 
 - sur la mémoire utilisée par chaque agent pour jouer son action :
 
 
 | Agent | Pic moyen de mémoire utilisée pour jouer (en B) | Pic maximal de mémoire utilisée pour jouer (en B) | 
 |    :---:            | :---:        |:---: |
-| WeigthedRandomAgent |  1127.830577 | 3187 |
-| SmartAgent          |  3310.667627 | 4673 |
+| `WeigthedRandomAgent` |  1127.830577 | 3187 |
+| `SmartAgent`          |  3310.667627 | 4673 |
 
 
-#### 2.1.3. Contre RandomAgent
+#### 2.1.3. `SmartAgent` contre `RandomAgent`
 
-##### 2.1.3.1. SmartAgent joue en premier 
+##### 2.1.3.1. `SmartAgent` joue en premier 
 
 | Nombre de tours moyen | Nombre de tours minimal | Nombre de tours maximal |
 |     :---:             |      :---:              |     :---:               |
@@ -129,25 +129,25 @@ L'agent a été systématiquement testé contre  lui-même, `RandomAgent` et `We
 
 | Agent | Fréquence de victoire | Fréquence d'égalité   | Fréquence de défaite | 
 |     :---:    | :---:  | :---: | :---:  |
-| SmartAgent   | 0.9909 | 0.0004 |0.0087 |
-| RandomAgent  | 0.0087 | 0.0004 |0.9909 |
+| `SmartAgent`  | 0.9909 | 0.0004 |0.0087 |
+|` RandomAgent`  | 0.0087 | 0.0004 |0.9909 |
 
 - sur le temps utilisée par chaque agent pour jouer son action :
 
 | Agent | Temps moyen pour jouer (en s) | Temps maximal pour jouer (en s) | 
 |    :---:     | :---:    | :---:    |
-| SmartAgent   | 0.000176 | 0.010628 |
-| RandomAgent  | 0.000049 | 0.001434 |
+| `SmartAgent`   | 0.000176 | 0.010628 |
+| `RandomAgent`  | 0.000049 | 0.001434 |
 
 - sur la mémoire utilisée par chaque agent pour jouer son action :
 
 
 | Agent | Pic moyen de mémoire utilisée pour jouer (en B) | Pic maximal de mémoire utilisée pour jouer (en B) | 
 |    :---:     | :---:        | :---:    |
-| SmartAgent   | 3313.937366  | 4793     |
-| RandomAgent  |  1596.188519 | 3195 |
+| `SmartAgent`   | 3313.937366  | 4793     |
+| `RandomAgent`  |  1596.188519 | 3195 |
 
-##### 2.1.3.2. SmartAgent joue en second
+##### 2.1.3.2. `SmartAgent` joue en second
 
 | Nombre de tours moyen | Nombre de tours minimal | Nombre de tours maximal |
 |     :---:             |      :---:              |     :---:               |
@@ -157,28 +157,28 @@ L'agent a été systématiquement testé contre  lui-même, `RandomAgent` et `We
 
 | Agent | Fréquence de victoire | Fréquence d'égalité   | Fréquence de défaite | 
 |     :---:    | :---:  | :---: | :---:  |
-| RandomAgent  | 0.9794 | 0.0006 |0.0200 |
-| SmartAgent   | 0.0200 | 0.0006 |0.9794 |
+| `RandomAgent`  | 0.9794 | 0.0006 |0.0200 |
+| `SmartAgent`   | 0.0200 | 0.0006 |0.9794 |
 
 - sur le temps utilisée par chaque agent pour jouer son action :
 
 | Agent | Temps moyen pour jouer (en s) | Temps maximal pour jouer (en s) | 
 |    :---:     | :---:    | :---:    |
-| RandomAgent  | 0.000048 | 0.001353 |
-| SmartAgent   | 0.000180 | 0.010860 |
+| `RandomAgent`  | 0.000048 | 0.001353 |
+| `SmartAgent`   | 0.000180 | 0.010860 |
 
 - sur la mémoire utilisée par chaque agent pour jouer son action :
 
 
 | Agent | Pic moyen de mémoire utilisée pour jouer (en B) | Pic maximal de mémoire utilisée pour jouer (en B) | 
 |    :---:     | :---:        | :---:|
-| RandomAgent  | 1590.520168  | 4609 |
-| SmartAgent   |  3312.556760 | 3195 |
+| `RandomAgent`  | 1590.520168  | 4609 |
+| `SmartAgent`   |  3312.556760 | 3195 |
 
 
 ### 2.2. Analyse
 
-#### 2.2.1. Force globale de SmartAgent
+#### 2.2.1. Force globale de `SmartAgent`
 
 `SmartAgent` contre lui-même obtient une fréquence de victoire d'environ 55% ainsi qu'une fréquence d'égalité de 7% avec des parties de longueur normale (un nombre de tours par partie moyen d'environ 22). L'avantage d'initiative de 5% sur les victoire est donc conservé ici aussi. Il semble même être plus fort que précédemment si l'on tient compte de l'augmentation de la fréquence de cas d'égalité au détriment de la fréquence de victoire de l'agent jouant en second. 
 
