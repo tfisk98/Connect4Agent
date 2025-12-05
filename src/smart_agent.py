@@ -56,7 +56,7 @@ class SmartAgent:
             return 3
 
         # Rule 4: Random fallback
-        # logger.debug("SmartAgent: RANDOM -> column {action}")
+        #logger.debug("SmartAgent: RANDOM -> column {action}")
         action=self.action_space.sample(action_mask)
         return action
     
