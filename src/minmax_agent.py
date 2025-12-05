@@ -4,6 +4,7 @@ Minimax agent with alpha-beta pruning
 
 import numpy as np
 import random
+from loguru import logger
 
 from src.evaluate_pos import evaluate_position
 
@@ -13,7 +14,7 @@ class MinimaxAgent:
     Agent using minimax algorithm with alpha-beta pruning
     """
 
-    def __init__(self, env, depth=2, player_name=None):
+    def __init__(self, env, depth=6, player_name=None):
         """
         Initialize minimax agent
 
@@ -59,7 +60,8 @@ class MinimaxAgent:
             if value > best_value:
                 best_value = value
                 best_action = action
-
+        
+        #print("best_action:",best_action)
         return best_action if best_action is not None else random.choice(valid_actions)
 
     def _minimax(self, board, depth, alpha, beta, maximizing):
@@ -81,7 +83,7 @@ class MinimaxAgent:
         #   - depth == 0: return evaluate(board)
         #   - game over: return win/loss score
        
-        if depth == 0 : 
+        if depth == 0  or self._get_valid_moves(board) == None : 
             return self._evaluate(board)
         
         # Recursive case:
