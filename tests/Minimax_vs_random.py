@@ -3,7 +3,7 @@ import os
 sys.path.append(os.getcwd())
 
 
-from src.minmax_agent import MinimaxAgent
+from connect4_agent.minimax_agent import MinimaxAgent
 from src.evaluate_pos import *
 
 
@@ -14,7 +14,7 @@ from pettingzoo.classic import connect_four_v3
 import src.random_agent as rnda
 import src.smart_agent as sa
 
-number_of_games=100
+number_of_games=1
 
 env = connect_four_v3.env(render_mode=None) 
 stats=gf.connect4_game_with_stats(number_of_games, sa.SmartAgent, MinimaxAgent)
@@ -27,8 +27,13 @@ stat_maximum_peak0 = stats[1]["Maximum memory usage peak"]["player_0"]
 
 
 stat_win_rate1 = stats[1]["Frequency of win"]["player_1"]
+stat_maximum_time1 = stats[1]["Maximum time to play"]["player_1"]
+stat_maximum_peak1 = stats[1]["Maximum memory usage peak"]["player_1"]
 
 print("stat_win_rate0 :", stat_win_rate0)
-print("stat_win_rate1 :", stat_win_rate1)
 print("stat_maximum_time0 :", stat_maximum_time0)
 print("stat_maximum_peak0 :", stat_maximum_peak0)
+
+print("stat_win_rate1 :", stat_win_rate1)
+print("stat_maximum_time1 :", stat_maximum_time1)
+print("stat_maximum_peak1 :", stat_maximum_peak1)
