@@ -24,12 +24,12 @@ class SmartAgent:
         3. Play center if available
         4. Random valid move
 
-        Returns : 
+        Returns: 
         None if there is no action to play, an integer between 0 and 6 otherwise
         """
 
         action=None
-        if terminated or truncated :
+        if terminated or truncated:
             print("Truncated")
             return action
         
@@ -71,8 +71,8 @@ class SmartAgent:
             list of valid column indexes
         """
         valid_cols = []
-        for col in range(len(action_mask)) :
-            if action_mask[col] == 1 : 
+        for col in range(len(action_mask)):
+            if action_mask[col] == 1: 
                 valid_cols.append(col)
 
         return valid_cols 
@@ -81,8 +81,8 @@ class SmartAgent:
         """
         Search for a winning move.
         Parameters:
-            observation : numpy array (6, 7, 2) - current board state
-            valid_actions : list of valid column indices
+            observation: numpy array (6, 7, 2) - current board state
+            valid_actions: list of valid column indices
             channel: 0 for current player, 1 for opponent
 
         Returns:
@@ -95,7 +95,7 @@ class SmartAgent:
     
         for col in valid_actions: 
             row = self._get_next_row(board, col)
-            if self._check_win_from_position(board, row, col, channel) :
+            if self._check_win_from_position(board, row, col, channel):
                 return col
 
         return None 
@@ -143,11 +143,11 @@ class SmartAgent:
 
         # Vertical
 
-        if row < 3 :
+        if row < 3:
             row += 1
             while (row <= 5 and player_board[row, col] == 1): 
                 token_count += 1
-                if token_count == 4 : 
+                if token_count == 4: 
                     return True 
                 row += 1
                 
@@ -160,9 +160,9 @@ class SmartAgent:
 
         col = token_col - 1
         
-        while col >= 0 and player_board[row, col] == 1 : 
+        while col >= 0 and player_board[row, col] == 1: 
             token_count += 1 
-            if token_count == 4 : 
+            if token_count == 4: 
                     return True 
             col -= 1
 
@@ -170,9 +170,9 @@ class SmartAgent:
 
         # Right
 
-        while col <= 6 and player_board[row, col] == 1 : 
+        while col <= 6 and player_board[row, col] == 1: 
             token_count += 1 
-            if token_count == 4 : 
+            if token_count == 4: 
                     return True 
             col += 1
 
@@ -187,9 +187,9 @@ class SmartAgent:
         col = token_col - 1
         row = token_row - 1
 
-        while (row >= 0 and col >= 0 and player_board[row, col] == 1 ) : 
+        while (row >= 0 and col >= 0 and player_board[row, col] == 1 ): 
             token_count += 1 
-            if token_count == 4 : 
+            if token_count == 4: 
                     return True 
             col -= 1
             row -= 1 
@@ -199,9 +199,9 @@ class SmartAgent:
 
         #Right
 
-        while (row <= 5 and col <= 6 and player_board[row, col] == 1 )  : 
+        while (row <= 5 and col <= 6 and player_board[row, col] == 1 ) : 
             token_count += 1 
-            if token_count == 4 : 
+            if token_count == 4: 
                     return True 
             col += 1
             row += 1 
@@ -217,9 +217,9 @@ class SmartAgent:
         col = token_col + 1
         row = token_row - 1
 
-        while (row >= 0 and col <= 6 and player_board[row, col] == 1 ) : 
+        while (row >= 0 and col <= 6 and player_board[row, col] == 1 ): 
             token_count += 1 
-            if token_count == 4 : 
+            if token_count == 4: 
                     return True 
             col += 1
             row -= 1 
@@ -229,9 +229,9 @@ class SmartAgent:
 
         #Right
 
-        while (row <= 5 and col >= 0 and player_board[row, col] == 1 )  : 
+        while (row <= 5 and col >= 0 and player_board[row, col] == 1 ) : 
             token_count += 1 
-            if token_count == 4 : 
+            if token_count == 4: 
                     return True 
             col -= 1
             row += 1 
@@ -241,7 +241,7 @@ class SmartAgent:
     
 
 
-### WARNING : EnhancedSmartAgent does not work for the moment.
+### WARNING: EnhancedSmartAgent does not work for the moment.
 
 class EnhancedSmartAgent(SmartAgent):
     """Smart Agent with enhanced tactics like detecting double threats and order of column preferences"""
@@ -266,17 +266,17 @@ class EnhancedSmartAgent(SmartAgent):
         3. Play center if available
         4. Random valid move
 
-        Returns : 
+        Returns: 
         None if there is no action to play, an integer between 0 and 6 otherwise
         """
 
         action=None
-        if terminated or truncated :
+        if terminated or truncated:
             print("Truncated")
             return action
-        elif action_mask == None :
+        elif action_mask == None:
             action_mask=observation["action_mask"]
-        else :
+        else:
             mask=action_mask
         
         # Get valid actions
@@ -308,7 +308,7 @@ class EnhancedSmartAgent(SmartAgent):
             logger.warning(f"{self.name}: DETECTED DOUBLE THREAT -> column {double_threat}")
             return double_threat
        
-        #Rule 5 : Default ordering choice  
+        #Rule 5: Default ordering choice  
         center_preference = [3, 2, 4, 1, 5, 0, 6]
         for col in center_preference:
             if col in valid_actions:
@@ -333,10 +333,10 @@ class EnhancedSmartAgent(SmartAgent):
 
         A double threat is unbeatable because opponent can only block one.
 
-        Parameters : 
-            observation : state of the game, especially for the boards
-            valid_actions : list of legal columns and the columns to be checked
-            channel : current player (0) or opponent(1)
+        Parameters: 
+            observation: state of the game, especially for the boards
+            valid_actions: list of legal columns and the columns to be checked
+            channel: current player (0) or opponent(1)
 
         Returns:
             col if a move creates a double threat, None otherwise
@@ -344,7 +344,7 @@ class EnhancedSmartAgent(SmartAgent):
          
          board = observation['observation']
          for col in valid_actions: 
-              if self._detects_double_threat(board, col, channel) :
+              if self._detects_double_threat(board, col, channel):
                    return col
               
          return None 
@@ -354,10 +354,10 @@ class EnhancedSmartAgent(SmartAgent):
         """
         Check if playing column col creates two separate winning threats.
 
-        Parameters : 
-            board : board to place the token in 
-            col : column of the tested token 
-            channel : current player (0) or opponent(1)
+        Parameters: 
+            board: board to place the token in 
+            col: column of the tested token 
+            channel: current player (0) or opponent(1)
 
         Returns:
             True if move creates double threat, False otherwise
@@ -366,15 +366,15 @@ class EnhancedSmartAgent(SmartAgent):
 
         row = self._get_next_row(board= board, col=col)
         if row >= 2:
-            if self._check_win_from_position(board, row -1, col, channel ) and self._check_win_from_position(board, row -2, col, channel ) :
+            if self._check_win_from_position(board, row -1, col, channel ) and self._check_win_from_position(board, row -2, col, channel ):
                 return True
-        if col <= 2 :
+        if col <= 2:
             board[col, row] = 1
-            if self._check_win_from_position(board, row, col, channel ) and self._check_win_from_position(board, row, col + 4, channel ) :
+            if self._check_win_from_position(board, row, col, channel ) and self._check_win_from_position(board, row, col + 4, channel ):
                 board[col, row] = 0
                 return True
             board[col, row] = 0
-        #if row >= 4 and col <= 2 : 
-        #    if self._check_win_from_position(board, row, col, channel ) and self._check_win_from_position(board, row-4, col + 4, channel ) :
+        #if row >= 4 and col <= 2: 
+        #    if self._check_win_from_position(board, row, col, channel ) and self._check_win_from_position(board, row-4, col + 4, channel ):
         #        return True
         return False 
