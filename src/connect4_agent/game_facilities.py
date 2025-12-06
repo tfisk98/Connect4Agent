@@ -583,7 +583,6 @@ full_game0=[0,1,0,2,0,1,0] # player_0 win
 full_game1=[0,1,2,1,0,1,2,1] # player_1 loose
 full_game2=[6,6,5,6,6,5,5,4,4,1,3]
 full_game3 =[3,3,4,3,3,4,4,5,5,1,6]
-
 full_game_list=[full_game0, full_game0, full_game0, full_game1]
 full_column=[0,0,0,0,0,0] # player_0 has to play
 win_state0=[0,1,0,2,0,3] # player_0 has to play
@@ -595,19 +594,15 @@ win_state5=[0,0,0,0,1,1,2,1,6,2,6,6,6,5,5,4,5,6,4] # player_1 has to play
 block_state0=[6,6,6,6,5,5,0,5,0,4,1,0,0,2,2,1,1,0,0] # player_1 has to play
 block_state1=[0,0,6,0,5,0] # player_0 has to play
 empty_state=[] # player_0 has to play
-
-#Minmax_States
-start = [3]
-full_center=[3,3,3,3,3] # player_0 has to play
-connect_threes= [3,4,4,3,5,3,5,3,5,1] 
-connect_twos =[0,2,0,2,1,2]
-win_state3_depth32=[3,3,3,4,4,3,4,6,5,5,5,1]
-win_state3_depth3=[3,3,2,3]    
-win_state_depth5 = [3,3,3,4,4,5,4,5,5,0]
+connect_threes= [3,4,4,3,5,3,5,3,5,1] # player_0 has to play
+connect_twos =[0,2,0,2,1,2] # player_0 has to play
+win_state_depth32=[3,3,3,4,4,3,4,6,5,5,5,1] # player_0 has to play
+win_state_depth3=[3,3,2,3] # player_0 has to play
+win_state_depth5 = [3,3,3,4,4,5,4,5,5,0] # player_0 has to play
 
 # Printing predefined states (don't forget to comment it again after vizualization):
 
-"""env = connect_four_v3.env(render_mode=None)
+env = connect_four_v3.env(render_mode=None)
 
 env.reset(seed=42)
 print("full_game0 corresponding state:\n")
@@ -657,4 +652,24 @@ print("empty_state0 corresponding state:\n")
 env.reset(seed=42)
 generate_state(env, empty_state, True)
 
-env.close()"""
+print("connect_threes corresponding state:\n")
+env.reset(seed=42)
+generate_state(env, connect_threes, True)
+
+print("connect_twos corresponding state:\n")
+env.reset(seed=42)
+generate_state(env, connect_twos, True)
+
+print("win_state_depth32 corresponding state:\n")
+env.reset(seed=42)
+generate_state(env, win_state_depth32, True)
+
+print("win_state_depth3 corresponding state:\n")
+env.reset(seed=42)
+generate_state(env, win_state_depth3, True)
+
+print("win_state_depth5 corresponding state:\n")
+env.reset(seed=42)
+generate_state(env, win_state_depth5, True)
+
+env.close()

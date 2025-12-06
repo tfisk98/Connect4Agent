@@ -34,8 +34,6 @@ class MCTSNode:
         Parameters:
             c: exploration constant
         """
-        # TODO: Implement UCB1
-        #UCB1 = (self.wins/self.visits) + c * np.sqrt(np.ln(self.parent.visits) / self.visits)
 
         max_UCB1 = 0
         best_child = self.children[0]

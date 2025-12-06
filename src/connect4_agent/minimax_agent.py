@@ -36,7 +36,6 @@ class MinimaxAgent:
 
         action=None
         if terminated or truncated :
-            #print("Truncated")
             return action
         elif action_mask == None :
             action_mask=observation["action_mask"]
@@ -78,7 +77,7 @@ class MinimaxAgent:
         Returns:
             float: evaluation score
         """
-        # TODO: Implement minimax
+
         # Base cases:
         #   - depth == 0: return evaluate(board)
         #   - game over: return win/loss score
@@ -133,7 +132,6 @@ class MinimaxAgent:
         Returns:
             new_board: Copy of board with move applied
         """
-        # TODO: Implement
         # 1. Copy board
 
         new_board = np.copy(board) # copy numpy array
@@ -154,7 +152,6 @@ class MinimaxAgent:
         Returns:
             list of valid columns
         """
-        # TODO: Check which columns aren't full
         valid_cols = []
         for col in range(7):
             if board[0,col,0] == 0 and board[0,col,1] == 0:
@@ -177,11 +174,7 @@ class MinimaxAgent:
         Returns:
             row index (0-5) if space available, None if column full
         """
-        # TODO: Implement this
-        # Hint: Start from bottom row (5) and go up
-        # A position is empty if board[row, col, 0] == 0 and board[row, col, 1] == 0
-
-        
+          
         for row in range(5,-1,-1):
             if (board[row, col, 0] == 0 and board[row, col, 1] == 0): 
                 return row
@@ -196,8 +189,6 @@ class MinimaxAgent:
         Returns:
             float: score (positive = good for us)
         """
-        # TODO: Implement evaluation function
-        # Consider: wins, threats, position, etc.
         return evaluate_position(board, 0) - evaluate_position(board, 1)
 
     def _check_win(self, board, channel):
@@ -207,7 +198,6 @@ class MinimaxAgent:
         Returns:
             bool: True if won
         """
-        # TODO: Check all positions for 4 in a row
 
         for row in range(5,-1,-1):
             for col in range(7):
@@ -258,8 +248,6 @@ class MinimaxAgent:
         Returns:
             True if this position creates 4 in a row/col/diag, False otherwise
         """
-        # TODO: Check all 4 directions: horizontal, vertical, diagonal /, diagonal \
-        # Hint: Count consecutive pieces in both directions from (row, col)
         
         start_count = 1
 

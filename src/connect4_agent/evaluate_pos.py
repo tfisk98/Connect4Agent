@@ -1,6 +1,4 @@
 import numpy as np
-import time 
-
 
 def evaluate_position(board, player_channel):
     """
@@ -92,9 +90,7 @@ def check_win_from_position(board, row, col, channel):
         Returns:
             True if this position creates 4 in a row/col/diag, False otherwise
         """
-        # TODO: Check all 4 directions: horizontal, vertical, diagonal /, diagonal \
-        # Hint: Count consecutive pieces in both directions from (row, col)
-        
+
         start_count = 1
 
         token_count = start_count 
@@ -205,7 +201,7 @@ def check_win_from_position(board, row, col, channel):
 def count_two_in_row(board, player_channel): 
     curr_board = board[:,:, player_channel]
     count = 0 
-    #On parcourt la grille de bas en haut, de la gauche vers la droite 
+    # Browsing the grid from bottom to top and left to right
     for row in range(5,-1,-1):
         for col in range(7):
             if curr_board[row,col] == 1 : 
@@ -218,7 +214,7 @@ def count_two_in_row(board, player_channel):
                         elif curr_board[row + loc_row, col + loc_col] == 1 :
                             count += 1
     
-    #Diagonales Descendantes 
+    # Descending Diagonal
     for row in range(4,-1,-1):
         for col in range(5):
             if curr_board[row,col] == 1 and curr_board[row + 1, col + 1 ] == 1:
@@ -230,7 +226,7 @@ def count_two_in_row(board, player_channel):
 def count_three_in_row(board, player_channel):
     curr_board = board[:,:, player_channel]
     count = 0
-    #On parcourt la grille de bas en haut, de la gauche vers la droite 
+    # Browsing the grid from bottom to top and left to right
     for row in range(5,-1,-1):
         for col in range(7):
             if curr_board[row,col] == 1 : 
@@ -253,7 +249,7 @@ def count_three_in_row(board, player_channel):
                                     #    if board[row + 3, col + 3, 1] + curr_board[row +3, col+ 3] == 0 :
                                     #        count += 1  #If both are free -> double threat : even better
     
-    #Diagonale Descendante 
+    # Descending Diagonal
     for row in range(3,-1,-1):
         for col in range(4):
             if curr_board[row,col] == 1 : 

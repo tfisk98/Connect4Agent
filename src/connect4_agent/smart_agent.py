@@ -91,7 +91,7 @@ class SmartAgent:
 
         board = observation['observation']
 
-        # winning_cols = [] option of we want to get all winning cols, for example, for when the opponent plays 
+        # winning_cols = [] option if we want to get all winning cols, for example, for when the opponent plays 
     
         for col in valid_actions: 
             row = self._get_next_row(board, col)
