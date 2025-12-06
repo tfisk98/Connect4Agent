@@ -5,6 +5,7 @@ Minimax agent with alpha-beta pruning
 import numpy as np
 import random
 from loguru import logger
+import time 
 
 from src.evaluate_pos import evaluate_position
 
@@ -14,7 +15,7 @@ class MinimaxAgent:
     Agent using minimax algorithm with alpha-beta pruning
     """
 
-    def __init__(self, env, depth=6, player_name=None):
+    def __init__(self, env, depth=1, player_name=None):
         """
         Initialize minimax agent
 
@@ -55,12 +56,18 @@ class MinimaxAgent:
             new_board = self._simulate_move(observation, action, channel=0)
 
             # Evaluate using minimax (opponent's turn, so minimizing)
+            #start = time.time()
             value = self._minimax(new_board, self.depth - 1, float('-inf'), float('inf'), False)
+            #stop = time.time()
+            print("value :", value)
+            #print("Minimax :", stop - start)
 
             if value > best_value:
                 best_value = value
                 best_action = action
         
+        #stop_chose = time.time()
+        #print("Chose action :", stop_chose - start_chose)
         #print("best_action:",best_action)
         return best_action if best_action is not None else random.choice(valid_actions)
 
@@ -82,8 +89,12 @@ class MinimaxAgent:
         # Base cases:
         #   - depth == 0: return evaluate(board)
         #   - game over: return win/loss score
+
+        game_over = False
+        if  self._get_valid_moves(board) == None or self._check_win( board, 0) or self._check_win( board, 1):
+            game_over = True
        
-        if depth == 0  or self._get_valid_moves(board) == None : 
+        if depth == 0  or game_over : 
             return self._evaluate(board)
         
         # Recursive case:
@@ -93,26 +104,25 @@ class MinimaxAgent:
         #   - Prune if possible
         
         elif maximizing : 
-            max_eval = alpha 
+            max_eval = float('-inf')
             for move in self._get_valid_moves(board) :
                 new_board = self._simulate_move(board, col=move, channel= 0)
                 eval = self._minimax(new_board, depth - 1, alpha, beta, False)
-                #print("eval :", eval)
                 max_eval = max(max_eval, eval)
                 alpha = max(alpha, eval)
                 if alpha >= beta : 
-                     break 
+                    break 
                      
             return max_eval
         else : 
-            min_eval = beta 
+            min_eval = float('inf') 
             for move in self._get_valid_moves(board) :
                 new_board = self._simulate_move(board, col=move, channel= 1)
                 eval = self._minimax(new_board, depth - 1, alpha, beta, True)
                 min_eval = min(min_eval, eval)
                 beta = min(beta, eval)
                 if alpha >= beta  : 
-                     break 
+                    break 
             return min_eval
 
     def _simulate_move(self, board, col, channel):

@@ -35,12 +35,20 @@ def test_count_three_in_row():
     gf.generate_state(env, gf.connect_threes)
     board=env.last()[0]["observation"]
 
+    start = time.time()
     player_channel = 0
     assert count_three_in_row(board, player_channel) == 2
+    stop = time.time() 
+    print("check threes 1 :", stop - start)
 
+    start = time.time()
     player_channel = 1
     assert count_three_in_row(board, player_channel) == 1
+    stop = time.time() 
+    print("check threes 1 :", stop - start)
     return
+
+test_count_three_in_row()
 
 def test_count_two_in_row():
     env = connect_four_v3.env(render_mode=None) 
@@ -49,13 +57,21 @@ def test_count_two_in_row():
     gf.generate_state(env, gf.connect_twos)
     board=env.last()[0]["observation"]
 
-    player_channel= 0
+    start = time.time()
+    player_channel = 0
     assert count_two_in_row(board, player_channel) == 3
+    stop = time.time() 
+    print("check twos 1 :", stop - start)
 
-    player_channel = 1 
+
+    start = time.time()
+    player_channel = 1
     assert count_two_in_row(board, player_channel) == 2
+    stop = time.time() 
+    print("check twos 1 :", stop - start)
     return
     
+test_count_two_in_row()
 
 def test_count_center():
     env = connect_four_v3.env(render_mode=None) 

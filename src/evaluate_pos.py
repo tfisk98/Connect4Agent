@@ -1,4 +1,5 @@
 import numpy as np
+import time 
 
 
 def evaluate_position(board, player_channel):
@@ -32,68 +33,10 @@ def evaluate_position(board, player_channel):
 def has_won(board, player_channel):
     for row in range(5,-1,-1):
          for col in range(7):
-              #if col == 0 :
-              #     print ("board[row,col,player_channel] ")
               if board[row,col,player_channel] == 1 and check_win_from_position(board, row, col, player_channel):
                    return True
     return False 
     
-
-def count_three_in_row(board, player_channel):
-    curr_board = board[:,:, player_channel]
-    count = 0
-    for row in range(6):
-        for col in range(7):
-            if curr_board[row,col] == 1 : 
-                for loc_row in range(-1,2,1):
-                    if row == 5 and loc_row==1 :
-                        pass 
-                    elif  row == 0 and loc_row== -1 :
-                        pass 
-                    else :
-                        for loc_col in range(-1,2,1): 
-                            if loc_row ==0 and loc_col == 0: 
-                                pass 
-                            elif col == 0 and loc_col == -1 :
-                                pass 
-                            elif col == 6 and loc_col == 1 :
-                                pass 
-                            elif row + 2*loc_row >= 0 and row + 2*loc_row < 6 :
-                                if col + 2*loc_col >= 0 and col + 2*loc_col < 7 :
-                                    if curr_board[row + loc_row, col + loc_col] == 1 and curr_board[row + 2*loc_row, col + 2*loc_col] == 1 :
-                                        count += 1
-                            if loc_row ==0 and loc_col == 0: 
-                                pass 
-                            elif col == 0 and (loc_col)**2 == 1 :
-                                pass 
-                            elif col == 6 and (loc_col)**2 == 1 :
-                                pass 
-                            elif row == 5 and loc_row== -1 :
-                                pass 
-                            elif row == 0 and loc_row == 1:
-                                pass
-                            elif curr_board[row + loc_row, col + loc_col] == 1 and curr_board[row - loc_row, col - loc_col] == 1 :
-                                count += 1/2
-    return int(count // 3) 
-
-def count_two_in_row(board, player_channel):
-    curr_board = board[:,:, player_channel]
-    count = 0 
-    for row in range(6):
-        for col in range(7):
-            if curr_board[row,col] == 1 : 
-                for loc_row in range(-1,2,1):
-                    for loc_col in range(-1,2,1): 
-                        if loc_col == 0 and loc_row == 0:
-                            pass 
-                        elif row + loc_row == 6 or row + loc_row == -1 :
-                            pass 
-                        elif col + loc_col == 7 or col + loc_col == -1 :
-                            pass 
-                        elif curr_board[row + loc_row, col + loc_col] == 1 :
-                            count += 1 
-
-    return int(count // 2) 
 
 
 def count_pieces_in_center(board, player_channel):
@@ -226,3 +169,71 @@ def check_win_from_position(board, row, col, channel):
         #row = token_row
 
         return False 
+
+
+def count_two_in_row(board, player_channel): 
+    curr_board = board[:,:, player_channel]
+    count = 0 
+    #On parcourt la grille de bas en haut, de la gauche vers la droite 
+    for row in range(5,-1,-1):
+        for col in range(7):
+            if curr_board[row,col] == 1 : 
+                for loc_row in range(-1,1,1):
+                    for loc_col in range(2): 
+                        if loc_col == 0 and loc_row == 0:
+                            pass 
+                        elif row + loc_row == -1 or col + loc_col == 7:
+                            pass 
+                        elif curr_board[row + loc_row, col + loc_col] == 1 :
+                            count += 1
+    
+    #Diagonales Descendantes 
+    for row in range(4,-1,-1):
+        for col in range(5):
+            if curr_board[row,col] == 1 :
+                if curr_board[row + 1, col + 1 ] == 1:
+                    count += 1
+
+    return count 
+
+
+def count_three_in_row(board, player_channel):
+    start = time.time() 
+    curr_board = board[:,:, player_channel]
+    count = 0
+    #On parcourt la grille de bas en haut, de la gauche vers la droite 
+    for row in range(5,-1,-1):
+        for col in range(7):
+            if curr_board[row,col] == 1 : 
+                for loc_row in range(-1,1,1):
+                    if row == 0 and loc_row== -1 :
+                        pass 
+                    else :
+                        for loc_col in range(2): 
+                            if loc_row ==0 and loc_col == 0: 
+                                pass 
+                            elif col == 6 and loc_col == 1 :
+                                pass 
+                            elif row + 2*loc_row < 6 and col + 2*loc_col < 7 :
+                                    if curr_board[row + loc_row, col + loc_col] == 1 and curr_board[row + 2*loc_row, col + 2*loc_col] == 1 :
+                                        count += 1
+    
+    #Diagonale Descendante 
+    for row in range(3,-1,-1):
+        for col in range(4):
+            if curr_board[row,col] == 1 : 
+                if curr_board[row + 1, col + 1] == 1 and curr_board[row + 2, col + 2] == 1 :
+                    count += 1   
+                            
+    return count
+
+
+def potential_threat(board,row, loc_row, col, loc_col, step):
+    if row + step*loc_row >= 0 and row + step*loc_row <= 5 :
+        if col + step*loc_col >= 0 and col + step*loc_col <= 6 :
+            if board[row + step*loc_row, col + step*loc_col,0] == 0 and  board[row + step*loc_row, col + step*loc_col,1] == 0:
+                return True
+    if row - loc_row >= 0 and row - loc_row <= 5 :
+        if col - loc_col >= 0 and col - loc_col <= 6 :
+            if board[row - loc_row, col - loc_col, 0] == 0 and  board[row - loc_row, col - loc_col,1] == 0 :
+                return True 
