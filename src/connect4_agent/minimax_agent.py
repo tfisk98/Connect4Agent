@@ -15,7 +15,7 @@ class MinimaxAgent:
     Agent using minimax algorithm with alpha-beta pruning
     """
 
-    def __init__(self, env, depth=1, player_name=None):
+    def __init__(self, env, depth=4, player_name=None):
         """
         Initialize minimax agent
 
@@ -36,7 +36,7 @@ class MinimaxAgent:
 
         action=None
         if terminated or truncated :
-            print("Truncated")
+            #print("Truncated")
             return action
         elif action_mask == None :
             action_mask=observation["action_mask"]
@@ -59,7 +59,7 @@ class MinimaxAgent:
             #start = time.time()
             value = self._minimax(new_board, self.depth - 1, float('-inf'), float('inf'), False)
             #stop = time.time()
-            print("value :", value)
+            #print("value :", value)
             #print("Minimax :", stop - start)
 
             if value > best_value:
@@ -90,11 +90,14 @@ class MinimaxAgent:
         #   - depth == 0: return evaluate(board)
         #   - game over: return win/loss score
 
-        game_over = False
-        if  self._get_valid_moves(board) == None or self._check_win( board, 0) or self._check_win( board, 1):
-            game_over = True
-       
-        if depth == 0  or game_over : 
+
+        if self._check_win( board, 0): 
+            return 20000
+
+        if self._check_win( board, 1):
+            return -20000
+
+        if depth == 0  or self._get_valid_moves(board) == None : 
             return self._evaluate(board)
         
         # Recursive case:
@@ -217,6 +220,36 @@ class MinimaxAgent:
             for col in range(7):
                 if board[row,col,channel] == 1 and self._check_win_from_position(board, row, col, channel):
                     return True
+        return False 
+    
+    def _check_win2(self,board, player_channel):
+
+        #Vertical wins
+        for row in range(3):
+            for col in range(7):
+                if np.sum(board[row: row +4, col, player_channel] )== 4 :
+                    return True 
+        
+        #Horizontal wins
+        for row in range(6):
+            for col in range(4):
+                if np.sum(board[row, col:col+4, player_channel])== 4 :
+                    return True 
+        
+        #Descending Diagonal win : 
+        for row in range(3):
+            for col in range(4):
+                if np.trace(board[row:row+4, col:col+4, player_channel] )== 4 :
+                    return True
+        
+        #Ascending Diagonal win :
+        indices = [3,6,9,12] 
+        for row in range(3):
+            for col in range(4):  
+                asc_diag = np.take(board[row:row+4, col:col+4, player_channel], indices)
+                if np.sum(asc_diag)== 4 :
+                    return True
+
         return False 
 
     def _check_win_from_position(self, board, row, col, channel):
