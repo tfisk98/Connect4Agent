@@ -1,6 +1,6 @@
 """
 Testing the class RandomAgent from random_agent.py.
-WARNING : Working directory must be the parent of this file's directory
+WARNING: Working directory must be the parent of this file's directory
 """
 
 
@@ -10,8 +10,8 @@ import sys
 import os
 sys.path.append(os.getcwd())
 
-import src.random_agent as rnda
-import src.game_facilities as gf
+import src.connect4_agent.random_agent as rnda
+import src.connect4_agent.game_facilities as gf
 
 number_of_games=1000
 
@@ -19,7 +19,7 @@ number_of_games=1000
 ### expected winrate range with a mild advantage for the agent that play first
 
 
-def test_RandomAgent() :
+def test_RandomAgent():
     stats=gf.connect4_game_with_stats(number_of_games, rnda.RandomAgent, rnda.RandomAgent)
     minimal_win_rate0 = 0.5
     minimal_win_rate1 = 0.4
@@ -40,10 +40,10 @@ def test_RandomAgent() :
     return
 
 
-### Testing WeightedRandomAgent against RandomAgent, WeeightedRandom Agent plays first : checking 
+### Testing WeightedRandomAgent against RandomAgent, WeeightedRandom Agent plays first: checking 
 ### ML-Arena requirements and statistical superiority of WeightedRandomAgent
 
-def test_WeightedRandomAgent_first() :
+def test_WeightedRandomAgent_first():
     stats=gf.connect4_game_with_stats(number_of_games, rnda.WeightedRandomAgent, rnda.RandomAgent)
     minimal_win_rate = 0.8
     maximum_time = 2.8
@@ -57,11 +57,11 @@ def test_WeightedRandomAgent_first() :
     return
 
 
-### Testing WeightedRandomAgent against RandomAgent, WeeightedRandom Agent plays second : checking 
+### Testing WeightedRandomAgent against RandomAgent, WeeightedRandom Agent plays second: checking 
 ### ML-Arena requirements and statistical superiority of WeightedRandomAgent
 
 
-def test_WeightedRandomAgent_second() :
+def test_WeightedRandomAgent_second():
     stats=gf.connect4_game_with_stats(number_of_games, rnda.RandomAgent, rnda.WeightedRandomAgent)
     minimal_win_rate = 0.75
     maximum_time = 2.8

@@ -1,11 +1,11 @@
 # Compréhension du jeu 
-## Partie 1: Règles du jeu
-### 1.1: Analyse des règles du jeu 
+## 1. Règles du jeu
+### 1.1. Analyse des règles du jeu 
 
 Le jeu de Puissance 4 se compose d'un plateau vertical de 42 cases : une grille de 6 lignes et 7 colonnes (fois deux pour représenter chaque joueur dans Pettingzoo). Un joueur joue avec les jetons jaunes et l'autre avec les rouges. Ils jouent tour à tour en déposant un jeton en haut d'une colonne (non pleine sinon le coup est illégal) et ce dernier tombe alors le long de celle-ci. Pour gagner, un joueur doit créer une chaine horizontale, verticale ou diagonale de 4 jetons de la couleur qui lui est attribué. Si le plateau est rempli sans que cette condition soit réalisée par l'un des deux joueurs, la partie est alors déclarée nulle.  Un coup illégal entraîne une défaite. Les résultats possibles pour un joueur sont donc victoire, match nul ou défaite.
 
  
-### 1.2: Analyse des conditions de victoire
+### 1.2. Analyse des conditions de victoire
 
 Voici les configurations victorieuses :
 
@@ -21,8 +21,8 @@ Pour une position et une couleur de jeton données dans la grille, il est néces
 - sinon, pas de victoire à cette position. 
 
 
-## Partie 2: Comprendre PettingZoo
-### 2.1 : Lire la documentation
+## 2. Comprendre PettingZoo
+### 2.1.  Lire la documentation
 
 Les noms des deux agents sont : `'player_0'` et `'player_1'`.
 
@@ -38,7 +38,7 @@ L'observation retournée est un dictionnaire possédant les clés `"observation"
 
 La clé `'action_mask'` est ainsi particulièrement importante car elle permet de déterminer les coups légaux possibles pour le prochain tour. 
 
-### 2.2: Analyse de l'espace d'observation
+### 2.2. Analyse de l'espace d'observation
 
 Le tableau d'observation est un tableau `ndarray` de dimension 3 et de taille `(6,7,2)` de la bibliothèque `numpy`.
 
@@ -49,8 +49,8 @@ Les deux premières dimensions représentent une position dans le plateau de jeu
 - la valeur 0 si il y a un jeton de l'adversaire ou une case vide.
 
 
-## Partie 3 : Décomposition du problème
-### 3.1 : Décomposer l'implémentation de l'agent
+## 3. Implémenter un agent
+### 3.1. Décomposer l'implémentation de l'agent
 
 Au moment de jouer; l'agent reçoit les informations renvoyées par env.last() : 
 - le dictionnaire `observation` donnant accès à l'état actuel des grilles de jeu ainsi que les actions légales possibles comme décrit dans les paragraphes précédents;
@@ -82,7 +82,7 @@ Une fois la colonne choisie l'agent n'aura alors plus qu'a retourner via `env.st
 
 ### 3.3 : Définir l'interface de l'agent
 
-Une classe `MyAgent` performante contiendrait les méthodes :
+Une classe `MyAgent` performante contiendrait nécessairement les méthodes :
 - `__init__` prenant pour arguments `self`, l'environnement `env` ainsi qu'un argument optionnel `name` et les construits en tant qu'attributs de classe, construit également à partir de `self.env` l'attribut `action_space`; 
 -  `choose_action` prenant pour arguments `self`, `observation` (obligatoire) et les autres objets renvoyés par `env.last()` (optionnels) et retourne la prochaine `action` à réaliser selon les stratégies implémentées par la fonction;
 - `check_winning_move` permettant de déterminer si il y a un coup gagnant pour l'agent;
