@@ -2,6 +2,7 @@
 ##### Build files
 build/
 __pycache__/
+connect4_agent.egg-info/
 
 ##### Log Files
 *.log
