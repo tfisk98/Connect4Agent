@@ -2,7 +2,7 @@
 Testing the class SmartAgent from smart_agent.py (stategies and battles against
 other agents). Refer to the annex of readme.md to visualize the game states
 used during the tests.
-WARNING : Working directory must be the parent of this file's directory
+WARNING: Working directory must be the parent of this file's directory
 """
 
 ### Working directory must be the parent of this file's directory
@@ -13,15 +13,15 @@ sys.path.append(os.getcwd())
 
 
 from pettingzoo.classic import connect_four_v3
-import src.game_facilities as gf
-import src.random_agent as rnda
-import src.smart_agent as sa
+import src.connect4_agent.game_facilities as gf
+import src.connect4_agent.random_agent as rnda
+import src.connect4_agent.smart_agent as sa
 
 number_of_games=1000
 
 ### Testing valid_actions 
 
-def test_valid_actions() :
+def test_valid_actions():
     env = connect_four_v3.env(render_mode=None) 
     env.reset(seed=42)
     agent0=sa.SmartAgent(env)
@@ -61,7 +61,7 @@ def test__get_next_row():
 
 ### Test choose_action priorities
 
-def test_choose_action() :
+def test_choose_action():
     
     # Check that winning has the highest priority
     assert gf.testing_strategy(gf.win_state0, sa.SmartAgent, [0])
@@ -76,7 +76,7 @@ def test_choose_action() :
 
     return
 
-### Test choose action in situations where the agent can win :
+### Test choose action in situations where the agent can win:
 
 def test_winning_move():
     assert gf.testing_strategy(gf.win_state0, sa.SmartAgent, [0])
@@ -88,9 +88,9 @@ def test_winning_move():
     assert gf.testing_strategy(gf.block_state0.copy()+[3,3], sa.SmartAgent, [4])
     return
 
-### Test choose action in situations where the agent can't win and should block it opponent :
+### Test choose action in situations where the agent can't win and should block it opponent:
 
-def test_blocking_move() :
+def test_blocking_move():
     assert gf.testing_strategy(gf.win_state0.copy()+[4], sa.SmartAgent, [0])
     assert gf.testing_strategy(gf.win_state1.copy()+[6], sa.SmartAgent, [2])
     assert gf.testing_strategy(gf.win_state2.copy()+[3], sa.SmartAgent, [2])
@@ -103,7 +103,7 @@ def test_blocking_move() :
 ### Testing SmartAgent against himself, checking ML-Arena requirements and statistical
 ### expected winrate and draw range with an advantage for the agent that play first
 
-def test_SmartAgent() :
+def test_SmartAgent():
     stats=gf.connect4_game_with_stats(number_of_games, sa.SmartAgent, sa.SmartAgent)
     minimal_win_rate0 = 0.5
     minimal_win_rate1 = 0.35
@@ -126,10 +126,10 @@ def test_SmartAgent() :
     assert stat_maximum_peak1 < maximum_memory_peak
     return
 
-### Testing SmartAgent against WeightedRandomAgent, SmartAgent plays first : checking 
+### Testing SmartAgent against WeightedRandomAgent, SmartAgent plays first: checking 
 ### ML-Arena requirements and statistical superiority of SmartAgent
 
-def test_Smart_vs_Weighted_first() :
+def test_Smart_vs_Weighted_first():
     stats=gf.connect4_game_with_stats(number_of_games, sa.SmartAgent, rnda.WeightedRandomAgent)
     minimal_win_rate = 0.9
     maximum_time = 2.8
@@ -143,10 +143,10 @@ def test_Smart_vs_Weighted_first() :
     return
 
 
-### Testing SmartAgent against WeightedRandomAgent, SmartAgent plays second : checking 
+### Testing SmartAgent against WeightedRandomAgent, SmartAgent plays second: checking 
 ### ML-Arena requirements and statistical superiority of SmartAgent
 
-def test_Smart_vs_Weighted_second() :
+def test_Smart_vs_Weighted_second():
     stats=gf.connect4_game_with_stats(number_of_games, rnda.WeightedRandomAgent, sa.SmartAgent)
     minimal_win_rate = 0.9
     maximum_time = 2.8
@@ -159,10 +159,10 @@ def test_Smart_vs_Weighted_second() :
     assert stat_maximum_peak1 < maximum_memory_peak
     return
 
-### Testing SmartAgent against RandomAgent, SmartAgent plays first : checking 
+### Testing SmartAgent against RandomAgent, SmartAgent plays first: checking 
 ### ML-Arena requirements and statistical superiority of SmartAgent
 
-def test_Smart_vs_Random_first() :
+def test_Smart_vs_Random_first():
     stats=gf.connect4_game_with_stats(number_of_games, sa.SmartAgent, rnda.RandomAgent)
     minimal_win_rate = 0.95
     maximum_time = 2.8
@@ -176,10 +176,10 @@ def test_Smart_vs_Random_first() :
     return
 
 
-### Testing SmartAgent against RandomAgent, SmartAgent plays second : checking 
+### Testing SmartAgent against RandomAgent, SmartAgent plays second: checking 
 ### ML-Arena requirements and statistical superiority of SmartAgent
 
-def test_Smart_vs_Random_second() :
+def test_Smart_vs_Random_second():
     stats=gf.connect4_game_with_stats(number_of_games, rnda.RandomAgent, sa.SmartAgent)
     minimal_win_rate = 0.95
     maximum_time = 2.8

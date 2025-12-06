@@ -3,7 +3,7 @@ Testing the main functions of game_facilities.py. You can refer to the
 annex of Readm.md to visualize the state of game represented 
 by predefined list of Connect4 actions in game_facilities.py.
 The test are designed to be executed with the library pytest.
-WARNING : Working directory must be the parent of this file's directory
+WARNING: Working directory must be the parent of this file's directory
 """
 
 ### Working directory must be the parent of this file's directory
@@ -13,12 +13,12 @@ import os
 sys.path.append(os.getcwd())
 
 from pettingzoo.classic import connect_four_v3
-import src.random_agent as rnda
-import src.game_facilities as gf
+import src.connect4_agent.random_agent as rnda
+import src.connect4_agent.game_facilities as gf
 
 ### Testing print_board
 
-def test_print_board() : 
+def test_print_board(): 
     expected_board1  = ". . . . . . . \n" 
     expected_board1 += ". . . . . . . \n" 
     expected_board1 += ". . . . . . . \n" 
@@ -56,7 +56,7 @@ def test_print_board() :
 
 ### Testing connect4_game_with_history using full_game_list
 
-def test_connect4_game_with_history() :
+def test_connect4_game_with_history():
     history=gf.connect4_game_with_history(4, None, None, 42, True)
     win=history[0]
     draw=history[1]
@@ -68,7 +68,7 @@ def test_connect4_game_with_history() :
 
 ### Testing connect4_game_with_stats using full_game_list
 
-def test_connect4_game_with_stats() :
+def test_connect4_game_with_stats():
     stats=gf.connect4_game_with_stats(4, None, None, 42, True)
     expected_average_turn_number = (3*7 + 8)/4
     expected_min_turn_number = 7
@@ -93,7 +93,7 @@ def test_connect4_game_with_stats() :
 
 # Testing testing_strategy
 
-def test_testing_strategy() :
+def test_testing_strategy():
     action_list=[]
     expected_action_list= [3]
     assert gf.testing_strategy( action_list, rnda.WeightedRandomAgent, expected_action_list )
