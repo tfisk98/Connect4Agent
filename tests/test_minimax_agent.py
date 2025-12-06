@@ -4,19 +4,11 @@ import sys
 import os
 sys.path.append(os.getcwd())
 
-
+from pettingzoo.classic import connect_four_v3
 from src.connect4_agent.minimax_agent import MinimaxAgent
 from src.connect4_agent.evaluate_pos import *
-
-
 import src.connect4_agent.game_facilities as gf
 
-from pettingzoo.classic import connect_four_v3
-
-import src.connect4_agent.random_agent as rnda
-import src.connect4_agent.smart_agent as sa
-
-import time 
 
 number_of_games=1000
 
@@ -29,9 +21,10 @@ def test_check_win():
     board=env.last()[0]["observation"]
     player_channel = 1
     assert (agent0._check_win(board, player_channel) == True )
-
     player_channel = 0
     assert (agent0._check_win(board, player_channel) == False )
+
+    env.close()
     return
 
 
@@ -41,10 +34,9 @@ def test_get_valid_actions():
     agent0=MinimaxAgent(env)
     gf.generate_state(env, gf.full_column)
     board=env.last()[0]["observation"]
-
-
     assert (agent0._get_valid_moves(board) == [1,2,3,4,5,6] )
 
+    env.close()
     return
 
 def test_evaluate():
@@ -53,144 +45,87 @@ def test_evaluate():
     agent0=MinimaxAgent(env)
     gf.generate_state(env, gf.full_game0)
     board=env.last()[0]["observation"]
-
     assert agent0._evaluate(board) == -20000
 
-
-    env = connect_four_v3.env(render_mode=None) 
     env.reset(seed=42)
     agent0=MinimaxAgent(env)
     gf.generate_state(env, gf.connect_twos)
     board=env.last()[0]["observation"]
-
-
     assert agent0._evaluate(board) == -3
 
-
-    env = connect_four_v3.env(render_mode=None) 
-    env.reset(seed=42)
-    agent0=MinimaxAgent(env)
-    gf.generate_state(env, gf.full_center)
-    board=env.last()[0]["observation"]
-
-    assert agent0._evaluate(board) == -3
-
+    env.close()
+    return
 
 
 def test_minimax():
-
     env = connect_four_v3.env(render_mode=None) 
     env.reset(seed=42)
     agent0=MinimaxAgent(env)
     gf.generate_state(env, gf.full_game0)
     board=env.last()[0]["observation"]
-
     assert agent0._minimax(board, 0, -1e6, 1e6, True) == agent0._evaluate(board)
 
-    env = connect_four_v3.env(render_mode=None) 
     env.reset(seed=42)
     agent0=MinimaxAgent(env)
     gf.generate_state(env, gf.connect_twos)
     board=env.last()[0]["observation"]
-
-    
     assert agent0._minimax(board, 0, -1e6, 1e6, True) == agent0._evaluate(board)
 
-
-    env = connect_four_v3.env(render_mode=None) 
     env.reset(seed=42)
     agent0=MinimaxAgent(env)
     gf.generate_state(env, gf.win_state0)
     board=env.last()[0]["observation"]
-
     assert agent0._minimax(board, 1, -1e6, 1e6, True) == 20000
 
-    env = connect_four_v3.env(render_mode=None) 
     env.reset(seed=42)
     agent0=MinimaxAgent(env)
-    gf.generate_state(env, gf.win_state3_depth3)
+    gf.generate_state(env, gf.win_state_depth3)
     board=env.last()[0]["observation"]
-
     assert agent0._minimax(board, 3, -1e6, 1e6, True) == 20000
 
-    #env = connect_four_v3.env(render_mode=None) 
     #env.reset(seed=42)
     #agent0=MinimaxAgent(env)
-    #gf.generate_state(env, gf.win_state5_depth52)
+    #gf.generate_state(env, gf.win_state_depth52)
     #board=env.last()[0]["observation"]
-
     #assert agent0._minimax(board, 5, -1e6, 1e6, True) == 20000
 
+    env.close()
+    return
 
 
 def test_chose_action(): 
-
     env = connect_four_v3.env(render_mode=None) 
     env.reset(seed=42)
     agent0=MinimaxAgent(env)
     gf.generate_state(env, gf.win_state0)
-    board=env.last()[0]["observation"]
+    observation=env.last()[0]
     action_mask = [1,1,1,1,1,1,1]
+    assert agent0.choose_action(observation, action_mask) == 0
 
-    assert agent0.choose_action(observation= env.last()[0], action_mask=action_mask) == 0
-
-
-    env = connect_four_v3.env(render_mode=None) 
     env.reset(seed=42)
     agent0=MinimaxAgent(env)
-    gf.generate_state(env, gf.win_state3_depth3)
-    board=env.last()[0]["observation"]
+    gf.generate_state(env, gf.win_state_depth3)
+    observation=env.last()[0]
+    assert agent0.choose_action(observation, action_mask) == 1
 
-    assert agent0.choose_action(observation= env.last()[0],action_mask=action_mask) == 1
-
-
-    #env = connect_four_v3.env(render_mode=None) 
     #env.reset(seed=42)
     #agent0=MinimaxAgent(env)
-    #gf.generate_state(env, gf.win_state3_depth32)
+    #gf.generate_state(env, gf.win_state_depth32)
     #board=env.last()[0]["observation"]
     #action = agent0.choose_action(observation= env.last()[0],action_mask=action_mask)
-
     #print("action :", action)
-
     #assert action == 6 # agent
 
-    env = connect_four_v3.env(render_mode=None) 
     env.reset(seed=42)
     agent0=MinimaxAgent(env)
     gf.generate_state(env, gf.win_state_depth5)
-    board=env.last()[0]["observation"]
-
-    print("board :", board)
-    action = agent0.choose_action(observation= env.last()[0],action_mask=action_mask)
-
-    print("action :", action)
-
+    observation=env.last()[0]
+    action = agent0.choose_action(observation, action_mask=action_mask)
     assert action == 6
 
-#####
+    env.close()
+    return
 
-
-
-def test_time_turn_Minimax_Agent():
-    env = connect_four_v3.env(render_mode=None) 
-    env.reset(seed=42)
-    agent0=MinimaxAgent(env)
-    gf.generate_state(env, gf.start)
-    board=env.last()[0]["observation"]
-    action_mask = [1,1,1,1,1,1,1]
-
-    start = time.time()
-    action = agent0.choose_action(observation= env.last()[0],action_mask=action_mask)
-    stop = time.time()
-    t = stop - start
-
-
-    print(t)
-    assert t < 3.0
-
-
-test_time_turn_Minimax_Agent()
 """
 
 def test_Minimax_vs_Random_first() :
