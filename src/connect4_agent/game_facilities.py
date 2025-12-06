@@ -581,6 +581,9 @@ def testing_strategy(action_list, CustomAgent, expected_action_list) :
 
 full_game0=[0,1,0,2,0,1,0] # player_0 win
 full_game1=[0,1,2,1,0,1,2,1] # player_1 loose
+full_game2=[6,6,5,6,6,5,5,4,4,1,3]
+full_game3 =[3,3,4,3,3,4,4,5,5,1,6]
+
 full_game_list=[full_game0, full_game0, full_game0, full_game1]
 full_column=[0,0,0,0,0,0] # player_0 has to play
 win_state0=[0,1,0,2,0,3] # player_0 has to play
