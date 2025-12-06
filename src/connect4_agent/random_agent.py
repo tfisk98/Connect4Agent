@@ -35,14 +35,14 @@ class RandomAgent:
             action_mask: numpy array (7,) - which columns are valid (1) or full (0)
 
         Returns:
-            action : None if the game is over or there is no legal play,
+            action: None if the game is over or there is no legal play,
             or an int (0-6) - which column to play - otherwise
         """
         action=None
-        if terminated or truncated :
+        if terminated or truncated:
             return action 
         
-        else :
+        else:
             mask=observation["action_mask"]
             action=self.action_space.sample(mask)
         return action
@@ -60,19 +60,19 @@ class RandomAgent:
             action_mask: numpy array (7,) - which columns are valid (1) or full (0)
 
         Returns:
-            action : None if the game is over or there is no legal play,
+            action: None if the game is over or there is no legal play,
             or an int (0-6) - which column to play - otherwise
         """
    
         action=None
-        if terminated or truncated :
+        if terminated or truncated:
             return action
     
-        else :
+        else:
             mask=observation["action_mask"]
             legal_action=[]
-            for i,legal in enumerate(mask) :
-                if legal==1 :
+            for i,legal in enumerate(mask):
+                if legal==1:
                     legal_action.append(i)
             action=rnd.choice(legal_action)
         return action 
@@ -107,17 +107,17 @@ class WeightedRandomAgent(RandomAgent):
             action_mask: numpy array (7,) - which columns are valid (1) or full (0)
 
         Returns:
-            action : None if the game is over or there is no legal play,
+            action: None if the game is over or there is no legal play,
             or an int (0-6) - which column to play - otherwise
         """
         action=None
-        if terminated or truncated :
+        if terminated or truncated:
             return action 
         
-        else :
+        else:
             mask=observation["action_mask"]
-            if mask[3]==1 :
+            if mask[3]==1:
                 action=3
-            else :
+            else:
                 action=super().choose_action(observation, reward, terminated, truncated, info, action_mask)
         return action
