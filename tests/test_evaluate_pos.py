@@ -5,10 +5,10 @@ import os
 sys.path.append(os.getcwd())
 
 
-from connect4_agent.minimax_agent import MinimaxAgent
-from src.evaluate_pos import *
+from src.connect4_agent.minimax_agent import MinimaxAgent
+from src.connect4_agent.evaluate_pos import *
 
-import src.game_facilities as gf
+import src.connect4_agent.game_facilities as gf
 
 from pettingzoo.classic import connect_four_v3
 
@@ -20,12 +20,90 @@ def test_has_won():
     agent0=MinimaxAgent(env)
     gf.generate_state(env, gf.full_game0)
     board=env.last()[0]["observation"]
+
+    start = time.time()
     player_channel = 1
     assert (has_won(board, player_channel) == True )
+    stop = time.time() 
+    print("has_won 1 Win :", stop - start)
 
+    start = time.time()
     player_channel = 0
     assert (has_won(board, player_channel) == False )
+    stop = time.time() 
+    print("has_won 1 Lose :", stop - start)
+
+    start = time.time()
+    player_channel = 1
+    assert (has_won2(board, player_channel) == True )
+    stop = time.time() 
+    print("has_won 2 Win:", stop - start)
+
+    start = time.time()
+    player_channel = 0
+    assert (has_won2(board, player_channel) == False )
+    stop = time.time() 
+    print("has_won 2 Lose:", stop - start)
+
+
+    env = connect_four_v3.env(render_mode=None) 
+    env.reset(seed=42)
+    agent0=MinimaxAgent(env)
+    gf.generate_state(env, gf.full_game1)
+    board=env.last()[0]["observation"]
+
+    start = time.time()
+    player_channel = 1
+    assert (has_won2(board, player_channel) == True )
+    stop = time.time() 
+    print("has_won 2 Win:", stop - start)
+
+    start = time.time()
+    player_channel = 0
+    assert (has_won2(board, player_channel) == False )
+    stop = time.time() 
+    print("has_won 2 Lose:", stop - start)
+
+    env = connect_four_v3.env(render_mode=None) 
+    env.reset(seed=42)
+    agent0=MinimaxAgent(env)
+    gf.generate_state(env, gf.full_game2)
+    board=env.last()[0]["observation"]
+
+    start = time.time()
+    player_channel = 1
+    assert (has_won2(board, player_channel) == True )
+    stop = time.time() 
+    print("has_won 2 Win:", stop - start)
+
+    start = time.time()
+    player_channel = 0
+    assert (has_won2(board, player_channel) == False )
+    stop = time.time() 
+    print("has_won 2 Lose:", stop - start)
+
+    env = connect_four_v3.env(render_mode=None) 
+    env.reset(seed=42)
+    agent0=MinimaxAgent(env)
+    gf.generate_state(env, gf.full_game3)
+    board=env.last()[0]["observation"]
+
+    start = time.time()
+    player_channel = 1
+    assert (has_won2(board, player_channel) == True )
+    stop = time.time() 
+    print("has_won 2 Win:", stop - start)
+
+    start = time.time()
+    player_channel = 0
+    assert (has_won2(board, player_channel) == False )
+    stop = time.time() 
+    print("has_won 2 Lose:", stop - start)
+
+
     return
+
+test_has_won()
 
 
 def test_count_three_in_row():
@@ -48,7 +126,6 @@ def test_count_three_in_row():
     print("check threes 1 :", stop - start)
     return
 
-test_count_three_in_row()
 
 def test_count_two_in_row():
     env = connect_four_v3.env(render_mode=None) 
@@ -71,7 +148,6 @@ def test_count_two_in_row():
     print("check twos 1 :", stop - start)
     return
     
-test_count_two_in_row()
 
 def test_count_center():
     env = connect_four_v3.env(render_mode=None) 

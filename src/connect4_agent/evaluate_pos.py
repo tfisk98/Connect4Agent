@@ -37,6 +37,37 @@ def has_won(board, player_channel):
                    return True
     return False 
     
+def has_won2(board, player_channel):
+
+    #Vertical wins
+    for row in range(3):
+        for col in range(7):
+            if np.sum(board[row: row +4, col, player_channel] )== 4 :
+                return True 
+    
+    #Horizontal wins
+    for row in range(6):
+        for col in range(4):
+            if np.sum(board[row, col:col+4, player_channel])== 4 :
+                return True 
+    
+    #Descending Diagonal win : 
+    for row in range(3):
+        for col in range(4):
+            if np.trace(board[row:row+4, col:col+4, player_channel] )== 4 :
+                return True
+    
+    #Ascending Diagonal win :
+    indices = [3,6,9,12] 
+    for row in range(3):
+        for col in range(4):  
+            asc_diag = np.take(board[row:row+4, col:col+4, player_channel], indices)
+            if row == 2 and col == 3 : 
+                print("asc_diag :", asc_diag)
+            if np.sum(asc_diag)== 4 :
+                return True
+
+    return False 
 
 
 def count_pieces_in_center(board, player_channel):

@@ -7,7 +7,7 @@ import random
 from loguru import logger
 import time 
 
-from src.evaluate_pos import evaluate_position
+from src.connect4_agent.evaluate_pos import evaluate_position
 
 
 class MinimaxAgent:
