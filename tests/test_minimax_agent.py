@@ -5,16 +5,16 @@ import os
 sys.path.append(os.getcwd())
 
 
-from connect4_agent.minimax_agent import MinimaxAgent
-from src.evaluate_pos import *
+from src.connect4_agent.minimax_agent import MinimaxAgent
+from src.connect4_agent.evaluate_pos import *
 
 
-import src.game_facilities as gf
+import src.connect4_agent.game_facilities as gf
 
 from pettingzoo.classic import connect_four_v3
 
-import src.random_agent as rnda
-import src.smart_agent as sa
+import src.connect4_agent.random_agent as rnda
+import src.connect4_agent.smart_agent as sa
 
 import time 
 
