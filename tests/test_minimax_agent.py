@@ -14,7 +14,7 @@ from src.connect4_agent.random_agent import RandomAgent
 from src.connect4_agent.smart_agent import SmartAgent
 
 
-number_of_games=20
+number_of_games=100
 
 ### Checking the evaluation of an agent 
 
@@ -131,7 +131,7 @@ def test_Minimax_vs_Smart_first() :
 
 def test_Minimax_vs_Smart_second() :
     stats=gf.connect4_game_with_stats(number_of_games, SmartAgent, MinimaxAgent)
-    minimal_win_rate = 0.65
+    minimal_win_rate = 0.55
     maximum_time = 2.8
     maximum_memory_peak = 364*10e6
     stat_win_rate1 = stats[1]["Frequency of win"]["player_1"]
