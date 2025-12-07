@@ -25,10 +25,12 @@ class SmartAgent:
         4. Random valid move
 
         Returns: 
+        Returns: 
         None if there is no action to play, an integer between 0 and 6 otherwise
         """
 
         action=None
+        if terminated or truncated:
         if terminated or truncated:
             print("Truncated")
             return action
@@ -144,9 +146,11 @@ class SmartAgent:
         # Vertical
 
         if row < 3:
+        if row < 3:
             row += 1
             while (row <= 5 and player_board[row, col] == 1): 
                 token_count += 1
+                if token_count == 4: 
                 if token_count == 4: 
                     return True 
                 row += 1
@@ -161,7 +165,9 @@ class SmartAgent:
         col = token_col - 1
         
         while col >= 0 and player_board[row, col] == 1: 
+        while col >= 0 and player_board[row, col] == 1: 
             token_count += 1 
+            if token_count == 4: 
             if token_count == 4: 
                     return True 
             col -= 1
@@ -171,7 +177,9 @@ class SmartAgent:
         # Right
 
         while col <= 6 and player_board[row, col] == 1: 
+        while col <= 6 and player_board[row, col] == 1: 
             token_count += 1 
+            if token_count == 4: 
             if token_count == 4: 
                     return True 
             col += 1
@@ -188,7 +196,9 @@ class SmartAgent:
         row = token_row - 1
 
         while (row >= 0 and col >= 0 and player_board[row, col] == 1 ): 
+        while (row >= 0 and col >= 0 and player_board[row, col] == 1 ): 
             token_count += 1 
+            if token_count == 4: 
             if token_count == 4: 
                     return True 
             col -= 1
@@ -200,7 +210,9 @@ class SmartAgent:
         #Right
 
         while (row <= 5 and col <= 6 and player_board[row, col] == 1 ) : 
+        while (row <= 5 and col <= 6 and player_board[row, col] == 1 ) : 
             token_count += 1 
+            if token_count == 4: 
             if token_count == 4: 
                     return True 
             col += 1
@@ -218,7 +230,9 @@ class SmartAgent:
         row = token_row - 1
 
         while (row >= 0 and col <= 6 and player_board[row, col] == 1 ): 
+        while (row >= 0 and col <= 6 and player_board[row, col] == 1 ): 
             token_count += 1 
+            if token_count == 4: 
             if token_count == 4: 
                     return True 
             col += 1
@@ -230,7 +244,9 @@ class SmartAgent:
         #Right
 
         while (row <= 5 and col >= 0 and player_board[row, col] == 1 ) : 
+        while (row <= 5 and col >= 0 and player_board[row, col] == 1 ) : 
             token_count += 1 
+            if token_count == 4: 
             if token_count == 4: 
                     return True 
             col -= 1

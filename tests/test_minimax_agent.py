@@ -5,6 +5,7 @@ import os
 sys.path.append(os.getcwd())
 
 from pettingzoo.classic import connect_four_v3
+from pettingzoo.classic import connect_four_v3
 from src.connect4_agent.minimax_agent import MinimaxAgent
 from src.connect4_agent.evaluate_pos import *
 import src.connect4_agent.game_facilities as gf
@@ -71,7 +72,9 @@ def test_chose_action():
     agent0=MinimaxAgent(env,1)
     gf.generate_state(env, gf.win_state0)
     observation=env.last()[0]
+    observation=env.last()[0]
     action_mask = [1,1,1,1,1,1,1]
+    assert agent0.choose_action(observation, action_mask) == 0
     assert agent0.choose_action(observation, action_mask) == 0
 
     env.reset(seed=42)

@@ -88,6 +88,7 @@ class MinimaxAgent:
             float: evaluation score
         """
 
+
         # Base cases:
         #   - depth == 0: return evaluate(board)
         #   - game over: return win/loss score
@@ -184,6 +185,7 @@ class MinimaxAgent:
         Returns:
             row index (0-5) if space available, None if column full
         """
+          
           
         for row in range(5,-1,-1):
             if (board[row, col, 0] == 0 and board[row, col, 1] == 0): 

@@ -82,6 +82,7 @@ def check_win_from_position(board, row, col, channel):
             True if this position creates 4 in a row/col/diag, False otherwise
         """
 
+
         start_count = 1
 
         token_count = start_count 
@@ -195,6 +196,7 @@ def count_two_in_row(board, player_channel):
     curr_board = board[:,:, player_channel]
     count = 0 
     # Browsing the grid from bottom to top and left to right
+    # Browsing the grid from bottom to top and left to right
     for row in range(5,-1,-1):
         for col in range(7):
             if curr_board[row,col] == 1 : 
@@ -207,6 +209,7 @@ def count_two_in_row(board, player_channel):
                         elif curr_board[row + loc_row, col + loc_col] == 1 :
                             count += 1
     
+    # Descending Diagonal
     # Descending Diagonal
     for row in range(4,-1,-1):
         for col in range(5):
@@ -231,6 +234,7 @@ def count_three_in_row(board, player_channel):
     curr_board = board[:,:, player_channel]
     count = 0
     # Browsing the grid from bottom to top and left to right
+    # Browsing the grid from bottom to top and left to right
     for row in range(5,-1,-1):
         for col in range(7):
             if curr_board[row,col] == 1 : 
@@ -247,6 +251,7 @@ def count_three_in_row(board, player_channel):
                                     if curr_board[row + loc_row, col + loc_col] == 1 and curr_board[row + 2*loc_row, col + 2*loc_col] == 1 :
                                         count += 1
     
+    # Descending Diagonal
     # Descending Diagonal
     for row in range(3,-1,-1):
         for col in range(4):

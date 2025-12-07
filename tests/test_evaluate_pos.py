@@ -5,12 +5,14 @@ import os
 sys.path.append(os.getcwd())
 
 from pettingzoo.classic import connect_four_v3
+from pettingzoo.classic import connect_four_v3
 from src.connect4_agent.minimax_agent import MinimaxAgent
 from src.connect4_agent.evaluate_pos import *
 import src.connect4_agent.game_facilities as gf
 
 ### Testing has_won()
 def test_has_won():
+
     env = connect_four_v3.env(render_mode=None) 
     env.reset(seed=42)
     gf.generate_state(env, gf.full_game0)
@@ -34,6 +36,8 @@ def test_count_three_in_row():
     assert count_three_in_row(board, player_channel) == 1
 
     env.close()
+
+    env.close()
     return
 
 ### Testing count_two_in_row()
@@ -46,6 +50,8 @@ def test_count_two_in_row():
     assert count_two_in_row(board, player_channel) == 3
     player_channel = 1
     assert count_two_in_row(board, player_channel) == 2
+
+    env.close()
 
     env.close()
     return
@@ -64,8 +70,6 @@ def test_count_center():
     env.close()
     return
 
-    env.close()
-    return
 
 ### Testing evaluate_position()
 def test_evaluate_position():
@@ -85,6 +89,7 @@ def test_evaluate_position():
     player_channel = 0
     assert evaluate_position(board, player_channel) == 6
 
+    env.close()
     env.close()
     return
 
