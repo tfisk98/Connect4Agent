@@ -1,3 +1,8 @@
+"""
+Testing evaluate_pos.py.
+WARNING: Working directory must be the parent of this file's directory
+"""
+
 ### Working directory must be the parent of this file's directory
 
 import sys

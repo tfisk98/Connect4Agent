@@ -12,10 +12,10 @@
 - `game_factilities.py` : diverses fonctionnalités permettant de manipuler plus facilement l'environnement de jeu Connect4 de `pettingzoo`;
 - `random_agent.py` : définit deux classes d'agents aléatoires simples;
 - `smart_agent.py` : définit une classe d'agent employant des stratégies simples;
-- `minimax_agent.py` : définit une classe d'agent employan un algorithme de type Minimax pour jouer;
+- `minimax_agent.py` : définit une classe d'agent employant un algorithme de type Minimax pour jouer;
 - `evaluate_pos.py` : un module auxiiaire à `minimax_agent.py`.
 
-Les agents précédemment mentionnés sont également définis de sorte à respecter les conditions de perfomances de d'une compétition du site ML-Arena (https://ml-arena.com/viewcompetition/2).
+Les agents précédemment mentionnés sont également définis de sorte à respecter les conditions de perfomances de d'une compétition du site ML-Arena (https://ml-arena.com/viewcompetition/2). L'agent `MinimaxAgent` avec `depth=2` a été utilisé par les auteurs du package dans la compétition.
 
 Davantage d'informations peuvent être trouvées dans les liens fournis dans le pragrapghe 3 de ce fichier. Voir notamment les présentations d'agents pour les modules d'agents, ainsi que la discussion sur les tests et l'annexe pour  `game_factilities.py`. Les fichiers sources documentés du package peuvent être également consultés.
 
