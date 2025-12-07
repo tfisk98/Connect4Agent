@@ -32,6 +32,16 @@ class MinimaxAgent:
     def choose_action(self, observation, reward=0.0, terminated=False, truncated=False, info=None, action_mask=None):
         """
         Choose action using minimax algorithm
+
+        Parameters : 
+            observation : State of the game (board of player_0 and player_1 plus action mask)
+            reward : score which rewards the agent for a win and punishes the agent for a in order improve its evaluation for the next game(unused here)
+            terminated : True if the game is over, False otherwise 
+            truncated : True if the game stops brutally, False otherwise 
+            info : unused here
+            action_mask : filter to indicate to the agent which columns are playable and which are not
+        return : 
+            integer between 0 and 6, which gets the best evaluation by the minimax algorithm, randomly chosen otherwise
         """
 
         action=None
@@ -53,11 +63,14 @@ class MinimaxAgent:
         for action in valid_actions:
             # Simulate the move
             new_board = self._simulate_move(observation, action, channel=0)
+
+            # Evaluate using minimax (opponent's turn, so minimizing)
             value = self._minimax(new_board, self.depth - 1, float('-inf'), float('inf'), False)
 
             if value > best_value:
                 best_value = value
                 best_action = action
+        
         return best_action if best_action is not None else random.choice(valid_actions)
 
     def _minimax(self, board, depth, alpha, beta, maximizing):
@@ -74,6 +87,7 @@ class MinimaxAgent:
         Returns:
             float: evaluation score
         """
+
 
         # Base cases:
         #   - depth == 0: return evaluate(board)
@@ -122,7 +136,7 @@ class MinimaxAgent:
         Simulate placing a piece without modifying original board
 
         Parameters:
-            board: Current board (6, 7, 2)
+            board: Current board state (6, 7, 2)
             col: Column to play
             channel: 0 for current player, 1 for opponent
 
@@ -172,6 +186,7 @@ class MinimaxAgent:
             row index (0-5) if space available, None if column full
         """
           
+          
         for row in range(5,-1,-1):
             if (board[row, col, 0] == 0 and board[row, col, 1] == 0): 
                 return row
@@ -200,36 +215,6 @@ class MinimaxAgent:
             for col in range(7):
                 if board[row,col,channel] == 1 and self._check_win_from_position(board, row, col, channel):
                     return True
-        return False 
-    
-    def _check_win2(self,board, player_channel):
-
-        #Vertical wins
-        for row in range(3):
-            for col in range(7):
-                if np.sum(board[row: row +4, col, player_channel] )== 4 :
-                    return True 
-        
-        #Horizontal wins
-        for row in range(6):
-            for col in range(4):
-                if np.sum(board[row, col:col+4, player_channel])== 4 :
-                    return True 
-        
-        #Descending Diagonal win : 
-        for row in range(3):
-            for col in range(4):
-                if np.trace(board[row:row+4, col:col+4, player_channel] )== 4 :
-                    return True
-        
-        #Ascending Diagonal win :
-        indices = [3,6,9,12] 
-        for row in range(3):
-            for col in range(4):  
-                asc_diag = np.take(board[row:row+4, col:col+4, player_channel], indices)
-                if np.sum(asc_diag)== 4 :
-                    return True
-
         return False 
 
     def _check_win_from_position(self, board, row, col, channel):
