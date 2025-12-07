@@ -82,7 +82,7 @@ Une fois la colonne choisie l'agent n'aura alors plus qu'a retourner via `env.st
 
 ### 3.3 : Définir l'interface de l'agent
 
-Une classe `MyAgent` performante contiendrait nécessairement les méthodes :
+Une classe `MyAgent` non triviale contiendrait par exemple les méthodes :
 - `__init__` prenant pour arguments `self`, l'environnement `env` ainsi qu'un argument optionnel `name` et les construits en tant qu'attributs de classe, construit également à partir de `self.env` l'attribut `action_space`; 
 -  `choose_action` prenant pour arguments `self`, `observation` (obligatoire) et les autres objets renvoyés par `env.last()` (optionnels) et retourne la prochaine `action` à réaliser selon les stratégies implémentées par la fonction;
 - `check_winning_move` permettant de déterminer si il y a un coup gagnant pour l'agent;

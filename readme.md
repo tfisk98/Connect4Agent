@@ -11,7 +11,9 @@
 `connect4_agent` est un package dont l'objectif est de faciliter la manipulation du jeu Connect4 de la librairie `pettingzoo` (https://pettingzoo.farama.org/). Il fournit les modules suivants :
 - `game_factilities.py` : diverses fonctionnalités permettant de manipuler plus facilement l'environnement de jeu Connect4 de `pettingzoo`;
 - `random_agent.py` : définit deux classes d'agents aléatoires simples;
-- `smart_agent.py` : définit une classe d'agent employant des stratégies simples.
+- `smart_agent.py` : définit une classe d'agent employant des stratégies simples;
+- `minimax_agent.py` : définit une classe d'agent employan un algorithme de type Minimax pour jouer;
+- `evaluate_pos.py` : un module auxiiaire à `minimax_agent.py`.
 
 Les agents précédemment mentionnés sont également définis de sorte à respecter les conditions de perfomances de d'une compétition du site ML-Arena (https://ml-arena.com/viewcompetition/2).
 
@@ -27,7 +29,7 @@ Le package peut-être installé dans l'environnemment de votre choix en exécuta
 
 Le package possède le namespace `connect4_agent`. Ainsi, pour importer l'un des modules mentionnés au paragraphe 1, une commande telle que `import connect4_agent.game_facilities as gf` peut par exemple être utilisée. 
 
-L'ensemble des tests du package ont été écrits pour être exécuté avec `pytest` qui doit être installé à part. Une fois ceci fait, la commande éponyme `pytest` peut être utilisé dans le terminal à la racine du package pour exécuter l'ensemble des tests.
+L'ensemble des tests du package ont été écrits pour être exécutés avec `pytest` qui doit être installé à part par l'utilisateur du package. Une fois ceci fait, la commande éponyme `pytest` peut être utilisée dans le terminal à la racine du package pour exécuter l'ensemble des tests. Mentionnons également que les derniers tests de `test_minimax.py` prennent quelques minutes pour être réalisés entièrement.
 
 
 ## 3. Informations supplémentaires
@@ -35,5 +37,6 @@ L'ensemble des tests du package ont été écrits pour être exécuté avec `pyt
 1) [Présentation générale du jeu et de l'environnement ](general_presentation.md#top)
 2) [Présentation de l'agent `RandomAgent`](random_agent_presentation.md)
 3) [Présentation de l'agent `SmartAgent`](smart_agent_presentation.md)
-4) [Mise en place de tests](testing_plan.md)
-5) [Annexe](annex.md#top)
+4) [Présentation de l'agent `MinimaxAgent`](minimax_agent_presentation.md)
+5) [Mise en place de tests](testing_plan.md)
+6) [Annexe](annex.md#top)
