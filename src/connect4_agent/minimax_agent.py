@@ -15,7 +15,7 @@ class MinimaxAgent:
     Agent using minimax algorithm with alpha-beta pruning
     """
 
-    def __init__(self, env, depth=4, player_name=None):
+    def __init__(self, env, depth=3, player_name=None):
         """
         Initialize minimax agent
 

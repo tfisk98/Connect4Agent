@@ -378,6 +378,8 @@ def connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option
                     start_time = time.time()
                     action = current_agent.choose_action(observation)
                     time_used= time.time()-start_time
+                    if time_used > 3 :
+                        print("time used :", time_used)
                     memory_peak=tracemalloc.get_traced_memory()[1]
                     tracemalloc.stop()
 
@@ -389,6 +391,7 @@ def connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option
                     start_time = time.time()
                     action = full_game_list[game][turn_count-1]
                     time_used= time.time()-start_time
+                    print("time used :", time_used)
                     memory_peak=tracemalloc.get_traced_memory()[1]
                     tracemalloc.stop()
 
