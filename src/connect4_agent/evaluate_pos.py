@@ -4,6 +4,10 @@ def evaluate_position(board, player_channel):
     """
     Evaluate board position from player's perspective
 
+    Parameters :
+        board : the (6,7,2) grid
+        player_channel : 0 for current player, 1 for the opponent
+
     Returns:
         float: positive = good for player, negative = bad
     """
@@ -29,52 +33,39 @@ def evaluate_position(board, player_channel):
 
 
 def has_won(board, player_channel):
+    """
+    Checks if the evaluated player has won or not 
+
+    Parameters :
+        board : the (6,7,2) grid
+        player_channel : 0 for current player, 1 for the opponent
+
+    Returns:
+        True if there is a connect 4, False otherwise
+    """
     for row in range(5,-1,-1):
          for col in range(7):
               if board[row,col,player_channel] == 1 and check_win_from_position(board, row, col, player_channel):
                    return True
-    return False 
-    
-def has_won2(board, player_channel):
-
-    #Vertical wins
-    for row in range(3):
-        for col in range(7):
-            if np.sum(board[row: row +4, col, player_channel] )== 4 :
-                return True 
-    
-    #Horizontal wins
-    for row in range(6):
-        for col in range(4):
-            if np.sum(board[row, col:col+4, player_channel])== 4 :
-                return True 
-    
-    #Descending Diagonal win : 
-    for row in range(3):
-        for col in range(4):
-            if np.trace(board[row:row+4, col:col+4, player_channel] )== 4 :
-                return True
-    
-    #Ascending Diagonal win :
-    indices = [3,6,9,12] 
-    for row in range(3):
-        for col in range(4):  
-            asc_diag = np.take(board[row:row+4, col:col+4, player_channel], indices)
-            if row == 2 and col == 3 : 
-                print("asc_diag :", asc_diag)
-            if np.sum(asc_diag)== 4 :
-                return True
-
-    return False 
+    return False    
 
 
 def count_pieces_in_center(board, player_channel):
+    """
+    Counts the number of tokens in the center column for a given player
+
+    Parameters :
+        board : the (6,7,2) grid
+        player_channel : 0 for current player, 1 for the opponent
+
+    Returns:
+        Integer from 0 to 6
+    """
     count = 0
     for row in range(6) :
         if board[row,3,player_channel] == 1:
             count += 1 
     return count 
-
 
 
 def check_win_from_position(board, row, col, channel):
@@ -112,7 +103,6 @@ def check_win_from_position(board, row, col, channel):
             row = token_row
 
         # Horizontal
-
         #Left
         col = token_col - 1
         
@@ -136,8 +126,6 @@ def check_win_from_position(board, row, col, channel):
         token_count = 1
 
         # Ascending Diagonal
-
-
         #Left
 
         col = token_col - 1
@@ -164,10 +152,7 @@ def check_win_from_position(board, row, col, channel):
 
         token_count = 1
 
-
         # Descending Diagonal
-
-
         #Left
 
         col = token_col + 1
@@ -192,13 +177,21 @@ def check_win_from_position(board, row, col, channel):
             col -= 1
             row += 1 
 
-        #col = token_col
-        #row = token_row
-
         return False 
 
 
 def count_two_in_row(board, player_channel): 
+    """
+    Counts the number of chains of horizontal, vertical, ascending diagonal and descending diagonal chains of tokens
+    on the same board that are of length 2. 
+
+    Parameters :
+        board : the (6,7,2) grid
+        player_channel : 0 for current player, 1 for the opponent
+
+    Returns:
+        Integer corresponding to the number of chains of 2 tokens a player has. 
+    """
     curr_board = board[:,:, player_channel]
     count = 0 
     # Browsing the grid from bottom to top and left to right
@@ -224,6 +217,17 @@ def count_two_in_row(board, player_channel):
 
 
 def count_three_in_row(board, player_channel):
+    """
+    Counts the number of chains of horizontal, vertical, ascending diagonal and descending diagonal chains of tokens
+    on the same board that are of length 3. 
+
+    Parameters :
+        board : the (6,7,2) grid
+        player_channel : 0 for current player, 1 for the opponent
+
+    Returns:
+        Integer corresponding to the number of chains of 3 tokens a player has. 
+    """
     curr_board = board[:,:, player_channel]
     count = 0
     # Browsing the grid from bottom to top and left to right
@@ -239,15 +243,9 @@ def count_three_in_row(board, player_channel):
                                 pass 
                             elif col == 6 and loc_col == 1 :
                                 pass 
-                            elif row + 2*loc_row < 6 and col + 2*loc_col < 7 :
+                            elif row + 2*loc_row >0 and col + 2*loc_col < 7 :
                                     if curr_board[row + loc_row, col + loc_col] == 1 and curr_board[row + 2*loc_row, col + 2*loc_col] == 1 :
                                         count += 1
-                                    #if row > 0 and col > 0 :
-                                    #    if board[row - 1, col - 1, 1] + curr_board[row -1, col-1] == 0 : 
-                                    #        count += 1 
-                                    #if row + 3*loc_row < 6 and col + 3*loc_col < 7 : 
-                                    #    if board[row + 3, col + 3, 1] + curr_board[row +3, col+ 3] == 0 :
-                                    #        count += 1  #If both are free -> double threat : even better
     
     # Descending Diagonal
     for row in range(3,-1,-1):
@@ -255,23 +253,5 @@ def count_three_in_row(board, player_channel):
             if curr_board[row,col] == 1 : 
                 if curr_board[row + 1, col + 1] == 1 and curr_board[row + 2, col + 2] == 1 :
                     count += 1
-                    #### Detect Threats 
-                    #if row > 0 and col > 0 :
-                    #    if board[row - 1, col - 1, 1] + curr_board[row -1, col-1] == 0 : 
-                    #        count += 1 
-                    #if row + 3 < 6 and col + 3 < 7 : 
-                    #    if board[row + 3, col + 3, 1] + curr_board[row +3, col+ 3] == 0 :
-                    #        count += 1  #If both are free -> double threat : even better
                             
     return count
-
-
-def potential_threat(board,row, loc_row, col, loc_col, step):
-    if row + step*loc_row >= 0 and row + step*loc_row <= 5 :
-        if col + step*loc_col >= 0 and col + step*loc_col <= 6 :
-            if board[row + step*loc_row, col + step*loc_col,0] == 0 and  board[row + step*loc_row, col + step*loc_col,1] == 0:
-                return True
-    if row - loc_row >= 0 and row - loc_row <= 5 :
-        if col - loc_col >= 0 and col - loc_col <= 6 :
-            if board[row - loc_row, col - loc_col, 0] == 0 and  board[row - loc_row, col - loc_col,1] == 0 :
-                return True 

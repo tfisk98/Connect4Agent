@@ -15,7 +15,7 @@ class MinimaxAgent:
     Agent using minimax algorithm with alpha-beta pruning
     """
 
-    def __init__(self, env, depth=5, player_name=None):
+    def __init__(self, env, depth=4, player_name=None):
         """
         Initialize minimax agent
 
@@ -32,6 +32,16 @@ class MinimaxAgent:
     def choose_action(self, observation, reward=0.0, terminated=False, truncated=False, info=None, action_mask=None):
         """
         Choose action using minimax algorithm
+
+        Parameters : 
+            observation : State of the game (board of player_0 and player_1 plus action mask)
+            reward : score which rewards the agent for a win and punishes the agent for a in order improve its evaluation for the next game(unused here)
+            terminated : True if the game is over, False otherwise 
+            truncated : True if the game stops brutally, False otherwise 
+            info : unused here
+            action_mask : filter to indicate to the agent which columns are playable and which are not
+        return : 
+            integer between 0 and 6, which gets the best evaluation by the minimax algorithm, randomly chosen otherwise
         """
 
         action=None
@@ -125,7 +135,7 @@ class MinimaxAgent:
         Simulate placing a piece without modifying original board
 
         Parameters:
-            board: Current board (6, 7, 2)
+            board: Current board state (6, 7, 2)
             col: Column to play
             channel: 0 for current player, 1 for opponent
 
@@ -203,36 +213,6 @@ class MinimaxAgent:
             for col in range(7):
                 if board[row,col,channel] == 1 and self._check_win_from_position(board, row, col, channel):
                     return True
-        return False 
-    
-    def _check_win2(self,board, player_channel):
-
-        #Vertical wins
-        for row in range(3):
-            for col in range(7):
-                if np.sum(board[row: row +4, col, player_channel] )== 4 :
-                    return True 
-        
-        #Horizontal wins
-        for row in range(6):
-            for col in range(4):
-                if np.sum(board[row, col:col+4, player_channel])== 4 :
-                    return True 
-        
-        #Descending Diagonal win : 
-        for row in range(3):
-            for col in range(4):
-                if np.trace(board[row:row+4, col:col+4, player_channel] )== 4 :
-                    return True
-        
-        #Ascending Diagonal win :
-        indices = [3,6,9,12] 
-        for row in range(3):
-            for col in range(4): 
-                asc_diag = np.take(board[row:row+4, col:col+4, player_channel], indices)
-                if np.sum(asc_diag)== 4 :
-                    return True
-
         return False 
 
     def _check_win_from_position(self, board, row, col, channel):
@@ -349,52 +329,5 @@ class MinimaxAgent:
                     return True 
             col -= 1
             row += 1 
-
-        return False 
-    
-
-    def _check_win_from_position2(self, board, row, col, channel):
-        """
-        Check if placing a piece at (row, col) would create 4 in a row
-
-        Parameters:
-            board: numpy array (6, 7, 2)
-            row: row index (0-5)
-            col: column index (0-6)
-            channel: 0 or 1 (which player's pieces to check)
-
-        Returns:
-            True if this position creates 4 in a row/col/diag, False otherwise
-        """
-        # TODO: Check all 4 directions: horizontal, vertical, diagonal /, diagonal \
-        # Hint: Count consecutive pieces in both directions from (row, col)
-
-        player_board = board[:,:,channel]
-
-        # Vertical
-
-        if row < 3 :
-            if  np.sum(board[row: row +4, col, channel] )== 4 :
-                    return True 
-
-        # Horizontal
-
-        if col < 4 :
-            if np.sum(board[row, col:col+4, channel])== 4 :
-                return True 
-
-        # Ascending Diagonal
-
-        if row < 3 and col < 4 : 
-            if np.trace(board[row:row+4, col:col+4, channel] )== 4 :
-                return True
-
-        # Descending Diagonal
-
-        indices = [3,6,9,12]
-        if row < 3 and col < 4 :
-            asc_diag = np.take(board[row:row+4, col:col+4, channel], indices)
-            if np.sum(asc_diag)== 4 :
-                return True 
 
         return False 
