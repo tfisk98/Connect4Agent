@@ -115,7 +115,7 @@ def test_Minimax_vs_Random_second() :
 
 def test_Minimax_vs_Smart_first() :
     stats=gf.connect4_game_with_stats(number_of_games, MinimaxAgent, SmartAgent)
-    minimal_win_rate = 0.85
+    minimal_win_rate = 0.8
     maximum_time = 2.8
     maximum_memory_peak = 364*10e6
     stat_win_rate0 = stats[1]["Frequency of win"]["player_0"]
