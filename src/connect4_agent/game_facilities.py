@@ -49,7 +49,6 @@ def print_board(observation, playing_agent, action=None, is_print=True):
     human_board = ""
 
     # Including playing_agent action in board_0:
-    # Including playing_agent action in board_0:
 
     if not action==None:
         for i in range(n_row-1,-1,-1): 
@@ -267,10 +266,6 @@ def connect4_game_with_history(num_games, Custom_Agent0, Custom_Agent1, seed_opt
 
                 # Normal case
 
-                if not is_testing:
-                    current_agent=select_current_agent(agent_list, agent)
-                    action = current_agent.choose_action(observation)
-                    action_list.append(int(action))
                 if not is_testing:
                     current_agent=select_current_agent(agent_list, agent)
                     action = current_agent.choose_action(observation)
@@ -552,7 +547,7 @@ def generate_state(env, action_list, is_print=False):
     return 
 
 
-def testing_strategy(action_list, CustomAgent, expected_action_list):
+def testing_strategy(action_list, CustomAgent, expected_action_list, depth=None):
     """ 
     Test if in a give state of the game, the agent will
     play as it is expected.
@@ -565,6 +560,7 @@ def testing_strategy(action_list, CustomAgent, expected_action_list):
         CustomAgent: the type of the agent that is tested
         expected_action_list: a list containing the agent's
         excpected possibilities of action
+        depht: the depht of the agent
 
     Return:
         as_expected: a boolean asserting if the agent 
@@ -574,8 +570,10 @@ def testing_strategy(action_list, CustomAgent, expected_action_list):
     env = connect_four_v3.env(render_mode=None)
     env.reset(seed=42)
 
-    tested_agent = CustomAgent(env)
-
+    if depth==None:
+        tested_agent = CustomAgent(env)
+    else: 
+        tested_agent = CustomAgent(env,depth)
     generate_state(env, action_list)
     action = tested_agent.choose_action(env.last()[0])
     as_expected = action in expected_action_list
@@ -584,7 +582,6 @@ def testing_strategy(action_list, CustomAgent, expected_action_list):
     return as_expected
 
 
-### Predefined action lists: 
 ### Predefined action lists: 
 
 # Note that the corresponding game states are represented in the annex of readme.md.
@@ -606,15 +603,13 @@ block_state1=[0,0,6,0,5,0] # player_0 has to play
 empty_state=[] # player_0 has to play
 connect_threes= [3,4,4,3,5,3,5,3,5,1] # player_0 has to play
 connect_twos =[0,2,0,2,1,2] # player_0 has to play
-win_state_depth32=[3,3,3,4,4,3,4,6,5,5,5,1] # player_0 plays and forces a two way win on column 6
-win_state_depth3=[3,3,2,3] # player_0 plays and creates a two way win on the bottom line (line 5)
-win_state_depth5 = [3,3,3,4,4,5,4,5,5,0] # player_0 plays and forces a two way win on column 6
+win_state_depth32=[3,3,3,4,4,3,4,6,5,5,5,1] # player_0 has to play
+win_state_depth3=[3,3,2,3] # player_0 has to play
+win_state_depth5 = [3,3,3,4,4,5,4,5,5,0] # player_0 has to play
 
 # Printing predefined states (don't forget to comment it again after vizualization):
-# Printing predefined states (don't forget to comment it again after vizualization):
 
-env = connect_four_v3.env(render_mode=None)
-env = connect_four_v3.env(render_mode=None)
+"""env = connect_four_v3.env(render_mode=None)
 
 env.reset(seed=42)
 print("full_game0 corresponding state:\n")
@@ -717,4 +712,4 @@ print("win_state_depth5 corresponding state:\n")
 env.reset(seed=42)
 generate_state(env, win_state_depth5, True)
 
-env.close()
+env.close()"""
