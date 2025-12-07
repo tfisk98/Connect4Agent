@@ -408,9 +408,8 @@ def connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option
         data1[2]=tuple(memory_list1)
         game_data=(turn_count, tuple(data0), tuple(data1))
         data.append(game_data)
-    
-        env.close()
-    
+        
+    env.close()
     data=tuple(data)
     return data
 

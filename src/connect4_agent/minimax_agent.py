@@ -4,9 +4,6 @@ Minimax agent with alpha-beta pruning
 
 import numpy as np
 import random
-from loguru import logger
-import time 
-
 from src.connect4_agent.evaluate_pos import evaluate_position
 
 
