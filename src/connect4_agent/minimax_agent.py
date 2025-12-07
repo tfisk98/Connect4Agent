@@ -15,7 +15,7 @@ class MinimaxAgent:
     Agent using minimax algorithm with alpha-beta pruning
     """
 
-    def __init__(self, env, depth=4, player_name=None):
+    def __init__(self, env, depth=2, player_name=None):
         """
         Initialize minimax agent
 
@@ -27,7 +27,6 @@ class MinimaxAgent:
         self.env = env
         self.action_space = env.action_space(env.agents[0])
         self.depth = depth
-        self.player_name = player_name or f"Minimax(d={depth})"
 
     def choose_action(self, observation, reward=0.0, terminated=False, truncated=False, info=None, action_mask=None):
         """
