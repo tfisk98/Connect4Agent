@@ -29,7 +29,7 @@ Le package peut-être installé dans l'environnemment de votre choix en exécuta
 
 Le package possède le namespace `connect4_agent`. Ainsi, pour importer l'un des modules mentionnés au paragraphe 1, une commande telle que `import connect4_agent.game_facilities as gf` peut par exemple être utilisée. 
 
-L'ensemble des tests du package ont été écrits pour être exécuté avec `pytest` qui doit être installé à part. Une fois ceci fait, la commande éponyme `pytest` peut être utilisé dans le terminal à la racine du package pour exécuter l'ensemble des tests.
+L'ensemble des tests du package ont été écrits pour être exécutés avec `pytest` qui doit être installé à part par l'utilisateur du package. Une fois ceci fait, la commande éponyme `pytest` peut être utilisée dans le terminal à la racine du package pour exécuter l'ensemble des tests. Mentionnons également que les derniers tests de `test_minimax.py` prennent quelques minutes pour être réalisés entièrement.
 
 
 ## 3. Informations supplémentaires

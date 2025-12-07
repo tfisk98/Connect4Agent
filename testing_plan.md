@@ -47,4 +47,4 @@ En cas d'échecs des tests ou de performances insatisfaisantes, la fonction `con
 
 ## 5. Tester le package
 
-Rappelons que les tests du package ont été écrits pour fonctionner avec `pytest`. Une fois ce dernier installé, il suffit alors d'éxécuter la commande éponyme à la racine du package pour lancer l'ensemble des tests.
+Rappelons que les tests du package ont été écrits pour fonctionner avec `pytest`. Une fois ce dernier installé, il suffit alors d'éxécuter la commande éponyme à la racine du package pour lancer l'ensemble des tests. Rappelons aussi que les derniers tests de `test_minimax.py` prennent quelques minutes pour être réalisés entièrement.
