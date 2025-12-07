@@ -1,4 +1,7 @@
-import numpy as np
+"""
+An auxiliary module for MinimaxAgent to alow him to 
+evaluate a given state of the game.
+"""
 
 def evaluate_position(board, player_channel):
     """

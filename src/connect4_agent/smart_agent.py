@@ -1,3 +1,7 @@
+"""
+A simple smart agent that uses basic strategies. 
+"""
+
 import random
 from loguru import logger
 
