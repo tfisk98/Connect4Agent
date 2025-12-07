@@ -221,15 +221,13 @@ def count_two_in_row(board, player_channel):
     #Diagonales Descendantes 
     for row in range(4,-1,-1):
         for col in range(5):
-            if curr_board[row,col] == 1 :
-                if curr_board[row + 1, col + 1 ] == 1:
+            if curr_board[row,col] == 1 and curr_board[row + 1, col + 1 ] == 1:
                     count += 1
 
     return count 
 
 
 def count_three_in_row(board, player_channel):
-    start = time.time() 
     curr_board = board[:,:, player_channel]
     count = 0
     #On parcourt la grille de bas en haut, de la gauche vers la droite 
@@ -248,13 +246,26 @@ def count_three_in_row(board, player_channel):
                             elif row + 2*loc_row < 6 and col + 2*loc_col < 7 :
                                     if curr_board[row + loc_row, col + loc_col] == 1 and curr_board[row + 2*loc_row, col + 2*loc_col] == 1 :
                                         count += 1
+                                    #if row > 0 and col > 0 :
+                                    #    if board[row - 1, col - 1, 1] + curr_board[row -1, col-1] == 0 : 
+                                    #        count += 1 
+                                    #if row + 3*loc_row < 6 and col + 3*loc_col < 7 : 
+                                    #    if board[row + 3, col + 3, 1] + curr_board[row +3, col+ 3] == 0 :
+                                    #        count += 1  #If both are free -> double threat : even better
     
     #Diagonale Descendante 
     for row in range(3,-1,-1):
         for col in range(4):
             if curr_board[row,col] == 1 : 
                 if curr_board[row + 1, col + 1] == 1 and curr_board[row + 2, col + 2] == 1 :
-                    count += 1   
+                    count += 1
+                    #### Detect Threats 
+                    #if row > 0 and col > 0 :
+                    #    if board[row - 1, col - 1, 1] + curr_board[row -1, col-1] == 0 : 
+                    #        count += 1 
+                    #if row + 3 < 6 and col + 3 < 7 : 
+                    #    if board[row + 3, col + 3, 1] + curr_board[row +3, col+ 3] == 0 :
+                    #        count += 1  #If both are free -> double threat : even better
                             
     return count
 

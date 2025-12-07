@@ -100,7 +100,7 @@ def test_has_won():
     stop = time.time() 
     print("has_won 2 Lose:", stop - start)
 
-
+    env.close()
     return
 
 test_has_won()
@@ -146,6 +146,8 @@ def test_count_two_in_row():
     assert count_two_in_row(board, player_channel) == 2
     stop = time.time() 
     print("check twos 1 :", stop - start)
+
+    env.close()
     return
     
 
@@ -161,6 +163,9 @@ def test_count_center():
 
     player_channel = 1
     assert count_pieces_in_center(board, player_channel) == 3 
+
+    env.close()
+    return
 
 
 def test_evaluate_position():
@@ -201,6 +206,8 @@ def test_evaluate_position():
     board=env.last()[0]["observation"]
 
     assert evaluate_position(board, player_channel) == 6
+
+    env.close()
     return
 
 

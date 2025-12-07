@@ -15,7 +15,7 @@ class MinimaxAgent:
     Agent using minimax algorithm with alpha-beta pruning
     """
 
-    def __init__(self, env, depth=4, player_name=None):
+    def __init__(self, env, depth=5, player_name=None):
         """
         Initialize minimax agent
 
@@ -56,19 +56,12 @@ class MinimaxAgent:
             new_board = self._simulate_move(observation, action, channel=0)
 
             # Evaluate using minimax (opponent's turn, so minimizing)
-            #start = time.time()
             value = self._minimax(new_board, self.depth - 1, float('-inf'), float('inf'), False)
-            #stop = time.time()
-            #print("value :", value)
-            #print("Minimax :", stop - start)
 
             if value > best_value:
                 best_value = value
                 best_action = action
         
-        #stop_chose = time.time()
-        #print("Chose action :", stop_chose - start_chose)
-        #print("best_action:",best_action)
         return best_action if best_action is not None else random.choice(valid_actions)
 
     def _minimax(self, board, depth, alpha, beta, maximizing):
@@ -245,7 +238,7 @@ class MinimaxAgent:
         #Ascending Diagonal win :
         indices = [3,6,9,12] 
         for row in range(3):
-            for col in range(4):  
+            for col in range(4): 
                 asc_diag = np.take(board[row:row+4, col:col+4, player_channel], indices)
                 if np.sum(asc_diag)== 4 :
                     return True
@@ -368,5 +361,52 @@ class MinimaxAgent:
                     return True 
             col -= 1
             row += 1 
+
+        return False 
+    
+
+    def _check_win_from_position2(self, board, row, col, channel):
+        """
+        Check if placing a piece at (row, col) would create 4 in a row
+
+        Parameters:
+            board: numpy array (6, 7, 2)
+            row: row index (0-5)
+            col: column index (0-6)
+            channel: 0 or 1 (which player's pieces to check)
+
+        Returns:
+            True if this position creates 4 in a row/col/diag, False otherwise
+        """
+        # TODO: Check all 4 directions: horizontal, vertical, diagonal /, diagonal \
+        # Hint: Count consecutive pieces in both directions from (row, col)
+
+        player_board = board[:,:,channel]
+
+        # Vertical
+
+        if row < 3 :
+            if  np.sum(board[row: row +4, col, channel] )== 4 :
+                    return True 
+
+        # Horizontal
+
+        if col < 4 :
+            if np.sum(board[row, col:col+4, channel])== 4 :
+                return True 
+
+        # Ascending Diagonal
+
+        if row < 3 and col < 4 : 
+            if np.trace(board[row:row+4, col:col+4, channel] )== 4 :
+                return True
+
+        # Descending Diagonal
+
+        indices = [3,6,9,12]
+        if row < 3 and col < 4 :
+            asc_diag = np.take(board[row:row+4, col:col+4, channel], indices)
+            if np.sum(asc_diag)== 4 :
+                return True 
 
         return False 

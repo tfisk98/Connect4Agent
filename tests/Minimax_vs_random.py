@@ -14,10 +14,10 @@ from pettingzoo.classic import connect_four_v3
 import src.connect4_agent.random_agent as rnda
 import src.connect4_agent.smart_agent as sa
 
-number_of_games=1
+number_of_games=100
 
 env = connect_four_v3.env(render_mode=None) 
-stats=gf.connect4_game_with_stats(number_of_games, sa.SmartAgent, MinimaxAgent)
+stats=gf.connect4_game_with_stats(number_of_games, MinimaxAgent, sa.SmartAgent)
 minimal_win_rate = 0.95
 maximum_time = 2.8
 maximum_memory_peak = 364*10e6
