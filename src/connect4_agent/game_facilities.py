@@ -26,23 +26,17 @@ def print_board(observation, playing_agent, action=None, is_print=True):
     indicate en empty position.
 
     Parameters:
-    Parameters:
         observation: numpy array of shape (6, 7, 2)
             observation[:,:,0] = playing's tokens
             observation[:,:,1] = opponent's tokens
         agents: the list containing the name of the
-        agents: the list containing the name of the
         agents of the environnement
-        playin_agent: the name of the agent currently
         playin_agent: the name of the agent currently
         playing
         action: the index of the column of observartion
-        action: the index of the column of observartion
         where the next tokens will be put
         is_print: a boolean asserting if the function has to print
-        is_print: a boolean asserting if the function has to print
-
-    Return: 
+ 
     Return: 
         None if is_print==True, the string humand_board representing
         the board otherwise
@@ -60,26 +54,20 @@ def print_board(observation, playing_agent, action=None, is_print=True):
     if not action==None:
         for i in range(n_row-1,-1,-1): 
             if board_0[i,action]==0 and board_1[i,action]==0:
-    if not action==None:
-        for i in range(n_row-1,-1,-1): 
-            if board_0[i,action]==0 and board_1[i,action]==0:
                 board_0[ i ,action]=1
                 break
 
     # Checking which agent is playing
 
     if playing_agent[-1]=="0":
-    if playing_agent[-1]=="0":
         check_player0 = True
-    else:
+
     else:
         check_player0 = False 
 
     # Preparing information for readibbility
 
-    board_title = "Next turn:\n"
-    board_title = board_title + "player_0 tokens: 'X'\n" 
-    board_title = board_title + "player_1 tokens: 'O'\n" 
+
     board_title = "Next turn:\n"
     board_title = board_title + "player_0 tokens: 'X'\n" 
     board_title = board_title + "player_1 tokens: 'O'\n" 
@@ -91,39 +79,27 @@ def print_board(observation, playing_agent, action=None, is_print=True):
         for j in range(n_col):
             if board_0[i][j] == 1:
                 if check_player0:
-    for i in range(n_row):
-        for j in range(n_col):
-            if board_0[i][j] == 1:
-                if check_player0:
                     human_board+="X "
-                else:
                 else:
                     human_board+="O "
             elif board_1[i][j] == 1: 
                 if check_player0:
-            elif board_1[i][j] == 1: 
-                if check_player0:
                     human_board+="O "
                 else:
-                else:
                     human_board+="X "
-            else: 
             else: 
                 human_board+=". "
         human_board+="\n"
    
     # Printing human readable state of the board
     if is_print:
-    if is_print:
         print(board_title)
         print(human_board)
         return
     else:
-    else:
         return human_board 
     
 
-def setting_custom_agent(env,Custom_Agent0, Custom_Agent1):
 def setting_custom_agent(env,Custom_Agent0, Custom_Agent1):
     """ 
     Setting the two custom agents that will play in 
@@ -133,13 +109,7 @@ def setting_custom_agent(env,Custom_Agent0, Custom_Agent1):
     env: a connect4 pettingzoo environement
     Custom_Agent0: the type of the first custom agent
     Custom_Agent1: the type of the second custom agent
-    Parameters:
-    env: a connect4 pettingzoo environement
-    Custom_Agent0: the type of the first custom agent
-    Custom_Agent1: the type of the second custom agent
 
-    Return: 
-        agent_list: the list containing the 
     Return: 
         agent_list: the list containing the 
         two agent created (agent0 at index 0)
@@ -151,34 +121,25 @@ def setting_custom_agent(env,Custom_Agent0, Custom_Agent1):
 
 
 def select_current_agent(agent_list, playing_agent):
-def select_current_agent(agent_list, playing_agent):
     """ 
     Getting the custom agent object corresponding 
     to agent currently playing in the game loop.
 
     Parameters:
     agent_list: the list of custom agent type object 
-    Parameters:
-    agent_list: the list of custom agent type object 
     in the environement
-    playing_agent: the name of the agent currently playing
-    playing_agent: the name of the agent currently playing
-    
-    Return: 
+    playing_agent: the name of the agent currently playing 
     Return: 
         current_agent the custom agent playing
     """
 
     if playing_agent[-1]=="0":
-    if playing_agent[-1]=="0":
         current_agent=agent_list[0]
-    else:
     else:
         current_agent=agent_list[1]
     return current_agent
 
 
-def connect4_game(num_games, Custom_Agent0, Custom_Agent1, custom_render_option=False, render_option=None, seed_option=42):
 def connect4_game(num_games, Custom_Agent0, Custom_Agent1, custom_render_option=False, render_option=None, seed_option=42):
     """ 
     Make a certain number of connect4 game with the given
@@ -189,19 +150,11 @@ def connect4_game(num_games, Custom_Agent0, Custom_Agent1, custom_render_option=
         Custom_Agent0: the type of the custom agent playing first
         Custom_Agent1: the type of the custom agent playgin second
         custom_render_option: boolean asserting if print_board has
-    Parameters: 
-        num_games: the number of game to be played
-        Custom_Agent0: the type of the custom agent playing first
-        Custom_Agent1: the type of the custom agent playgin second
-        custom_render_option: boolean asserting if print_board has
         to be used
-        render_option: setting string for pettingzoo environment render_mode
-        seed_option: a positive integer to be used as seed for 
         render_option: setting string for pettingzoo environment render_mode
         seed_option: a positive integer to be used as seed for 
         pettingzoo environment 
 
-    Return:
     Return:
         None
     """
@@ -215,11 +168,8 @@ def connect4_game(num_games, Custom_Agent0, Custom_Agent1, custom_render_option=
     score = [0,0]
 
     # Gameloop
-
-    for game in range(0,num_games):
     for game in range(0,num_games):
 
-        print(f"\nGAME NUMBER {game+1}:\n\n")
         print(f"\nGAME NUMBER {game+1}:\n\n")
 
         env.reset(seed=seed_option)
@@ -237,24 +187,21 @@ def connect4_game(num_games, Custom_Agent0, Custom_Agent1, custom_render_option=
             else:
                 current_agent=select_current_agent(agent_list, agent)
                 action = current_agent.choose_action(observation)
-                if custom_render_option:
+
                 if custom_render_option:
                     print_board(observation, agent, action)
             env.step(action)
-    if score[0] >= score[1]:
+
     if score[0] >= score[1]:
         winner = 0
         looser = 1
-    else: 
     else: 
         winner = 1
         looser = 0
     print("\nThe overall winner is player_"+ str(winner) + f" with a score of {score[winner]} points against {score[looser]} !\n")
     env.close()
-    print("The overall winner is player_"+ str(winner) + f" with a score of {score[winner]} points against {score[looser]} !\n")
             
 
-def connect4_game_with_history(num_games, Custom_Agent0, Custom_Agent1, seed_option=42, is_testing=False):
 def connect4_game_with_history(num_games, Custom_Agent0, Custom_Agent1, seed_option=42, is_testing=False):
     """ 
     Make a certain number of connect4 game with the given
@@ -265,19 +212,11 @@ def connect4_game_with_history(num_games, Custom_Agent0, Custom_Agent1, seed_opt
         Custom_Agent0: the type of the custom agent playing first
         Custom_Agent1: the type of the custom agent playgin second
         seed_option: a positive integer to be used as seed for 
-    Parameters: 
-        num_games: the number of game to be played
-        Custom_Agent0: the type of the custom agent playing first
-        Custom_Agent1: the type of the custom agent playgin second
-        seed_option: a positive integer to be used as seed for 
         pettingzoo environment 
-        is_testing: a boolean to trigger the testing mode of the 
+
         is_testing: a boolean to trigger the testing mode of the 
         function (playing 4 deterministic games for testing
         purpose)
-
-    Return:
-        history: a tuple containing of the form (win, draw, loss) where win registers
     Return:
         history: a tuple containing of the form (win, draw, loss) where win registers
         in a tupple the games won by CustomAgent0, draw registers games ending with a draw 
@@ -290,7 +229,7 @@ def connect4_game_with_history(num_games, Custom_Agent0, Custom_Agent1, seed_opt
 
     env = connect_four_v3.env(render_mode=None)
     env.reset(seed=seed_option)
-    if not is_testing:
+
     if not is_testing:
         agent_list = setting_custom_agent(env,Custom_Agent0, Custom_Agent1)
 
@@ -300,7 +239,7 @@ def connect4_game_with_history(num_games, Custom_Agent0, Custom_Agent1, seed_opt
     draw_list=[]
     loose_list=[]
 
-    for game in range(num_games):
+
     for game in range(num_games):
 
         env.reset(seed=seed_option)
@@ -317,9 +256,7 @@ def connect4_game_with_history(num_games, Custom_Agent0, Custom_Agent1, seed_opt
                 action = None
                 if reward == 1:
                     if agent=='player_0':
-                    if agent=='player_0':
                         win_list.append(tuple(action_list))
-                    else:
                     else:
                         loose_list.append(tuple(action_list))
                        
@@ -342,7 +279,6 @@ def connect4_game_with_history(num_games, Custom_Agent0, Custom_Agent1, seed_opt
                 # Special case to make tests of the function
 
                 else:
-                else:
                     turn_count+=1
                     action = full_game_list[game][turn_count-1]
                     action_list.append(int(action))
@@ -355,16 +291,11 @@ def connect4_game_with_history(num_games, Custom_Agent0, Custom_Agent1, seed_opt
 
 
 def connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option=42, is_testing=False):
-def connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option=42, is_testing=False):
     """ 
     Make a certain number of connect4 game with the given
     agents and get data for later analysis.
 
-    Parameters: 
-        num_games: the number of game to be played
-        Custom_Agent0: the type of the custom agent playing first
-        Custom_Agent1: the type of the custom agent playgin second
-        seed_option: a positive integer to be used as seed for 
+
     Parameters: 
         num_games: the number of game to be played
         Custom_Agent0: the type of the custom agent playing first
@@ -372,12 +303,9 @@ def connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option
         seed_option: a positive integer to be used as seed for 
         pettingzoo environment 
         is_testing: a boolean to trigger the testing mode of the 
-        is_testing: a boolean to trigger the testing mode of the 
         function (playing 4 deterministic games for testing
         purpose)
 
-    Return:
-        data: a tuple containing for each game another tuple 
     Return:
         data: a tuple containing for each game another tuple 
         of the form (turn_count, data0, data1).
@@ -393,7 +321,6 @@ def connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option
     env = connect_four_v3.env(render_mode=None)
     env.reset(seed=seed_option)
     if not is_testing:
-    if not is_testing:
         agent_list=setting_custom_agent(env,Custom_Agent0, Custom_Agent1)
 
     
@@ -401,7 +328,6 @@ def connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option
 
     data=[]
 
-    for game in range(num_games):
     for game in range(num_games):
 
         env.reset(seed=seed_option)
@@ -428,10 +354,8 @@ def connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option
                 action = None
                 if reward == 1:
                     if agent=='player_0':
-                    if agent=='player_0':
                         data0[0]="win"
                         data1[0]="loss"
-                    else:
                     else:
                         data0[0]="loss"
                         data1[0]="win"
@@ -448,7 +372,6 @@ def connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option
                 # Normal case
 
                 if not is_testing:
-                if not is_testing:
                     turn_count+=1
                     current_agent=select_current_agent(agent_list, agent)
                     tracemalloc.start()
@@ -461,7 +384,6 @@ def connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option
                 # Special case to make tests of the function
 
                 else:
-                else:
                     turn_count+=1
                     tracemalloc.start()
                     start_time = time.time()
@@ -473,11 +395,9 @@ def connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option
                 # Saving time and memory data of this turn
 
                 if agent[-1] == "0":
-                if agent[-1] == "0":
                     time_list0.append(time_used)
                     memory_list0.append(memory_peak)
 
-                else: 
                 else: 
                     time_list1.append(time_used)
                     memory_list1.append(memory_peak)
@@ -501,17 +421,10 @@ def connect4_game_with_data(num_games, Custom_Agent0, Custom_Agent1, seed_option
 
 
 def getting_stats_per_game(data): 
-def getting_stats_per_game(data): 
     """ 
     Make statistics per game of a given set of played ones.
-
     Parameters: 
         data: a tuple as returned by the function Connect4_game_with_data
-    Parameters: 
-        data: a tuple as returned by the function Connect4_game_with_data
-
-    Return:
-        per_game_data: a tuple (turn_counter, stats0, stats1) where turn_counter
     Return:
         per_game_data: a tuple (turn_counter, stats0, stats1) where turn_counter
         is a panda series containing the number of turns per game. stat0 and stat1 are 
@@ -520,7 +433,6 @@ def getting_stats_per_game(data):
         the same structure where each line represents a game played, and the column
         indicate a specific metric constructed thanks to data. These metrics are
         for a given agent: the result of the game,the average time used to play
-        for a given agent: the result of the game,the average time used to play
         and the maximum one, the average memory peak reached by the agent and the maximum one.
     """
 
@@ -528,7 +440,6 @@ def getting_stats_per_game(data):
     agent0_data = []
     agent1_data = []
 
-    for game in data:
     for game in data:
         turn_counter_data.append(game[0])
         data0 = game[1]
@@ -548,15 +459,8 @@ def getting_stats_per_game(data):
     
 
 def connect4_game_with_stats(num_games, Custom_Agent0, Custom_Agent1, seed_option=42, is_testing=False):
-def connect4_game_with_stats(num_games, Custom_Agent0, Custom_Agent1, seed_option=42, is_testing=False):
     """ 
-    Generate general statistics for the agents over a certain number of games played
-
-    Parameters: 
-        num_games: the number of game to be played
-        Custom_Agent0: the type of the custom agent playing first
-        Custom_Agent1: the type of the custom agent playgin second
-        seed_option: a positive integer to be used as seed for 
+    Generate general statistics for the agents over a certain number of games played 
     Parameters: 
         num_games: the number of game to be played
         Custom_Agent0: the type of the custom agent playing first
@@ -564,12 +468,9 @@ def connect4_game_with_stats(num_games, Custom_Agent0, Custom_Agent1, seed_optio
         seed_option: a positive integer to be used as seed for 
         pettingzoo environment 
         is_testing: a boolean to trigger the testing mode of the 
-        is_testing: a boolean to trigger the testing mode of the 
         function (playing 4 deterministic games for testing
         purpose)
 
-    Return:
-        stats: a tuple of the form (turn_stats, agent_stats) where turn_stats gives statistics
     Return:
         stats: a tuple of the form (turn_stats, agent_stats) where turn_stats gives statistics
         abbout the length of the games and agent_stats is data frame containing the overall 
@@ -595,8 +496,6 @@ def connect4_game_with_stats(num_games, Custom_Agent0, Custom_Agent1, seed_optio
 
     for i in range(2):
         if i==0:
-    for i in range(2):
-        if i==0:
             result=stats0["Result"]
             win_frequency=len(result[result=="win"])/len(result)
             draw_frequency=len(result[result=="draw"])/len(result)
@@ -605,7 +504,6 @@ def connect4_game_with_stats(num_games, Custom_Agent0, Custom_Agent1, seed_optio
             max_time=stats0["Maximum time"].max()
             average_peak=stats0["Average peak"].mean()
             max_peak=stats0["Maximum peak"].max()
-        else:
         else:
             result=stats1["Result"]
             win_frequency=len(result[result=="win"])/len(result)
@@ -631,7 +529,6 @@ def connect4_game_with_stats(num_games, Custom_Agent0, Custom_Agent1, seed_optio
 
 
 def generate_state(env, action_list, is_print=False):
-def generate_state(env, action_list, is_print=False):
     """ 
     Generate a given state of game. has to be used inside an
     already defined game.
@@ -639,23 +536,16 @@ def generate_state(env, action_list, is_print=False):
     Parameters: 
         env: a connect4 pettingzoo environement
         action_list: the list of action to be performed
-    Parameters: 
-        env: a connect4 pettingzoo environement
-        action_list: the list of action to be performed
         to reach the desired state of game
-        is_print: a boolean asserting if the state 
         is_print: a boolean asserting if the state 
         has to be printed
 
     Return:
-    Return:
         None
     """
-    
-    for action in action_list:
+
     for action in action_list:
         env.step(action)
-    if is_print:
     if is_print:
         print(print_board(env.last()[0], f"player_{len(action_list)%2}",None,False))
         
@@ -663,13 +553,10 @@ def generate_state(env, action_list, is_print=False):
 
 
 def testing_strategy(action_list, CustomAgent, expected_action_list):
-def testing_strategy(action_list, CustomAgent, expected_action_list):
     """ 
     Test if in a give state of the game, the agent will
     play as it is expected.
 
-    Parameters: 
-        action_list: the list of action to be performed
     Parameters: 
         action_list: the list of action to be performed
         to reach the desired state of game
@@ -679,8 +566,6 @@ def testing_strategy(action_list, CustomAgent, expected_action_list):
         expected_action_list: a list containing the agent's
         excpected possibilities of action
 
-    Return:
-        as_expected: a boolean asserting if the agent 
     Return:
         as_expected: a boolean asserting if the agent 
         actually played expected_action

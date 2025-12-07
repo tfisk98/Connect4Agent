@@ -35,7 +35,6 @@ def test_count_three_in_row():
     player_channel = 1
     assert count_three_in_row(board, player_channel) == 1
 
-    env.close()
 
     env.close()
     return
@@ -50,8 +49,6 @@ def test_count_two_in_row():
     assert count_two_in_row(board, player_channel) == 3
     player_channel = 1
     assert count_two_in_row(board, player_channel) == 2
-
-    env.close()
 
     env.close()
     return
@@ -89,7 +86,6 @@ def test_evaluate_position():
     player_channel = 0
     assert evaluate_position(board, player_channel) == 6
 
-    env.close()
     env.close()
     return
 
